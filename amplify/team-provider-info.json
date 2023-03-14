@@ -1,0 +1,20 @@
+{
+  "develop": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-presolvedteamsadmin-develop-201120-authRole",
+      "UnauthRoleArn": "arn:aws:iam::039289871235:role/amplify-presolvedteamsadmin-develop-201120-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::039289871235:role/amplify-presolvedteamsadmin-develop-201120-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-presolvedteamsadmin-develop-201120-deployment",
+      "UnauthRoleName": "amplify-presolvedteamsadmin-develop-201120-unauthRole",
+      "StackName": "amplify-presolvedteamsadmin-develop-201120",
+      "StackId": "arn:aws:cloudformation:us-east-1:039289871235:stack/amplify-presolvedteamsadmin-develop-201120/f64d6590-c0e3-11ed-b471-0efe7a68cf51",
+      "AmplifyAppId": "d2sg3m2pawykox"
+    },
+    "categories": {
+      "auth": {
+        "presolvedteamsadmine76efdae": {}
+      }
+    }
+  }
+}
