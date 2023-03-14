@@ -1,32 +1,38 @@
-import React  from 'react'
-import {  QuestionOutlined,  UserOutlined, SettingOutlined, LogoutOutlined  } from '@ant-design/icons';
+import React, { useEffect,useState  } from 'react'
+import { QuestionOutlined, UserOutlined, SettingOutlined, LogoutOutlined } from '@ant-design/icons';
 import { Layout, Menu, theme, Space, Avatar, Typography, Button, Dropdown } from 'antd';
 import { Auth } from 'aws-amplify';
 import { navigate } from '@gatsbyjs/reach-router';
-
-
-
-
-
+import { useSelector } from 'react-redux';
 
 const AdminHeader = () => {
-    const profileMenu = [        
-            {
-              key: 'settings',
-              label: <div><SettingOutlined/> Settings</div>,              
+    const user = useSelector(state => state.user)
+    const [state, setState] = useState(user?.email || "guest")
+    useEffect(() => {
+        if (user.isLoggedin) {
+            setState(user?.email)
+        }
+    }, [user])
+    const logout = () => {
+        Auth.signOut().then(() => {
+            navigate("/login")
+        })
+    }
 
-            },
-            {
-              key: 'signout',
-              label: <div><LogoutOutlined/> Logout</div>,
-                onClick: () =>{
-                    Auth.signOut()
-                    navigate("/login")
-                }
-            },
-        
+    const profileMenu = [
+        {
+            key: 'settings',
+            label: <div><SettingOutlined /> Settings</div>,
+
+        },
+        {
+            key: 'signout',
+            label: <div><LogoutOutlined /> Logout</div>,
+            onClick: () => { logout() }
+        },
+
     ]
-    const { Header,r } = Layout;  
+    const { Header, r } = Layout;
     const { token } = theme.useToken();
     return (
         <Header className="primary-header">
@@ -35,10 +41,10 @@ const AdminHeader = () => {
                 <Space size={20}>
                     <Button icon={<QuestionOutlined />} shape='round' type="primary">Help</Button>
                     <Dropdown menu={{ items: profileMenu }} trigger={['hover']}>
-                    <Space>
-                        <Avatar style={{ background: token.colorPrimary }} size={32} icon={<UserOutlined />} />
-                        <Typography.Text>John Doe</Typography.Text>
-                    </Space>
+                        <Space style={{'cursor':'pointer'}} >
+                            <Avatar style={{ background: token.colorPrimary }} size={32} icon={<UserOutlined />} />
+                            <Typography.Text>{state}</Typography.Text>
+                        </Space>
                     </Dropdown>
                 </Space>
             </div>

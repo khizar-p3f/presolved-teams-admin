@@ -9,14 +9,16 @@ import { Router, navigate } from '@gatsbyjs/reach-router';
 import AdminLoginPage from './pages/login';
 import AdminMainPage from './pages';
 import { Auth } from 'aws-amplify';
+import { useDispatch } from 'react-redux';
+import { updateUser } from '../store/reducers/user';
 
 
 const AdminIndexPage = () => {
     const { Content, Footer, } = Layout;
-
+    const dispatch = useDispatch()
     useEffect(() => {
         Auth.currentAuthenticatedUser().then((login) => {
-           
+            dispatch(updateUser({ ...login.attributes, userName: login?.username }))
         }).catch((err) => {
             navigate("/login")
         })
