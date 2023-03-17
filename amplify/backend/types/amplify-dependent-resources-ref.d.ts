@@ -8,6 +8,28 @@ export type AmplifyDependentResourcesAttributes = {
             "UserPoolName": "string",
             "AppClientIDWeb": "string",
             "AppClientID": "string"
+        },
+        "userPoolGroups": {
+            "p3fAdminGroupRole": "string",
+            "p3fSupportGroupRole": "string",
+            "tenantAdminGroupRole": "string",
+            "tenantSupervisorGroupRole": "string",
+            "tenantUserGroupRole": "string"
+        }
+    },
+    "function": {
+        "AdminQueriescecc2b38": {
+            "Name": "string",
+            "Arn": "string",
+            "Region": "string",
+            "LambdaExecutionRole": "string"
+        }
+    },
+    "api": {
+        "AdminQueries": {
+            "RootUrl": "string",
+            "ApiName": "string",
+            "ApiId": "string"
         }
     }
 }

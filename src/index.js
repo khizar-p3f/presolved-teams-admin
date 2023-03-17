@@ -1,5 +1,5 @@
-import React, { Suspense } from "react"
-import ReactDOM from "react-dom"
+import React, { Suspense } from "react";
+import ReactDOM from "react-dom";
 import { Router } from "@gatsbyjs/reach-router";
 import { Amplify } from "aws-amplify";
 import oldAwsConfig from "./aws-exports";
@@ -16,19 +16,23 @@ import SuperAdminIndexPage from "./super-admin";
 const AdminPage = React.lazy(() => import("./admin/index"));
 const root = document.getElementById("root");
 Amplify.configure(oldAwsConfig);
-new AppGlobal()
+
+new AppGlobal();
 
 ReactDOM.render(
-    <Provider store={store}>
-        <Suspense fallback={<Suspence />}>
-            <ConfigProvider theme={{algorithm: theme.defaultAlgorithm,token:globalTheme.token}}  prefixCls={globalTheme.prefixCls} >
-                <Router basepath="/">
-                    <AdminPage path="/*" />
-                    <ClientSignupPage path="/signup/*"/>
-                    <SuperAdminIndexPage path="/admin/*"/>
-                </Router>
-            </ConfigProvider>
-        </Suspense>
-    </Provider>,
-    root
+  <Provider store={store}>
+    <Suspense fallback={<Suspence />}>
+      <ConfigProvider
+        theme={{ algorithm: theme.defaultAlgorithm, token: globalTheme.token }}
+        prefixCls={globalTheme.prefixCls}
+      >
+        <Router basepath="/">
+          <AdminPage path="/*" />
+          <ClientSignupPage path="/signup/*" />
+          <SuperAdminIndexPage path="/admin/*" />
+        </Router>
+      </ConfigProvider>
+    </Suspense>
+  </Provider>,
+  root
 );

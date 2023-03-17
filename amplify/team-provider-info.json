@@ -13,7 +13,17 @@
     },
     "categories": {
       "auth": {
-        "presolvedteamsadmine76efdae": {}
+        "presolvedteamsadmine76efdae": {},
+        "userPoolGroups": {}
+      },
+      "function": {
+        "AdminQueriescecc2b38": {
+          "deploymentBucketName": "amplify-presolvedteamsadmin-develop-201120-deployment",
+          "s3Key": "amplify-builds/AdminQueriescecc2b38-43477a4e67662b323771-build.zip"
+        }
+      },
+      "api": {
+        "AdminQueries": {}
       }
     }
   }

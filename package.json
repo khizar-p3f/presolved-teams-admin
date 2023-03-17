@@ -93,6 +93,4 @@
     "test": "cypress open",
     "release": "amplify publish"
   }
-
-  
 }
