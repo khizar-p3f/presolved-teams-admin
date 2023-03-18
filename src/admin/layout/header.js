@@ -39,7 +39,7 @@ const AdminHeader = () => {
             <div className="page-name">Admin Dashborad</div>
             <div className="user-info">
                 <Space size={20}>
-                    <Button icon={<QuestionOutlined />} shape='round' type="primary">Help</Button>
+                    <Button icon={<QuestionOutlined />} className="btn-outline" shape='round' type="primary">Help</Button>
                     <Dropdown menu={{ items: profileMenu }} trigger={['hover']}>
                         <Space style={{'cursor':'pointer'}} >
                             <Avatar style={{ background: token.colorPrimary }} size={32} icon={<UserOutlined />} />

@@ -1,0 +1,22 @@
+[
+  {
+    "groupName": "p3fAdmin",
+    "precedence": 1
+  },
+  {
+    "groupName": "p3fSupport",
+    "precedence": 2
+  },
+  {
+    "groupName": "tenantAdmin",
+    "precedence": 3
+  },
+  {
+    "groupName": "tenantSupervisor",
+    "precedence": 4
+  },
+  {
+    "groupName": "tenantUser",
+    "precedence": 5
+  }
+]
