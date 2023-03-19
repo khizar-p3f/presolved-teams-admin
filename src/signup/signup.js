@@ -27,8 +27,7 @@ const SignupWidget = () => {
                 name: signup.name,
                 company: signup.company,
                 email: signup.email,
-                phone: signup.phone,
-                
+                phone: signup.phone,                
             }).then((data) => {              
                 notification.success({
                     message: 'Success',

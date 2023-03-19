@@ -7,6 +7,7 @@ import '@aws-amplify/ui-react/styles.css';
 import { useDispatch } from 'react-redux';
 import { updateUser } from '../store/reducers/user';
 import { navigate } from '@gatsbyjs/reach-router';
+import { getClientInformation } from './api';
 
 const SigninWidget = () => {
     const dispatch = useDispatch()
@@ -21,7 +22,12 @@ const SigninWidget = () => {
         Auth.currentAuthenticatedUser().then((login) => {
             const loginData = login?.attributes
             console.log({ login });
-            dispatch(updateUser({ ...loginData, userName: login?.username }))
+            getClientInformation(loginData.email).then((res) => {
+                console.log({ res });
+                dispatch(updateUser({...loginData, ...res,  }))
+                navigate("/")
+            })            
+            //dispatch(updateUser({ ...loginData, userName: login?.username }))
             navigate("/")
         })
     }, [state.isLoggedin])
@@ -37,17 +43,21 @@ const SigninWidget = () => {
 
 
     const onFinish = (e) => {
-
         Auth.signIn({
             username: e.email,
             password: e.password
         }).then((data) => {
-            console.log({ data });
-            notification.success({
+            console.log({ data });            
+            getClientInformation(e.email).then((res) => {
+                console.log({ res });
+                dispatch(updateUser({...data, ...res, userName: e.email }))
+                navigate("/")
+            })
+           /*  notification.success({
                 message: 'Success',
                 description: 'Login Successful'
             })
-
+ */
         }).catch((err) => {
             console.error(err)
             notification.error({

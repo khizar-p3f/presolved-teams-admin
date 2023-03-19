@@ -48,6 +48,7 @@
     "react-highcharts": "^16.1.0",
     "react-icons": "^4.7.1",
     "react-infinite-scroll-component": "^6.1.0",
+    "react-microsoft-login": "^2.0.1",
     "react-redux": "^8.0.4",
     "react-simple-line-icons": "^1.0.8",
     "react-split-pane": "^0.1.92",
@@ -93,6 +94,4 @@
     "test": "cypress open",
     "release": "amplify publish"
   }
-
-  
 }
