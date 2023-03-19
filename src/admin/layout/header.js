@@ -15,7 +15,7 @@ const AdminHeader = () => {
     }, [user])
     const logout = () => {
         Auth.signOut().then(() => {
-            navigate("/login")
+            navigate("/signup")
         })
     }
 

@@ -20,7 +20,7 @@ const AdminIndexPage = () => {
         Auth.currentAuthenticatedUser().then((login) => {
             dispatch(updateUser({ ...login.attributes, userName: login?.username }))
         }).catch((err) => {
-            navigate("/login")
+            navigate("/signup")
         })
     }, [])
 
@@ -34,7 +34,7 @@ const AdminIndexPage = () => {
                 <Content className="main-container">
                     <Router>
                         <AdminMainPage path="/" />
-                        <AdminLoginPage path="/login" />
+                        <AdminLoginPage path="/signup" />
                     </Router>
                 </Content>
                 <Footer className="primary-footer">

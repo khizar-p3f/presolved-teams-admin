@@ -19,11 +19,12 @@
       "function": {
         "AdminQueriescecc2b38": {
           "deploymentBucketName": "amplify-presolvedteamsadmin-develop-201120-deployment",
-          "s3Key": "amplify-builds/AdminQueriescecc2b38-43477a4e67662b323771-build.zip"
+          "s3Key": "amplify-builds/AdminQueriescecc2b38-597541544f366c736d35-build.zip"
         }
       },
       "api": {
-        "AdminQueries": {}
+        "AdminQueries": {},
+        "presolvedteamsadmin": {}
       }
     }
   }

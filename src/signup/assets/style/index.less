@@ -1,3 +1,5 @@
+@primary-color: #f2f2f2;
+@primary-gradient:linear-gradient(40deg, #7716d9, #639);
 section.signup{
    
     .flex-container {
@@ -9,7 +11,7 @@ section.signup{
         align-items: stretch;
         .signup-banner{
             width: 100%;
-            background:  rgb(61, 51, 153);
+            background: @primary-color;
             display: flex;
             flex-direction: column;
             flex-wrap: wrap;
@@ -26,12 +28,12 @@ section.signup{
                 text-align: center;
               
                 h1{
-                    color: #fff !important;
+                    color: #555 !important;
                     font-weight: 600;
                     font-size: 30px;
                 }
                 h3{
-                    color: #fff !important;
+                    color: #999 !important;
                     
                 }
             }
@@ -45,61 +47,42 @@ section.signup{
             align-content: center;
             justify-content: center;
             align-items: center;
-            .signup-form{
-                width: 100%;
-                display: flex;
-                flex-direction: column;
-                flex-wrap: wrap;
-                align-content: center;
-                justify-content: center;
-                align-items: center;
-                .signup-form-item{
+            
+                .container{
+                    border: 0 !important;
                     width: 100%;
-                    display: flex;
-                    flex-direction: column;
-                    flex-wrap: wrap;
-                    align-content: center;
-                    justify-content: center;
-                    align-items: center;
-                    .signup-form-item-input{
-                        width: 100%;
-                        display: flex;
-                        flex-direction: column;
-                        flex-wrap: wrap;
-                        align-content: center;
-                        justify-content: center;
-                        align-items: center;
-                        .signup-form-item-input-label{
-                            width: 100%;
-                            display: flex;
-                            flex-direction: column;
-                            flex-wrap: wrap;
-                            align-content: center;
-                            justify-content: center;
-                            align-items: center;
-                            .signup-form-item-input-label-text{
-                                width: 100%;
-                                display: flex;
-                                flex-direction: column;
-                                flex-wrap: wrap;
-                                align-content: center;
-                                justify-content: center;
-                                align-items: center;
-                            }
-                            .signup-form-item-input-label-input{
-                                width: 100%;
-                                display: flex;
-                                flex-direction: column;
-                                flex-wrap: wrap;
-                                align-content: center;
-                                justify-content: center;
-                                align-items: center;
-                            }
+                    .presolved-card-head-title{
+                        font-size: 20px;
+                        font-weight: 600;
+                        color: #000;
+                        text-align: center;
+                        margin-bottom: 50px;
+                        h3{
+                            font-size: 16px;
+                            font-weight: 100;
+                            color: #999;
+                            text-align: center;
+                        
                         }
                     }
+                    .presolved-card-body{
+                        width: 100%;
+                    }
                 }
-            }
+            
         }
+    }
+
+}
+
+.btn-outline{
+    box-shadow: none;
+    border: 1px solid @primary-color;
+    background: inherit;
+    color:@primary-color;
+    
+    &:hover{
+        background-color: @primary-gradient;          
     }
 
 }
