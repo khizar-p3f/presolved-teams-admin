@@ -109,3 +109,48 @@ export const onDeleteClientUsers = /* GraphQL */ `
     }
   }
 `;
+export const onCreateClientIntergrations = /* GraphQL */ `
+  subscription OnCreateClientIntergrations(
+    $filter: ModelSubscriptionClientIntergrationsFilterInput
+  ) {
+    onCreateClientIntergrations(filter: $filter) {
+      id
+      clientId
+      loginMS
+      consentMS
+      attributes
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateClientIntergrations = /* GraphQL */ `
+  subscription OnUpdateClientIntergrations(
+    $filter: ModelSubscriptionClientIntergrationsFilterInput
+  ) {
+    onUpdateClientIntergrations(filter: $filter) {
+      id
+      clientId
+      loginMS
+      consentMS
+      attributes
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteClientIntergrations = /* GraphQL */ `
+  subscription OnDeleteClientIntergrations(
+    $filter: ModelSubscriptionClientIntergrationsFilterInput
+  ) {
+    onDeleteClientIntergrations(filter: $filter) {
+      id
+      clientId
+      loginMS
+      consentMS
+      attributes
+      createdAt
+      updatedAt
+    }
+  }
+`;

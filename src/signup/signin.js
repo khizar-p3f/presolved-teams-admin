@@ -1,6 +1,6 @@
 
-import React, { useState, useEffect  } from 'react'
-import { Form, Input, Button, Checkbox, Row, Col, notification } from 'antd';
+import React, { useState, useEffect } from 'react'
+import { Form, Input, Button, Checkbox, Row, Col, notification, Divider, Spin } from 'antd';
 import { Auth, Hub } from 'aws-amplify';
 import { Authenticator, Heading, ThemeProvider, View } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
@@ -8,12 +8,14 @@ import { useDispatch } from 'react-redux';
 import { updateUser } from '../store/reducers/user';
 import { navigate } from '@gatsbyjs/reach-router';
 import { getClientInformation } from './api';
+import { updateClient } from '../store/reducers/client';
 
 const SigninWidget = () => {
     const dispatch = useDispatch()
     const [form] = Form.useForm()
     const [showAuthenticator, setShowAuthenticator] = useState(false)
     const [state, setState] = useState({
+        isLoginIn: false,
         isLoggedin: false,
         user: null
     })
@@ -21,20 +23,18 @@ const SigninWidget = () => {
     useEffect(() => {
         Auth.currentAuthenticatedUser().then((login) => {
             const loginData = login?.attributes
-            console.log({ login });
             getClientInformation(loginData.email).then((res) => {
-                console.log({ res });
-                dispatch(updateUser({...loginData, ...res,  }))
+                dispatch(updateUser({ ...loginData, ...res, }))
+                dispatch(updateClient({...res}))
                 navigate("/")
-            })            
+            })
             //dispatch(updateUser({ ...loginData, userName: login?.username }))
             navigate("/")
         })
     }, [state.isLoggedin])
-    
+
     Hub.listen('auth', (data) => {
         const event = data.payload.event;
-        console.log({ event });
         if (event === 'signIn') {
             setState({ ...state, isLoggedin: true })
         }
@@ -43,21 +43,23 @@ const SigninWidget = () => {
 
 
     const onFinish = (e) => {
+        setState({ ...state, isLoginIn: true })
         Auth.signIn({
             username: e.email,
             password: e.password
         }).then((data) => {
-            console.log({ data });            
+            console.log({ data });
             getClientInformation(e.email).then((res) => {
-                console.log({ res });
-                dispatch(updateUser({...data, ...res, userName: e.email }))
+                setState({ ...state, isLoginIn: false })
+                dispatch(updateUser({ ...data, ...res, userName: e.email }))
+                dispatch(updateClient({...res}))
                 navigate("/")
             })
-           /*  notification.success({
-                message: 'Success',
-                description: 'Login Successful'
-            })
- */
+            /*  notification.success({
+                 message: 'Success',
+                 description: 'Login Successful'
+             })
+  */
         }).catch((err) => {
             console.error(err)
             notification.error({
@@ -100,11 +102,16 @@ const SigninWidget = () => {
                         <Button type='link' onClick={() => setShowAuthenticator(!showAuthenticator)}  >Recover Password</Button>
                     </Col>
                 </Row>
+              
+                {state.isLoginIn ?
+                    <Form.Item>
+                        <Divider />
+                        <Spin size='large' style={{ fontSize: 40 }} />
+                        <Divider />
+                    </Form.Item> : null}
                 <Form.Item>
                     <Button type='primary' htmlType='submit' block >Signin</Button>
                 </Form.Item>
-
-
 
             </Form>
 

@@ -10,7 +10,7 @@ const AdminHeader = () => {
     const [state, setState] = useState(user?.email || "guest")
     useEffect(() => {
         if (user.isLoggedin) {
-            setState(user?.email)
+            setState(user?.name)
         }
     }, [user])
     const logout = () => {

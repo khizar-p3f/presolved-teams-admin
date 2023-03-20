@@ -23,3 +23,11 @@ type clientUsers @model {
   role: Int!
   status: Int!
 }
+
+type clientIntergrations @model {
+  id: ID!
+  clientId: String!
+  loginMS: Int!
+  consentMS: Int!
+  attributes: AWSJSON!
+}

@@ -77,7 +77,6 @@ export const createClientUser = async (data) => {
 }
 
 export const getClientInformation = async (emailId) => {
-    // fetch userinformation from getClientUsers using emil id
     return new Promise((resolve, reject) => {
         try {
             API.graphql({
@@ -86,8 +85,15 @@ export const getClientInformation = async (emailId) => {
                     emailId: emailId
                 }
             }).then((response) => {
-                console.log({ getClientUsers: response.data });
-                resolve(response.data.listClientUsers.items[0]);
+                getClientSignup(response.data.listClientUsers.items[0].clientId).then((clientInfo) => {
+                    let result = {
+                        ...response.data.listClientUsers.items[0],
+                        ...clientInfo
+                    }
+                    resolve(result);
+                }).catch((error) => {
+                    throw error;
+                })
             }).catch((error) => {
                 throw error;
             })
@@ -98,6 +104,26 @@ export const getClientInformation = async (emailId) => {
             reject(error);
         }
     })
+}
 
-
+export const getClientSignup = async (id) => {
+    return new Promise((resolve, reject) => {
+        try {
+            API.graphql({
+                query: queries.getClientSignup,
+                variables: {
+                    id: id
+                }
+            }).then((response) => {
+                resolve(response.data.getClientSignup);
+            }).catch((error) => {
+                throw error;
+            })
+        } catch (error) {
+            console.error({
+                getClientSignup: error
+            });
+            reject(error);
+        }
+    })
 }

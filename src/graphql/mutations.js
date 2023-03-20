@@ -115,3 +115,51 @@ export const deleteClientUsers = /* GraphQL */ `
     }
   }
 `;
+export const createClientIntergrations = /* GraphQL */ `
+  mutation CreateClientIntergrations(
+    $input: CreateClientIntergrationsInput!
+    $condition: ModelClientIntergrationsConditionInput
+  ) {
+    createClientIntergrations(input: $input, condition: $condition) {
+      id
+      clientId
+      loginMS
+      consentMS
+      attributes
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateClientIntergrations = /* GraphQL */ `
+  mutation UpdateClientIntergrations(
+    $input: UpdateClientIntergrationsInput!
+    $condition: ModelClientIntergrationsConditionInput
+  ) {
+    updateClientIntergrations(input: $input, condition: $condition) {
+      id
+      clientId
+      loginMS
+      consentMS
+      attributes
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteClientIntergrations = /* GraphQL */ `
+  mutation DeleteClientIntergrations(
+    $input: DeleteClientIntergrationsInput!
+    $condition: ModelClientIntergrationsConditionInput
+  ) {
+    deleteClientIntergrations(input: $input, condition: $condition) {
+      id
+      clientId
+      loginMS
+      consentMS
+      attributes
+      createdAt
+      updatedAt
+    }
+  }
+`;

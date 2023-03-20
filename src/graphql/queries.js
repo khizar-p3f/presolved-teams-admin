@@ -79,3 +79,40 @@ export const listClientUsers = /* GraphQL */ `
     }
   }
 `;
+export const getClientIntergrations = /* GraphQL */ `
+  query GetClientIntergrations($id: ID!) {
+    getClientIntergrations(id: $id) {
+      id
+      clientId
+      loginMS
+      consentMS
+      attributes
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listClientIntergrations = /* GraphQL */ `
+  query ListClientIntergrations(
+    $filter: ModelClientIntergrationsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listClientIntergrations(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        clientId
+        loginMS
+        consentMS
+        attributes
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
