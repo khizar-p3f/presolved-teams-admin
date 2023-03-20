@@ -7,14 +7,38 @@
         box-shadow: 0 4px 3px 0 rgba(0, 0, 0, 0.1);       
         margin-bottom: 30px;
     }
-
     .statistic-container{
-     
-        .presolved-card{
-            box-shadow: 0 4px 3px 0 rgba(0, 0, 0, 0.1);
-            margin-bottom: 30px;
+        margin-bottom: 30px;
+        .card-meta{
+            border-bottom: 1px solid rgb(204, 204, 204);
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+            .presolved-avatar{
+                background: linear-gradient(40deg, #7716d9, #639)
+            }
 
         }
+        .stats-container{
+            margin-bottom: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 10px;
+            .stats-items{
+                &:not(:last-child){
+                    border-right: 1px solid rgb(204, 204, 204);
+                }
+                flex-grow: 1;
+                text-align: center;
+            }
+        }
+        
+    }
+    .calls-report-container{
+        margin-bottom: 30px;
+    }
+    .alerts-container{
+        
     }
     h1, h2, h3, h4, h5, h6{
        margin: 3px 0;
