@@ -151,7 +151,7 @@ const AdminMainPage = (props) => {
                             <Empty style={{ minHeight: 300 }} />
 
                         </Card>
-                    </Col>
+                    </Col> 
                 </Row>
 
                 <Row className='alerts-container' gutter={[16, 16]}>
