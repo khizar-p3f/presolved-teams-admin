@@ -3,7 +3,7 @@ import { PhoneOutlined, UserOutlined, SettingOutlined, LogoutOutlined } from '@a
 import React, { useEffect, useState } from 'react'
 import MicrosoftLogin from "react-microsoft-login";
 import './index.less'
-
+import bgimg from '../assets/images/current-account.png'
 
 const AdminMainPage = (props) => {
     const { client } = props
@@ -37,7 +37,7 @@ const AdminMainPage = (props) => {
                 <Row className='greetings-container'>
                     <Col span={24}>
 
-                        <Card bordered={false} >
+                        <Card className='greetings-card' bordered={false} style={{ backgroundImage: `url('${bgimg}')` }} >
 
                             <Card.Meta title={<Space>
                                 <Typography.Title level={4}>Hi {client?.name}  - {client.company}</Typography.Title>
@@ -142,19 +142,14 @@ const AdminMainPage = (props) => {
 
                 <Row className='calls-report-container' gutter={[16, 16]}>
                     <Col span={12}>
-                        <Card title="Recent Calls" extra={[<Button icon={<SettingOutlined/>}>Settings</Button> ]}>
-                            <Empty>
-                                <Typography.Text>No recent calls</Typography.Text>
-                            </Empty>
-                            
+                        <Card title="Recent Calls" extra={[<Button icon={<SettingOutlined />}>Settings</Button>]}>
+                            <Empty style={{ minHeight: 300 }} />
                         </Card>
                     </Col>
                     <Col span={12}>
-                        <Card title="Group Calls" extra={[<Button icon={<SettingOutlined/>}>Settings</Button> ]}>
-                            <Empty>
-                                <Typography.Text>No Group calls</Typography.Text>
-                            </Empty>
-                            
+                        <Card title="Group Calls" extra={[<Button icon={<SettingOutlined />}>Settings</Button>]}>
+                            <Empty style={{ minHeight: 300 }} />
+
                         </Card>
                     </Col>
                 </Row>
@@ -162,25 +157,25 @@ const AdminMainPage = (props) => {
                 <Row className='alerts-container' gutter={[16, 16]}>
                     <Col span={24}>
                         <Alert banner
-                        closable
-                        message="You haven't Signing with Microsoft Teams yet. Please click the button below to sign in"
-                        description={<Button type="primary" icon={<UserOutlined />}>Sign in with Microsoft Teams</Button>}
-                        type="warning"
-                        showIcon
+                            closable
+                            message="You haven't Signing with Microsoft Teams yet. Please click the button below to sign in"
+                            description={<Button type="primary" icon={<UserOutlined />}>Sign in with Microsoft Teams</Button>}
+                            type="warning"
+                            showIcon
                         />
                     </Col>
 
                     <Col span={24}>
                         <Alert banner
-                        role='alert'
-                        closable
-                        message="You need to get a consent from Microsoft Teams to access your data. Please click the button below to sign in"
-                        description={<Button type="primary" icon={<UserOutlined />}>Get consent</Button>}
-                        type="warning"
-                        showIcon
+                            role='alert'
+                            closable
+                            message="You need to get a consent from Microsoft Teams to access your data. Please click the button below to sign in"
+                            description={<Button type="primary" icon={<UserOutlined />}>Get consent</Button>}
+                            type="warning"
+                            showIcon
                         />
                     </Col>
-                    
+
                 </Row>
             </div>
         </div>
