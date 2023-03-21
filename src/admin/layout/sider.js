@@ -1,21 +1,27 @@
 import React, { useState } from 'react'
 import { FileOutlined, PieChartOutlined, UserOutlined, DesktopOutlined, TeamOutlined } from '@ant-design/icons';
 import { Layout, Menu, Space, Typography, } from 'antd';
-
-
-const items = [
+import teams from '../assets/images/icons/teams.png'
+import dashboard from '../assets/images/icons/dashboard.png'
+import { Link } from '@gatsbyjs/reach-router'
+const items = [ 
     {
         key: 'dashboard',
-        icon: <PieChartOutlined />,
-        label: 'Dashboard',
+        icon: <img src={dashboard} height={26} />,
+        label: <Link to="/">Dashboard</Link>,
 
+    },
+    {
+        key: 'integration',
+        icon: <img src={teams} height={26} />,
+        label: <Link to="/teams-integraion">Teams Integration</Link>,
     },
     {
         key: 'settings',
         icon: <DesktopOutlined />,
         label: 'Settings',
-
     },
+   
     {
         key: 'code',
         icon: <FileOutlined />,

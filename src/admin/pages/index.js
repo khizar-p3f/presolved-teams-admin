@@ -1,11 +1,13 @@
 import { Alert, Avatar, Breadcrumb, Button, Card, Col, Empty, Result, Row, Space, Typography } from 'antd'
 import { PhoneOutlined, UserOutlined, SettingOutlined, LogoutOutlined } from '@ant-design/icons';
+import Icon from '@ant-design/icons';
 import React, { useEffect, useState } from 'react'
 import MicrosoftLogin from "react-microsoft-login";
 import './index.less'
 import bgimg from '../assets/images/current-account.png'
 import attn from '../assets/images/empty-expense-card.png'
-
+import Teams48 from '../assets/images/icons/teams.png'
+ 
 const AdminMainPage = (props) => {
     const { client } = props
     const [state, setState] = useState({
@@ -19,9 +21,7 @@ const AdminMainPage = (props) => {
         }
     }, [])
 
-    const authCallback = (err, data) => {
-        console.log({ err, data });
-    }
+  
 
     return (
         <div className='content-container'>
@@ -171,7 +171,10 @@ const AdminMainPage = (props) => {
 
                                         </Space>
                                     </Space>
-                                    <Button style={{ marginLeft: 90 }} size='large' type="dashed" shape='round' icon={<SettingOutlined />}>Login With Microsoft</Button>
+                                    <Button style={{ marginLeft: 90 }} size='large' type="dashed" shape='round' >  <Space align='start'>
+                                            <img src={Teams48} height={25} />
+                                            <span>Login With Microsoft</span>
+                                        </Space></Button>
                                 </Space>
 
                             </Card>
@@ -192,7 +195,12 @@ const AdminMainPage = (props) => {
 
                                         </Space>
                                     </Space>
-                                    <Button style={{ marginLeft: 90 }} size='large' type="dashed" shape='round' icon={<SettingOutlined />}>Get Consent</Button>
+                                    <Button style={{ marginLeft: 90 }} size='large' type="dashed" shape='round' >
+                                        <Space align='start'>
+                                            <img src={Teams48} height={25} />
+                                            <span>Get Consent</span>
+                                        </Space>
+                                    </Button>
                                 </Space>
 
                             </Card>

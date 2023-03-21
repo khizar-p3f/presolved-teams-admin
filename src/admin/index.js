@@ -15,6 +15,7 @@ import { getClientInformation } from '../signup/api';
 import { useSelector } from 'react-redux';
 import { updateClient, updateClientConfig } from '../store/reducers/client';
 import { getClientIntegration } from './api';
+import TeamsIntegration from './pages/teamsIntegration';
 
 
 const AdminIndexPage = () => {
@@ -61,6 +62,7 @@ const AdminIndexPage = () => {
                     <Router>
                         <AdminMainPage path="/" client={client} />
                         <AdminLoginPage path="/signup" />
+                        <TeamsIntegration path="/teams-integraion" client={client} />
                     </Router>
                 </Content>
                 :

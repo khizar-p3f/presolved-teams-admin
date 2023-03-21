@@ -27,6 +27,7 @@ type clientUsers @model {
 type clientIntergrations @model {
   id: ID!
   clientId: String!
+  tenantId: String!
   loginMS: Int!
   consentMS: Int!
   attributes: AWSJSON!

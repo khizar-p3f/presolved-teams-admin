@@ -123,6 +123,7 @@ export const createClientIntergrations = /* GraphQL */ `
     createClientIntergrations(input: $input, condition: $condition) {
       id
       clientId
+      tenantId
       loginMS
       consentMS
       attributes
@@ -139,6 +140,7 @@ export const updateClientIntergrations = /* GraphQL */ `
     updateClientIntergrations(input: $input, condition: $condition) {
       id
       clientId
+      tenantId
       loginMS
       consentMS
       attributes
@@ -155,6 +157,7 @@ export const deleteClientIntergrations = /* GraphQL */ `
     deleteClientIntergrations(input: $input, condition: $condition) {
       id
       clientId
+      tenantId
       loginMS
       consentMS
       attributes

@@ -116,6 +116,7 @@ export const onCreateClientIntergrations = /* GraphQL */ `
     onCreateClientIntergrations(filter: $filter) {
       id
       clientId
+      tenantId
       loginMS
       consentMS
       attributes
@@ -131,6 +132,7 @@ export const onUpdateClientIntergrations = /* GraphQL */ `
     onUpdateClientIntergrations(filter: $filter) {
       id
       clientId
+      tenantId
       loginMS
       consentMS
       attributes
@@ -146,6 +148,7 @@ export const onDeleteClientIntergrations = /* GraphQL */ `
     onDeleteClientIntergrations(filter: $filter) {
       id
       clientId
+      tenantId
       loginMS
       consentMS
       attributes

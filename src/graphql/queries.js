@@ -84,6 +84,7 @@ export const getClientIntergrations = /* GraphQL */ `
     getClientIntergrations(id: $id) {
       id
       clientId
+      tenantId
       loginMS
       consentMS
       attributes
@@ -106,6 +107,7 @@ export const listClientIntergrations = /* GraphQL */ `
       items {
         id
         clientId
+        tenantId
         loginMS
         consentMS
         attributes
