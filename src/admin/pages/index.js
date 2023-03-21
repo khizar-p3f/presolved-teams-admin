@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import MicrosoftLogin from "react-microsoft-login";
 import './index.less'
 import bgimg from '../assets/images/current-account.png'
+import attn from '../assets/images/empty-expense-card.png'
 
 const AdminMainPage = (props) => {
     const { client } = props
@@ -14,7 +15,7 @@ const AdminMainPage = (props) => {
 
     useEffect(() => {
         if (client.clientId) {
-            setState({ ...state, isLoaded: true, clientId: client.clientId })
+            setState({ ...state, isLoaded: true, clientId: client.clientId, ...client })
         }
     }, [])
 
@@ -151,32 +152,54 @@ const AdminMainPage = (props) => {
                             <Empty style={{ minHeight: 300 }} />
 
                         </Card>
-                    </Col> 
+                    </Col>
                 </Row>
 
                 <Row className='alerts-container' gutter={[16, 16]}>
-                    <Col span={24}>
-                        <Alert banner
-                            closable
-                            message="You haven't Signing with Microsoft Teams yet. Please click the button below to sign in"
-                            description={<Button type="primary" icon={<UserOutlined />}>Sign in with Microsoft Teams</Button>}
-                            type="warning"
-                            showIcon
-                        />
-                    </Col>
+                    {state?.config?.loginMS <= 0 &&
+                        <Col span={8}>
+                            <Card className='attention'>
+                                <Space size={10} direction='vertical' >
+                                    <Space size={30}>
+                                        <img src={attn} height={100} />
+                                        <Space direction='vertical' size={0}>
+                                            <Typography.Title style={{ margin: 0 }} level={4}>MS Login required</Typography.Title>
+                                            <Typography.Text>
+                                                Hi,
+                                                Seems you havent logged in to Microsoft Teams yet. Please click the button below to get started
+                                            </Typography.Text>
 
-                    <Col span={24}>
-                        <Alert banner
-                            role='alert'
-                            closable
-                            message="You need to get a consent from Microsoft Teams to access your data. Please click the button below to sign in"
-                            description={<Button type="primary" icon={<UserOutlined />}>Get consent</Button>}
-                            type="warning"
-                            showIcon
-                        />
-                    </Col>
+                                        </Space>
+                                    </Space>
+                                    <Button style={{ marginLeft: 90 }} size='large' type="dashed" shape='round' icon={<SettingOutlined />}>Login With Microsoft</Button>
+                                </Space>
 
+                            </Card>
+                        </Col>
+                    }
+                    {state?.config?.consentMS <= 0 &&
+                        <Col span={8}>
+                            <Card className='attention grey'>
+                                <Space size={10} direction='vertical' >
+                                    <Space size={30}>
+                                        <img src={attn} height={100} />
+                                        <Space direction='vertical' size={0}>
+                                            <Typography.Title style={{ margin: 0 }} level={4}>Teams Consent required</Typography.Title>
+                                            <Typography.Text>
+                                                Hi,
+                                                Seems you havent accquired the Consent from Microsoft Teams yet. Please click the button below to get started
+                                            </Typography.Text>
+
+                                        </Space>
+                                    </Space>
+                                    <Button style={{ marginLeft: 90 }} size='large' type="dashed" shape='round' icon={<SettingOutlined />}>Get Consent</Button>
+                                </Space>
+
+                            </Card>
+                        </Col>
+                    }
                 </Row>
+                <div style={{ margin: '50px 0' }}>&nbsp;</div>
             </div>
         </div>
     )

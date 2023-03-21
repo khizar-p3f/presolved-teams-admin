@@ -4,11 +4,11 @@ const initialState = {
   isLoaded: false,
   config: {
     isLoaded: false,
-    id: null,
-    clientId: null,
-    loginMS: null,
-    consentMS: null,
-    attributes: null
+    id: undefined,
+    clientId: undefined,
+    loginMS: 0,
+    consentMS: 0,
+    attributes: {}
   }
 
 
