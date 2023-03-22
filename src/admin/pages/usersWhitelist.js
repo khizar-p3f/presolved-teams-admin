@@ -1,7 +1,7 @@
-import { Breadcrumb, Card, Col, Row, Typography, Steps, Result, Button, Input, Space, Spin, Divider, List, Empty, Avatar, notification } from 'antd';
+import { Breadcrumb, Card, Col, Row, Typography, Table, Result, Button, Input, Space, Spin, Divider, List, Empty, Avatar, notification } from 'antd';
 import React, { useEffect, useState } from 'react';
 import './usersWhitelist.less';
-import {PlusOutlined, UserOutlined} from '@ant-design/icons';
+import { PlusOutlined, UserOutlined } from '@ant-design/icons';
 import bgimg from '../assets/images/icons/teams144.svg';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
@@ -13,11 +13,15 @@ const TeamsUsersWhitelisting = (props) => {
     const [isLoaded, setIsLoaded] = useState(false)
     const [searchResults, setSearchResults] = useState([])
     const [searchInProgress, setSearchInProgress] = useState(false)
+    const [dataLoaded, setDataLoaded] = useState(false)
     useEffect(() => {
         if (client.config.tenantId) {
             setIsLoaded(true)
         }
-    }, [client.config])
+        if (client.whiteListedUsers.isLoaded) {
+            setDataLoaded(true)
+        }
+    }, [client.config, client.whiteListedUsers])
 
 
     const performSearch = (users) => {
@@ -50,7 +54,7 @@ const TeamsUsersWhitelisting = (props) => {
         })
     }
     const addUsers = (user) => {
-        const  userData={
+        const userData = {
             "clientId": client.config.clientId,
             "displayName": user.displayName || " ",
             "businessPhones": user.businessPhones.length > 0 ? JSON.stringify(user.businessPhones[0]) : JSON.stringify([]),
@@ -64,9 +68,9 @@ const TeamsUsersWhitelisting = (props) => {
             "userPrincipalName": user.userPrincipalName || " ",
             "uid": user.id || " ",
         }
-        addUserWhiteListing(userData).then((res)=>{
-            console.log({res})
-        }).catch((err)=>{
+        addUserWhiteListing(userData).then((res) => {
+            console.log({ res })
+        }).catch((err) => {
             notification.error({
                 message: 'Error',
                 description: err.message || 'Unable to add user to whitelist',
@@ -75,6 +79,44 @@ const TeamsUsersWhitelisting = (props) => {
 
 
     }
+
+    const columns = [
+        {
+            title: 'Name',
+            dataIndex: 'displayName',
+            key: 'displayName',
+            render: (text, record) => (
+                <Space>
+                    <AvatarUserInitials name={text} size={30} />
+                    <Typography.Text>{text}</Typography.Text>
+                </Space>
+            ),
+        },
+        {
+            title: 'Email',
+            dataIndex: 'mail',
+            key: 'mail',
+        },
+        {
+            title: 'Job Title',
+            dataIndex: 'jobTitle',
+            key: 'jobTitle',
+        },
+        {
+            title: 'Phone',
+            dataIndex: 'mobilePhone',
+            key: 'mobilePhone',
+        },
+        {
+            title: 'Action',
+            dataIndex: 'action',
+            key: 'action',
+            render: (text, record) => (
+                <Button type='primary' icon={<PlusOutlined />} onClick={() => null}>Add</Button>
+            ),
+        },
+    ]
+
 
 
     return (
@@ -121,52 +163,52 @@ const TeamsUsersWhitelisting = (props) => {
                                                 <Space style={{ width: '100%' }} direction='vertical' size={30}>
                                                     <Typography.Text strong>Search Results</Typography.Text>
                                                     {searchInProgress && <Spin size='large' />}
-                                               
-                                                {searchResults.length < 1 && !searchInProgress && <Typography.Text disabled>
-                                                    <Empty description="No users data" />
-                                                </Typography.Text>}
-                                                {searchResults.length > 0 && !searchInProgress && <Space style={{ width: '100%' }} direction='vertical' size={20}>
-                                                    
-                                                    <List
-                                                        pagination={{
-                                                            position: 'bottom',
-                                                            align: 'center',
-                                                        }}
-                                                        dataSource={searchResults}
-                                                        renderItem={(item, index) => (
-                                                            <List.Item>
-                                                                <List.Item.Meta
-                                                                    avatar={<AvatarUserInitials name={item.displayName} />}
-                                                                    title={
-                                                                        <Space size={5}>
-                                                                            <Typography.Text strong>
-                                                                                {item.displayName}
-                                                                            </Typography.Text>
-                                                                            <Typography.Text type='secondary'>
-                                                                                {item.jobTitle}
-                                                                            </Typography.Text>
-                                                                        </Space>
-                                                                    }
-                                                                    description={
-                                                                        <Space direction='vertical' size={5}>
-                                                                            <Typography.Text type='secondary'>
-                                                                                {item.mail}
-                                                                            </Typography.Text>
-                                                                            <Typography.Text type='secondary'>
-                                                                                {item.mobilePhone || item.businessPhones[0]}
-                                                                            </Typography.Text>                                                                           
-                                                                        </Space>
-                                                                      
-                                                                    }
-                                                                />
-                                                                <Button type='default' 
-                                                                onClick={()=>{addUsers(item)}}
-                                                                shape='circle' size='large' icon={<PlusOutlined/>} />
-                                                            </List.Item>
-                                                        )}
-                                                    />
 
-                                                </Space>}
+                                                    {searchResults.length < 1 && !searchInProgress && <Typography.Text disabled>
+                                                        <Empty description="No users data" />
+                                                    </Typography.Text>}
+                                                    {searchResults.length > 0 && !searchInProgress && <Space style={{ width: '100%' }} direction='vertical' size={20}>
+
+                                                        <List
+                                                            pagination={{
+                                                                position: 'bottom',
+                                                                align: 'center',
+                                                            }}
+                                                            dataSource={searchResults}
+                                                            renderItem={(item, index) => (
+                                                                <List.Item>
+                                                                    <List.Item.Meta
+                                                                        avatar={<AvatarUserInitials name={item.displayName} />}
+                                                                        title={
+                                                                            <Space size={5}>
+                                                                                <Typography.Text strong>
+                                                                                    {item.displayName}
+                                                                                </Typography.Text>
+                                                                                <Typography.Text type='secondary'>
+                                                                                    {item.jobTitle}
+                                                                                </Typography.Text>
+                                                                            </Space>
+                                                                        }
+                                                                        description={
+                                                                            <Space direction='vertical' size={5}>
+                                                                                <Typography.Text type='secondary'>
+                                                                                    {item.mail}
+                                                                                </Typography.Text>
+                                                                                <Typography.Text type='secondary'>
+                                                                                    {item.mobilePhone || item.businessPhones[0]}
+                                                                                </Typography.Text>
+                                                                            </Space>
+
+                                                                        }
+                                                                    />
+                                                                    <Button type='default'
+                                                                        onClick={() => { addUsers(item) }}
+                                                                        shape='circle' size='large' icon={<PlusOutlined />} />
+                                                                </List.Item>
+                                                            )}
+                                                        />
+
+                                                    </Space>}
 
                                                 </Space>
 
@@ -177,6 +219,17 @@ const TeamsUsersWhitelisting = (props) => {
 
                                     </Col>
                                     <Col span={16} className="result-section">
+                                        {dataLoaded &&
+                                            <Row>
+                                                <Col span={24}>
+                                                    <Space style={{ width: '100%' }} direction='vertical' size={30}>
+                                                        
+                                                        <Table columns={columns} dataSource={client.whiteListedUsers.items} />
+                                                    </Space>
+
+                                                </Col>
+                                            </Row>
+                                        }
 
 
                                     </Col>
@@ -205,11 +258,11 @@ const TeamsUsersWhitelisting = (props) => {
 
 export default TeamsUsersWhitelisting
 
-const AvatarUserInitials = ({name}) => {
+const AvatarUserInitials = ({ name, size=64 }) => {
     const initials = name.split(' ').map((n) => n[0]).join('');
-    
 
-    return(
-        <Avatar size={64} style={{ backgroundColor: '#663399', color: '#FFF', fontSize:35 }}>{initials.toUpperCase()}</Avatar>
+
+    return (
+        <Avatar size={size} style={{ backgroundColor: '#663399', color: '#FFF', fontSize: 35 }}>{initials.toUpperCase()}</Avatar>
     )
 }
