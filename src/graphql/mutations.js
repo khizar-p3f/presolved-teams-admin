@@ -166,3 +166,75 @@ export const deleteClientIntergrations = /* GraphQL */ `
     }
   }
 `;
+export const createClientUserWhitelisting = /* GraphQL */ `
+  mutation CreateClientUserWhitelisting(
+    $input: CreateClientUserWhitelistingInput!
+    $condition: ModelClientUserWhitelistingConditionInput
+  ) {
+    createClientUserWhitelisting(input: $input, condition: $condition) {
+      id
+      clientId
+      displayName
+      businessPhones
+      givenName
+      jobTitle
+      mail
+      mobilePhone
+      officeLocation
+      preferredLanguage
+      surname
+      userPrincipalName
+      uid
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateClientUserWhitelisting = /* GraphQL */ `
+  mutation UpdateClientUserWhitelisting(
+    $input: UpdateClientUserWhitelistingInput!
+    $condition: ModelClientUserWhitelistingConditionInput
+  ) {
+    updateClientUserWhitelisting(input: $input, condition: $condition) {
+      id
+      clientId
+      displayName
+      businessPhones
+      givenName
+      jobTitle
+      mail
+      mobilePhone
+      officeLocation
+      preferredLanguage
+      surname
+      userPrincipalName
+      uid
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteClientUserWhitelisting = /* GraphQL */ `
+  mutation DeleteClientUserWhitelisting(
+    $input: DeleteClientUserWhitelistingInput!
+    $condition: ModelClientUserWhitelistingConditionInput
+  ) {
+    deleteClientUserWhitelisting(input: $input, condition: $condition) {
+      id
+      clientId
+      displayName
+      businessPhones
+      givenName
+      jobTitle
+      mail
+      mobilePhone
+      officeLocation
+      preferredLanguage
+      surname
+      userPrincipalName
+      uid
+      createdAt
+      updatedAt
+    }
+  }
+`;

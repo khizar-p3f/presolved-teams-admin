@@ -118,3 +118,56 @@ export const listClientIntergrations = /* GraphQL */ `
     }
   }
 `;
+export const getClientUserWhitelisting = /* GraphQL */ `
+  query GetClientUserWhitelisting($id: ID!) {
+    getClientUserWhitelisting(id: $id) {
+      id
+      clientId
+      displayName
+      businessPhones
+      givenName
+      jobTitle
+      mail
+      mobilePhone
+      officeLocation
+      preferredLanguage
+      surname
+      userPrincipalName
+      uid
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listClientUserWhitelistings = /* GraphQL */ `
+  query ListClientUserWhitelistings(
+    $filter: ModelClientUserWhitelistingFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listClientUserWhitelistings(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        clientId
+        displayName
+        businessPhones
+        givenName
+        jobTitle
+        mail
+        mobilePhone
+        officeLocation
+        preferredLanguage
+        surname
+        userPrincipalName
+        uid
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;

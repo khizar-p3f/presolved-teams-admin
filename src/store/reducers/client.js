@@ -9,7 +9,11 @@ const initialState = {
     loginMS: 0,
     consentMS: 0,
     attributes: {}
-  }
+  },
+  whiteListedUsers: {
+    isLoaded: false,
+    items: []
+  },
 
 
 }
@@ -26,6 +30,16 @@ export const clientSlice = createSlice({
         ...action.payload
       }
     },
+    updateWhiteListedUsers: (state, action) => {
+      return {
+        ...state,
+        whiteListedUsers: {
+          ...state.whiteListedUsers,
+          isLoaded: true,
+          items:action.payload
+        }       
+      }
+    },
     updateClientConfig: (state, action) => {
       return {
         ...state,
@@ -39,6 +53,6 @@ export const clientSlice = createSlice({
   },
 })
 // Action creators are generated for each case reducer function
-export const { updateClient, updateClientConfig } = clientSlice.actions
+export const { updateClient, updateClientConfig,updateWhiteListedUsers } = clientSlice.actions
 
 export default clientSlice.reducer

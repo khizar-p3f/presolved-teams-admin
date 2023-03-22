@@ -157,3 +157,72 @@ export const onDeleteClientIntergrations = /* GraphQL */ `
     }
   }
 `;
+export const onCreateClientUserWhitelisting = /* GraphQL */ `
+  subscription OnCreateClientUserWhitelisting(
+    $filter: ModelSubscriptionClientUserWhitelistingFilterInput
+  ) {
+    onCreateClientUserWhitelisting(filter: $filter) {
+      id
+      clientId
+      displayName
+      businessPhones
+      givenName
+      jobTitle
+      mail
+      mobilePhone
+      officeLocation
+      preferredLanguage
+      surname
+      userPrincipalName
+      uid
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateClientUserWhitelisting = /* GraphQL */ `
+  subscription OnUpdateClientUserWhitelisting(
+    $filter: ModelSubscriptionClientUserWhitelistingFilterInput
+  ) {
+    onUpdateClientUserWhitelisting(filter: $filter) {
+      id
+      clientId
+      displayName
+      businessPhones
+      givenName
+      jobTitle
+      mail
+      mobilePhone
+      officeLocation
+      preferredLanguage
+      surname
+      userPrincipalName
+      uid
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteClientUserWhitelisting = /* GraphQL */ `
+  subscription OnDeleteClientUserWhitelisting(
+    $filter: ModelSubscriptionClientUserWhitelistingFilterInput
+  ) {
+    onDeleteClientUserWhitelisting(filter: $filter) {
+      id
+      clientId
+      displayName
+      businessPhones
+      givenName
+      jobTitle
+      mail
+      mobilePhone
+      officeLocation
+      preferredLanguage
+      surname
+      userPrincipalName
+      uid
+      createdAt
+      updatedAt
+    }
+  }
+`;

@@ -25,6 +25,12 @@
       "api": {
         "AdminQueries": {},
         "presolvedteamsadmin": {}
+      },
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "d2sg3m2pawykox",
+          "type": "manual"
+        }
       }
     }
   }

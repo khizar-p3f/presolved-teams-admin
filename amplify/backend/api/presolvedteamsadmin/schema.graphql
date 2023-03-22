@@ -32,3 +32,19 @@ type clientIntergrations @model {
   consentMS: Int!
   attributes: AWSJSON!
 }
+
+type clientUserWhitelisting @model {
+  id: ID!
+  clientId: String!
+  displayName: String!
+  businessPhones: AWSJSON!
+  givenName: String!
+  jobTitle: String!
+  mail: String!
+  mobilePhone: String!
+  officeLocation: String!
+  preferredLanguage: String!
+  surname: String!
+  userPrincipalName: String!
+  uid: String!
+}

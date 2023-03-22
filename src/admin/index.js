@@ -13,12 +13,13 @@ import { useDispatch } from 'react-redux';
 import { updateUser } from '../store/reducers/user';
 import { getClientInformation } from '../signup/api';
 import { useSelector } from 'react-redux';
-import { updateClient, updateClientConfig } from '../store/reducers/client';
-import { getClientIntegration } from './api';
+import { updateClient, updateClientConfig, updateWhiteListedUsers } from '../store/reducers/client';
+import { getClientIntegration, getUsersWhiteListing } from './api';
 import TeamsIntegration from './pages/teamsIntegration';
+import TeamsUsersWhitelisting from './pages/usersWhitelist';
 
 
-const AdminIndexPage = () => {
+const AdminIndexPage = (props) => {
     const dispatch = useDispatch()
     const { Content, Footer, } = Layout;
 
@@ -42,6 +43,13 @@ const AdminIndexPage = () => {
                             setState({ ...state, clientLoaded:true,configsLoaded: true })
                         })
                     }
+                    if(!client.whiteListedUsers.isLoaded){                       
+                        getUsersWhiteListing(res.clientId).then((gwl)=>{
+                            dispatch(updateWhiteListedUsers(gwl))                          
+                            
+                        })
+                    }
+
                 })
             }).catch((err) => {
                 navigate("/signup")
@@ -53,7 +61,7 @@ const AdminIndexPage = () => {
     return (
 
         <Layout className="main-layout">
-            <AdminSider />
+            <AdminSider props={props} />
             <Layout className="site-layout">
                 <AdminHeader />
                 {
@@ -62,7 +70,8 @@ const AdminIndexPage = () => {
                     <Router>
                         <AdminMainPage path="/" client={client} />
                         <AdminLoginPage path="/signup" />
-                        <TeamsIntegration path="/teams-integraion" client={client} />
+                        <TeamsIntegration path="/teams-integration" client={client} />
+                        <TeamsUsersWhitelisting path="/teams-users-whitelisting" client={client} />
                     </Router>
                 </Content>
                 :
