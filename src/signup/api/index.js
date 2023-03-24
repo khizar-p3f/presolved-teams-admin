@@ -82,10 +82,17 @@ export const getClientInformation = async (emailId) => {
             API.graphql({
                 query: queries.listClientUsers,
                 variables: {
-                    emailId: emailId
+                    filter: {
+                        email: {
+                            eq: emailId
+                        }
+                    }
                 }
             }).then((response) => {
+                console.log({getClientInformation: response.data.listClientUsers.items[0]});
+
                 getClientSignup(response.data.listClientUsers.items[0].clientId).then((clientInfo) => {
+                    console.log({getClientInformation: clientInfo});
                     let result = {
                         ...response.data.listClientUsers.items[0],
                         ...clientInfo

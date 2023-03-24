@@ -8,7 +8,11 @@ export const getClientIntegration = async (clientId) => {
             API.graphql({
                 query: queries.listClientIntergrations,
                 variables: {
-                    clientId: clientId
+                    filter: {
+                        clientId: {
+                            eq: clientId
+                        }
+                    }
                 },
             }).then((response) => {
                 resolve(response.data.listClientIntergrations.items[0]);
@@ -99,7 +103,11 @@ export const getUsersWhiteListing = async (clientId) => {
             API.graphql({
                 query: queries.listClientUserWhitelistings,
                 variables: {
-                    clientId: clientId
+                    filter: {
+                        clientId: {
+                            eq: clientId
+                        }
+                    }
                 }
             }).then((response) => {
                 resolve(response.data.listClientUserWhitelistings.items);

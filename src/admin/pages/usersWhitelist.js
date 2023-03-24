@@ -15,11 +15,10 @@ const TeamsUsersWhitelisting = (props) => {
     const [searchInProgress, setSearchInProgress] = useState(false)
     const [dataLoaded, setDataLoaded] = useState(false)
     useEffect(() => {
-        if (client.config.tenantId) {
-            setIsLoaded(true)
-        }
+    
         if (client.whiteListedUsers.isLoaded) {
             setDataLoaded(true)
+            setIsLoaded(true)
         }
     }, [client.config, client.whiteListedUsers])
 
