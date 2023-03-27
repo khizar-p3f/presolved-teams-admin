@@ -25,7 +25,7 @@
         "MSTeamsClientsAPI": {
           "secretsPathAmplifyAppId": "d2sg3m2pawykox",
           "deploymentBucketName": "amplify-presolvedteamsadmin-develop-201120-deployment",
-          "s3Key": "amplify-builds/MSTeamsClientsAPI-66717a6e3932394e734c-build.zip",
+          "s3Key": "amplify-builds/MSTeamsClientsAPI-4464574c483251516e57-build.zip",
           "callManagerUrl": "https://td7y4pmq4a.execute-api.us-east-1.amazonaws.com/staging"
         }
       },
@@ -33,6 +33,9 @@
         "AdminQueries": {},
         "presolvedteamsadmin": {},
         "PresolvedClientAPI": {}
+      },
+      "hosting": {
+        "S3AndCloudFront": {}
       }
     }
   }

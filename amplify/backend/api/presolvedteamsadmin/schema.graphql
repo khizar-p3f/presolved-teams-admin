@@ -53,12 +53,7 @@ type clientUserWhitelisting @model {
 type ClientCallLogs @model {
   RecordingId: String!
   tenantId: ID! @index(name: "byTenantId", sortKeyFields: ["contactId"])
-  callId: ID!
-    @primaryKey
-    @index(
-      name: "byCallStartTime"
-      sortKeyFields: ["contactId", "callStartTime"]
-    )
+  callId: ID! @primaryKey
   contactId: ID!
   callType: String!
   callStatus: String!
