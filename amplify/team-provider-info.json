@@ -9,8 +9,7 @@
       "UnauthRoleName": "amplify-presolvedteamsadmin-develop-201120-unauthRole",
       "StackName": "amplify-presolvedteamsadmin-develop-201120",
       "StackId": "arn:aws:cloudformation:us-east-1:039289871235:stack/amplify-presolvedteamsadmin-develop-201120/f64d6590-c0e3-11ed-b471-0efe7a68cf51",
-      "AmplifyAppId": "d2sg3m2pawykox",
-      "APIGatewayAuthURL": "https://s3.amazonaws.com/amplify-presolvedteamsadmin-develop-201120-deployment/amplify-cfn-templates/api/APIGatewayAuthStack.json"
+      "AmplifyAppId": "d2sg3m2pawykox"
     },
     "categories": {
       "auth": {
