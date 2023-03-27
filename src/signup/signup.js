@@ -3,7 +3,15 @@ import React, { useState } from 'react'
 import { Form, Input, Button, Checkbox, Row, Col, Typography, Divider, notification } from 'antd';
 import { Auth } from 'aws-amplify';
 import { createSignup } from './api';
+import { createAuditRecord, listAuditRecords } from '../api/auditAPI';
 
+// To list the Audit records from DB
+
+async function listAudit(nextToken) {
+    let filter = { resource: { eq: 'User' } , action: { eq: 'Create' }};
+        const auditRecords = await listAuditRecords(filter, 10, nextToken);
+        console.log("auditRecords: ", auditRecords);
+    }
 
 const SignupWidget = () => {
     const [form] = Form.useForm()

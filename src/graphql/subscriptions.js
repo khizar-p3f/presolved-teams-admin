@@ -2,10 +2,8 @@
 // this is an auto generated file. This will be overwritten
 
 export const onCreateClientSignup = /* GraphQL */ `
-  subscription OnCreateClientSignup(
-    $filter: ModelSubscriptionClientSignupFilterInput
-  ) {
-    onCreateClientSignup(filter: $filter) {
+  subscription OnCreateClientSignup {
+    onCreateClientSignup {
       id
       name
       email
@@ -22,10 +20,8 @@ export const onCreateClientSignup = /* GraphQL */ `
   }
 `;
 export const onUpdateClientSignup = /* GraphQL */ `
-  subscription OnUpdateClientSignup(
-    $filter: ModelSubscriptionClientSignupFilterInput
-  ) {
-    onUpdateClientSignup(filter: $filter) {
+  subscription OnUpdateClientSignup {
+    onUpdateClientSignup {
       id
       name
       email
@@ -42,10 +38,8 @@ export const onUpdateClientSignup = /* GraphQL */ `
   }
 `;
 export const onDeleteClientSignup = /* GraphQL */ `
-  subscription OnDeleteClientSignup(
-    $filter: ModelSubscriptionClientSignupFilterInput
-  ) {
-    onDeleteClientSignup(filter: $filter) {
+  subscription OnDeleteClientSignup {
+    onDeleteClientSignup {
       id
       name
       email
@@ -62,10 +56,8 @@ export const onDeleteClientSignup = /* GraphQL */ `
   }
 `;
 export const onCreateClientUsers = /* GraphQL */ `
-  subscription OnCreateClientUsers(
-    $filter: ModelSubscriptionClientUsersFilterInput
-  ) {
-    onCreateClientUsers(filter: $filter) {
+  subscription OnCreateClientUsers {
+    onCreateClientUsers {
       id
       clientId
       name
@@ -78,10 +70,8 @@ export const onCreateClientUsers = /* GraphQL */ `
   }
 `;
 export const onUpdateClientUsers = /* GraphQL */ `
-  subscription OnUpdateClientUsers(
-    $filter: ModelSubscriptionClientUsersFilterInput
-  ) {
-    onUpdateClientUsers(filter: $filter) {
+  subscription OnUpdateClientUsers {
+    onUpdateClientUsers {
       id
       clientId
       name
@@ -94,10 +84,8 @@ export const onUpdateClientUsers = /* GraphQL */ `
   }
 `;
 export const onDeleteClientUsers = /* GraphQL */ `
-  subscription OnDeleteClientUsers(
-    $filter: ModelSubscriptionClientUsersFilterInput
-  ) {
-    onDeleteClientUsers(filter: $filter) {
+  subscription OnDeleteClientUsers {
+    onDeleteClientUsers {
       id
       clientId
       name
@@ -110,10 +98,8 @@ export const onDeleteClientUsers = /* GraphQL */ `
   }
 `;
 export const onCreateClientIntergrations = /* GraphQL */ `
-  subscription OnCreateClientIntergrations(
-    $filter: ModelSubscriptionClientIntergrationsFilterInput
-  ) {
-    onCreateClientIntergrations(filter: $filter) {
+  subscription OnCreateClientIntergrations {
+    onCreateClientIntergrations {
       id
       clientId
       tenantId
@@ -126,10 +112,8 @@ export const onCreateClientIntergrations = /* GraphQL */ `
   }
 `;
 export const onUpdateClientIntergrations = /* GraphQL */ `
-  subscription OnUpdateClientIntergrations(
-    $filter: ModelSubscriptionClientIntergrationsFilterInput
-  ) {
-    onUpdateClientIntergrations(filter: $filter) {
+  subscription OnUpdateClientIntergrations {
+    onUpdateClientIntergrations {
       id
       clientId
       tenantId
@@ -142,10 +126,8 @@ export const onUpdateClientIntergrations = /* GraphQL */ `
   }
 `;
 export const onDeleteClientIntergrations = /* GraphQL */ `
-  subscription OnDeleteClientIntergrations(
-    $filter: ModelSubscriptionClientIntergrationsFilterInput
-  ) {
-    onDeleteClientIntergrations(filter: $filter) {
+  subscription OnDeleteClientIntergrations {
+    onDeleteClientIntergrations {
       id
       clientId
       tenantId
@@ -158,10 +140,8 @@ export const onDeleteClientIntergrations = /* GraphQL */ `
   }
 `;
 export const onCreateClientUserWhitelisting = /* GraphQL */ `
-  subscription OnCreateClientUserWhitelisting(
-    $filter: ModelSubscriptionClientUserWhitelistingFilterInput
-  ) {
-    onCreateClientUserWhitelisting(filter: $filter) {
+  subscription OnCreateClientUserWhitelisting {
+    onCreateClientUserWhitelisting {
       id
       clientId
       displayName
@@ -181,10 +161,8 @@ export const onCreateClientUserWhitelisting = /* GraphQL */ `
   }
 `;
 export const onUpdateClientUserWhitelisting = /* GraphQL */ `
-  subscription OnUpdateClientUserWhitelisting(
-    $filter: ModelSubscriptionClientUserWhitelistingFilterInput
-  ) {
-    onUpdateClientUserWhitelisting(filter: $filter) {
+  subscription OnUpdateClientUserWhitelisting {
+    onUpdateClientUserWhitelisting {
       id
       clientId
       displayName
@@ -204,10 +182,8 @@ export const onUpdateClientUserWhitelisting = /* GraphQL */ `
   }
 `;
 export const onDeleteClientUserWhitelisting = /* GraphQL */ `
-  subscription OnDeleteClientUserWhitelisting(
-    $filter: ModelSubscriptionClientUserWhitelistingFilterInput
-  ) {
-    onDeleteClientUserWhitelisting(filter: $filter) {
+  subscription OnDeleteClientUserWhitelisting {
+    onDeleteClientUserWhitelisting {
       id
       clientId
       displayName
@@ -221,6 +197,111 @@ export const onDeleteClientUserWhitelisting = /* GraphQL */ `
       surname
       userPrincipalName
       uid
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateClientCallLogs = /* GraphQL */ `
+  subscription OnCreateClientCallLogs {
+    onCreateClientCallLogs {
+      RecordingId
+      tenantId
+      callId
+      contactId
+      callType
+      callStatus
+      callStartTime
+      callEndTime
+      callDuration
+      charge
+      callerNumber
+      calleeNumber
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateClientCallLogs = /* GraphQL */ `
+  subscription OnUpdateClientCallLogs {
+    onUpdateClientCallLogs {
+      RecordingId
+      tenantId
+      callId
+      contactId
+      callType
+      callStatus
+      callStartTime
+      callEndTime
+      callDuration
+      charge
+      callerNumber
+      calleeNumber
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteClientCallLogs = /* GraphQL */ `
+  subscription OnDeleteClientCallLogs {
+    onDeleteClientCallLogs {
+      RecordingId
+      tenantId
+      callId
+      contactId
+      callType
+      callStatus
+      callStartTime
+      callEndTime
+      callDuration
+      charge
+      callerNumber
+      calleeNumber
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreatePresolvedAudit = /* GraphQL */ `
+  subscription OnCreatePresolvedAudit {
+    onCreatePresolvedAudit {
+      id
+      tenantId
+      resource
+      action
+      byUser
+      byDateTime
+      changesMade
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdatePresolvedAudit = /* GraphQL */ `
+  subscription OnUpdatePresolvedAudit {
+    onUpdatePresolvedAudit {
+      id
+      tenantId
+      resource
+      action
+      byUser
+      byDateTime
+      changesMade
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeletePresolvedAudit = /* GraphQL */ `
+  subscription OnDeletePresolvedAudit {
+    onDeletePresolvedAudit {
+      id
+      tenantId
+      resource
+      action
+      byUser
+      byDateTime
+      changesMade
       createdAt
       updatedAt
     }
