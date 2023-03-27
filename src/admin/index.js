@@ -34,28 +34,32 @@ const AdminIndexPage = (props) => {
     useEffect(() => {
         if (!user.isLoggedin || !client.isLoaded) {
             Auth.currentAuthenticatedUser().then((login) => {
-                getClientInformation(login.attributes.email).then((res) => {
-                    dispatch(updateUser({ ...res }))
-                    dispatch(updateClient({ ...res }))                    
-                    if (!client.config.isLoaded) {
-                        getClientIntegration(res.clientId).then((gci) => {
-                            dispatch(updateClientConfig({ ...gci, clientId: res.clientId }))
-                            setState({ ...state, clientLoaded:true,configsLoaded: true })
-                        })
-                    }
-                    if(!client.whiteListedUsers.isLoaded){                       
-                        getUsersWhiteListing(res.clientId).then((gwl)=>{
-                            dispatch(updateWhiteListedUsers(gwl))                          
-                            
-                        })
-                    }
-
-                })
+                postLoginCheks(login)
             }).catch((err) => {
                 navigate("/signup")
             })
         }
     }, [])
+    
+    const postLoginCheks = (login) => {
+        getClientInformation(login.attributes.email).then((res) => {
+            dispatch(updateUser({ ...res }))
+            dispatch(updateClient({ ...res }))
+            if (!client.config.isLoaded) {
+                getClientIntegration(res.clientId).then((gci) => {
+                    dispatch(updateClientConfig({ ...gci, clientId: res.clientId }))
+                    setState({ ...state, clientLoaded: true, configsLoaded: true })
+                })
+            }
+            if (!client.whiteListedUsers.isLoaded) {
+                getUsersWhiteListing(res.clientId).then((gwl) => {
+                    dispatch(updateWhiteListedUsers(gwl))
+
+                })
+            }
+
+        })
+    }
 
 
     return (
@@ -65,22 +69,22 @@ const AdminIndexPage = (props) => {
             <Layout className="site-layout">
                 <AdminHeader />
                 {
-                    state.clientLoaded  ?
-                < Content className="main-container">
-                    <Router>
-                        <AdminMainPage path="/" client={client} />
-                        <AdminLoginPage path="/signup" />
-                        <TeamsIntegration path="/teams-integration" client={client} />
-                        <TeamsUsersWhitelisting path="/teams-users-whitelisting" client={client} />
-                    </Router>
-                </Content>
-                :
-                <section style={{display:'flex', minHeight:'100vh', padding:24, justifyContent:'center',alignItems:'center'}}>
-                    <Space size={20}>
-                    <Spin size='large' />
-                    <Typography.Title level={3}>Please wait while we load the data...</Typography.Title>
-                    </Space>
-                </section>
+                    state.clientLoaded ?
+                        < Content className="main-container">
+                            <Router>
+                                <AdminMainPage path="/" client={client} />
+                                <AdminLoginPage path="/signup" />
+                                <TeamsIntegration path="/teams-integration" client={client} />
+                                <TeamsUsersWhitelisting path="/teams-users-whitelisting" client={client} />
+                            </Router>
+                        </Content>
+                        :
+                        <section style={{ display: 'flex', minHeight: '100vh', padding: 24, justifyContent: 'center', alignItems: 'center' }}>
+                            <Space size={20}>
+                                <Spin size='large' />
+                                <Typography.Title level={3}>Please wait while we load the data...</Typography.Title>
+                            </Space>
+                        </section>
                 }
                 <Footer className="primary-footer">
                     Presolved © 2020 Created by Presolved

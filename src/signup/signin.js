@@ -8,7 +8,8 @@ import { useDispatch } from 'react-redux';
 import { updateUser } from '../store/reducers/user';
 import { navigate } from '@gatsbyjs/reach-router';
 import { getClientInformation } from './api';
-import { updateClient } from '../store/reducers/client';
+import { updateClient, updateClientConfig } from '../store/reducers/client';
+import { getClientIntegration } from '../admin/api';
 
 const SigninWidget = () => {
     const dispatch = useDispatch()
@@ -23,13 +24,16 @@ const SigninWidget = () => {
     useEffect(() => {
         Auth.currentAuthenticatedUser().then((login) => {
             const loginData = login?.attributes
-            getClientInformation(loginData.email).then((res) => {
+           /*  getClientInformation(loginData.email).then((res) => {
                 dispatch(updateUser({ ...loginData, ...res, }))
-                dispatch(updateClient({...res}))
-                navigate("/")
-            })
+                dispatch(updateClient({ ...res }))
+                getClientIntegration(res.clientId).then((gci) => {
+                    dispatch(updateClientConfig({ ...gci, clientId: res.clientId }))
+                    navigate("/")
+                })
+            }) */
             //dispatch(updateUser({ ...loginData, userName: login?.username }))
-            navigate("/")
+            navigate("/", { state: {...login, proceedpostLoginCheks:true } })
         })
     }, [state.isLoggedin])
 
@@ -48,13 +52,14 @@ const SigninWidget = () => {
             username: e.email,
             password: e.password
         }).then((data) => {
-            console.log({ data });
-            getClientInformation(e.email).then((res) => {
+            console.log({ data }); 
+            navigate("/", { state: {...data, proceedpostLoginCheks:true } })
+           /*  getClientInformation(e.email).then((res) => {
                 setState({ ...state, isLoginIn: false })
                 dispatch(updateUser({ ...data, ...res, userName: e.email }))
-                dispatch(updateClient({...res}))
+                dispatch(updateClient({ ...res }))
                 navigate("/")
-            })
+            }) */
             /*  notification.success({
                  message: 'Success',
                  description: 'Login Successful'
@@ -102,7 +107,7 @@ const SigninWidget = () => {
                         <Button type='link' onClick={() => setShowAuthenticator(!showAuthenticator)}  >Recover Password</Button>
                     </Col>
                 </Row>
-              
+
                 {state.isLoginIn ?
                     <Form.Item>
                         <Divider />
