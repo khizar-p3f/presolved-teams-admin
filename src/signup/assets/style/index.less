@@ -1,0 +1,88 @@
+@primary-color: #f2f2f2;
+@primary-gradient:linear-gradient(40deg, #7716d9, #639);
+section.signup{
+   
+    .flex-container {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: center;
+        align-items: stretch;
+        .signup-banner{
+            width: 100%;
+            background: @primary-color;
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            align-content: center;
+            justify-content: center;
+            align-items: center;
+            background-position: top right;
+            background-repeat: no-repeat;
+            .banner-img{
+                margin: 20px auto;
+                text-align: center;
+            }
+            .banner-title{
+                text-align: center;
+              
+                h1{
+                    color: #555 !important;
+                    font-weight: 600;
+                    font-size: 30px;
+                }
+                h3{
+                    color: #999 !important;
+                    
+                }
+            }
+           
+        }
+        .signup-item{
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            align-content: center;
+            justify-content: center;
+            align-items: center;
+            
+                .container{
+                    border: 0 !important;
+                    width: 100%;
+                    .presolved-card-head-title{
+                        font-size: 20px;
+                        font-weight: 600;
+                        color: #000;
+                        text-align: center;
+                        margin-bottom: 50px;
+                        h3{
+                            font-size: 16px;
+                            font-weight: 100;
+                            color: #999;
+                            text-align: center;
+                        
+                        }
+                    }
+                    .presolved-card-body{
+                        width: 100%;
+                    }
+                }
+            
+        }
+    }
+
+}
+
+.btn-outline{
+    box-shadow: none;
+    border: 1px solid @primary-color;
+    background: inherit;
+    color:@primary-color;
+    
+    &:hover{
+        background-color: @primary-gradient;          
+    }
+
+}

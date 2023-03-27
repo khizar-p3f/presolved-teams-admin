@@ -1,0 +1,49 @@
+
+/**
+ * To DO
+ Integrations with Teams
+	if(consent){
+		Teams is already integrated
+	}else{	
+		Signin With MS to get tenant ID
+		diplay list of permission needed for presolved along with the button to consent ("on behalf of your organization")
+		User clicks on consent button, after successfull consent MS will redirect to presolved callback (/page/consent)
+		Save the consent in the DB and the redirect them back to integration page
+	}
+	
+	
+
+Manage users
+Client code
+
+
+Consent Signin	
+	Check Tenant ID
+		Yes - > Consent Done
+			Integration With Teams				https://login.microsoftonline.com/{tenantId}/adminConsent?client_id=35a2ff7a-28a5-466d-9f84-1cefbe80c187&redirect_uri=https://portal.azure.com/TokenAuthorize
+				onresponse IntegratedwithTEamsFlag:boolean
+			
+		No -> Signin with MS
+
+        developer account
+        khizaras
+        khizaras@5pfm87.onmicrosoft.com
+		TNPowerStar@1323
+ 
+
+
+        Dashbaord statistics
+
+        Thim month 
+            Call/Minutes/ Failed calls
+        This week 
+            Call/Minutes/ Failed calls
+        Today Calls
+            Call/Minutes/ Failed calls
+ 
+
+        CAlls by Group
+        Recent Calls    
+            click to launch call search page
+
+ */

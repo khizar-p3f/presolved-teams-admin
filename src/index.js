@@ -10,10 +10,11 @@ import { store } from "./store";
 import AppGlobal from "./widgets/global";
 import { globalTheme } from "./globals/style";
 import { ConfigProvider, theme } from "antd";
-import ClientSignupPage from "./signup";
+
 import SuperAdminIndexPage from "./super-admin";
 
 const AdminPage = React.lazy(() => import("./admin/index"));
+const ClientSignupPage = React.lazy(() => import("./signup"));
 const root = document.getElementById("root");
 Amplify.configure(oldAwsConfig);
 
@@ -36,3 +37,4 @@ ReactDOM.render(
   </Provider>,
   root
 );
+

@@ -49,4 +49,32 @@ export type AmplifyDependentResourcesAttributes = {
             "ApiId": "string"
         }
     }
+  },
+  "auth": {
+    "presolvedteamsadmine76efdae": {
+      "AppClientID": "string",
+      "AppClientIDWeb": "string",
+      "IdentityPoolId": "string",
+      "IdentityPoolName": "string",
+      "UserPoolArn": "string",
+      "UserPoolId": "string",
+      "UserPoolName": "string"
+    },
+    "userPoolGroups": {
+      "p3fAdminGroupRole": "string",
+      "p3fSupportGroupRole": "string",
+      "tenantAdminGroupRole": "string",
+      "tenantSupervisorGroupRole": "string",
+      "tenantUserGroupRole": "string"
+    }
+  },
+  "function": {
+    "AdminQueriescecc2b38": {
+      "Arn": "string",
+      "LambdaExecutionRole": "string",
+      "LambdaExecutionRoleArn": "string",
+      "Name": "string",
+      "Region": "string"
+    }
+  }
 }

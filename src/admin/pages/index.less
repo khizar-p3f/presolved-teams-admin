@@ -1,0 +1,97 @@
+.admin-dashboard {
+    min-height: 100vh;
+
+    .breadcrumb-container {
+        margin-bottom: 30px;
+    }
+
+    .greetings-container {
+        //box-shadow: 0 4px 3px 0 rgba(0, 0, 0, 0.1);               
+        margin-bottom: 30px;
+
+        .presolved-card.greetings-card {
+            .presolved-card-body {
+                border-radius: 10px;
+                border: solid 5px #fff;
+                *{color: #666;}
+            }
+
+            background-color: #fbf4ff !important;
+            background-repeat: no-repeat !important;
+            background-position: right top !important;
+            background-size: 150px !important;
+            border: solid 1px #ccc;
+            border-radius: 10px;
+
+        }
+
+    }
+
+    .statistic-container {
+        margin-bottom: 30px;
+
+        .card-meta {
+            border-bottom: 1px solid rgb(204, 204, 204);
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+
+            .presolved-avatar {
+                background: linear-gradient(40deg, #7716d9, #639)
+            }
+
+        }
+
+        .stats-container {
+            margin-bottom: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 10px;
+
+            .stats-items {
+                &:not(:last-child) {
+                    border-right: 1px solid rgb(204, 204, 204);
+                }
+
+                flex-grow: 1;
+                text-align: center;
+            }
+        }
+
+    }
+
+    .calls-report-container {
+        margin-bottom: 30px;
+    }
+
+    .alerts-container {
+        margin-bottom: 30px;
+      
+        .presolved-card.attention {
+            
+            &.grey{
+                background-color:#f2f5ff;
+                border: solid 2px #6e727f;
+            }
+            background-color: rgb(233, 212, 255);
+            .presolved-card-body {
+                min-height: 230px;
+                border-radius: 10px;
+                border: solid 5px #fff;
+                *{color: #666;}
+            }
+            border: solid 2px #639;
+            border-radius: 10px;
+
+        }
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        margin: 3px 0;
+    }
+}
