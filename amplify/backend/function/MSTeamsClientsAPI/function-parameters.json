@@ -1,0 +1,13 @@
+{
+  "lambdaLayers": [],
+  "secretNames": [
+    "CallManagerAPIKey"
+  ],
+  "environmentVariableList": [
+    {
+      "cloudFormationParameterName": "callManagerUrl",
+      "environmentVariableName": "CallManagerURL"
+    }
+  ],
+  "permissions": {}
+}

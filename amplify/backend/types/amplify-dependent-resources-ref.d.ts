@@ -22,11 +22,28 @@ export type AmplifyDependentResourcesAttributes = {
             "Name": "string",
             "Arn": "string",
             "Region": "string",
+            "LambdaExecutionRole": "string",
+            "LambdaExecutionRoleArn": "string"
+        },
+        "MSTeamsClientsAPI": {
+            "Name": "string",
+            "Arn": "string",
+            "Region": "string",
             "LambdaExecutionRole": "string"
         }
     },
     "api": {
         "AdminQueries": {
+            "RootUrl": "string",
+            "ApiName": "string",
+            "ApiId": "string"
+        },
+        "presolvedteamsadmin": {
+            "GraphQLAPIKeyOutput": "string",
+            "GraphQLAPIIdOutput": "string",
+            "GraphQLAPIEndpointOutput": "string"
+        },
+        "PresolvedClientAPI": {
             "RootUrl": "string",
             "ApiName": "string",
             "ApiId": "string"

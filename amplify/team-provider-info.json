@@ -9,7 +9,8 @@
       "UnauthRoleName": "amplify-presolvedteamsadmin-develop-201120-unauthRole",
       "StackName": "amplify-presolvedteamsadmin-develop-201120",
       "StackId": "arn:aws:cloudformation:us-east-1:039289871235:stack/amplify-presolvedteamsadmin-develop-201120/f64d6590-c0e3-11ed-b471-0efe7a68cf51",
-      "AmplifyAppId": "d2sg3m2pawykox"
+      "AmplifyAppId": "d2sg3m2pawykox",
+      "APIGatewayAuthURL": "https://s3.amazonaws.com/amplify-presolvedteamsadmin-develop-201120-deployment/amplify-cfn-templates/api/APIGatewayAuthStack.json"
     },
     "categories": {
       "auth": {
@@ -19,11 +20,19 @@
       "function": {
         "AdminQueriescecc2b38": {
           "deploymentBucketName": "amplify-presolvedteamsadmin-develop-201120-deployment",
-          "s3Key": "amplify-builds/AdminQueriescecc2b38-43477a4e67662b323771-build.zip"
+          "s3Key": "amplify-builds/AdminQueriescecc2b38-597541544f366c736d35-build.zip"
+        },
+        "MSTeamsClientsAPI": {
+          "secretsPathAmplifyAppId": "d2sg3m2pawykox",
+          "deploymentBucketName": "amplify-presolvedteamsadmin-develop-201120-deployment",
+          "s3Key": "amplify-builds/MSTeamsClientsAPI-66717a6e3932394e734c-build.zip",
+          "callManagerUrl": "https://td7y4pmq4a.execute-api.us-east-1.amazonaws.com/staging"
         }
       },
       "api": {
-        "AdminQueries": {}
+        "AdminQueries": {},
+        "presolvedteamsadmin": {},
+        "PresolvedClientAPI": {}
       }
     }
   }

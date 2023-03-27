@@ -8,7 +8,7 @@ async function createUser() {
   const password = document.forms["createUser"]["password"].value;
   const role = document.forms["createUser"]["role"].value;*/
 
-  const name = "siva2@gmail.com";
+  const name = "siva3@gmail.com";
   const email = name;
   const password = "#P3Fusion135";
   const role = "tenantUser";
@@ -53,6 +53,56 @@ async function createUser() {
     });
 }
 
+async function listUsers() {
+  const apiName = "AdminQueries"; // replace this with your api name.
+  const path = "/listUsers"; //replace this with the path you have configured on your API
+  const myInit = {
+    // OPTIONAL
+    headers: {
+      Authorization: `Bearer ${(await Auth.currentSession())
+        .getAccessToken()
+        .getJwtToken()}`,
+    }, // OPTIONAL
+  };
+
+  API.get(apiName, path, myInit)
+    .then((response) => {
+      // Add your code here
+      console.log("Response from ListUsers API is ", response);
+    })
+    .catch((error) => {
+      console.log(error.response);
+    });
+}
+
+async function listTeamsUsers() {
+  const apiName = "PresolvedClientAPI"; // replace this with your api name.
+  const path = "/teams/users"; //replace this with the path you have configured on your API
+  const myInit = {
+    queryStringParameters: {
+      tenantId: "b0a714c6-6ab2-43b2-aae0-5e855bb3752f",
+      displayName: "Siv",
+    },
+    // OPTIONAL
+    headers: {
+      Authorization: `Bearer ${(await Auth.currentSession())
+        .getAccessToken()
+        .getJwtToken()}`,
+    }, // OPTIONAL
+  };
+
+  console.log("Calling MSTeamsClientsAPI API with ", myInit);
+
+  API.get(apiName, path, myInit)
+    .then((response) => {
+      // Add your code here
+      console.log("Response from ListTeamsUsers API is ", response);
+    })
+    .catch((error) => {
+      console.log("Error calling API ", error);
+    });
+}
+
 const SuperAdminIndexPage = () => {
   return (
     <div>
@@ -88,6 +138,17 @@ const SuperAdminIndexPage = () => {
         <br></br>
         <input type="submit" value="Submit" />
       </form>
+      <br></br>
+      <p>List Users</p>
+      <button
+        onClick={(e) => {
+          e.preventDefault();
+          //listUsers();
+          listTeamsUsers();
+        }}
+      >
+        List Users
+      </button>
     </div>
   );
 };

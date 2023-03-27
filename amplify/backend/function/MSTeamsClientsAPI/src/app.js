@@ -1,4 +1,7 @@
-/*
+/* Amplify Params - DO NOT EDIT
+	ENV
+	REGION
+Amplify Params - DO NOT EDIT *//*
 Use the following code to retrieve configured secrets from SSM:
 
 const aws = require('aws-sdk');
@@ -57,6 +60,8 @@ app.get("/teams/users", async function (req, res) {
   authToken = authToken.replace("Bearer ", "");
   //console.log("Auth Token is ", authToken);
   //let userDetails = await msteams.validateAuthToken(authToken);
+  //Load the Tenant Id from the DB
+
   let validatedTokenResult = await msteams.validateIdToken(
     authToken,
     req.query.tenantId

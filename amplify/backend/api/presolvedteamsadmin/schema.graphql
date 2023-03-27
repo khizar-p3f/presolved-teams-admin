@@ -1,0 +1,71 @@
+# This "input" configures a global authorization rule to enable public access to
+# all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
+input AMPLIFY {
+  globalAuthRule: AuthRule = { allow: public }
+} # FOR TESTING ONLY!
+type clientSignup @model {
+  id: ID!
+  name: String!
+  email: String!
+  phone: String!
+  company: String!
+  address: String!
+  city: String!
+  state: String!
+  zip: String!
+  country: String!
+}
+
+type clientUsers @model {
+  id: ID!
+  clientId: String!
+  name: String!
+  email: String!
+  role: Int!
+  status: Int!
+}
+
+type clientIntergrations @model {
+  id: ID!
+  clientId: String!
+  tenantId: String!
+  loginMS: Int!
+  consentMS: Int!
+  attributes: AWSJSON!
+}
+
+type clientUserWhitelisting @model {
+  id: ID!
+  clientId: String!
+  displayName: String!
+  businessPhones: AWSJSON!
+  givenName: String!
+  jobTitle: String!
+  mail: String!
+  mobilePhone: String!
+  officeLocation: String!
+  preferredLanguage: String!
+  surname: String!
+  userPrincipalName: String!
+  uid: String!
+}
+
+type ClientCallLogs @model {
+  RecordingId: String!
+  tenantId: ID! @index(name: "byTenantId", sortKeyFields: ["contactId"])
+  callId: ID!
+    @primaryKey
+    @index(
+      name: "byCallStartTime"
+      sortKeyFields: ["contactId", "callStartTime"]
+    )
+  contactId: ID!
+  callType: String!
+  callStatus: String!
+  callStartTime: AWSDateTime!
+  callEndTime: AWSDateTime!
+  callDuration: Int!
+  charge: Float!
+  callerNumber: String!
+  calleeNumber: String!
+}
