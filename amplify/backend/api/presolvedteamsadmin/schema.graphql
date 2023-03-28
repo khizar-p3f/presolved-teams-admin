@@ -64,3 +64,13 @@ type ClientCallLogs @model {
   callerNumber: String!
   calleeNumber: String!
 }
+
+type PresolvedAudit @model {
+  id: ID!
+  tenantId: String!
+  resource: String!
+  action: String!  
+  byUser: String!
+  byDateTime: AWSDateTime!
+  changesMade: AWSJSON
+}

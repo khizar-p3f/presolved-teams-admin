@@ -171,3 +171,95 @@ export const listClientUserWhitelistings = /* GraphQL */ `
     }
   }
 `;
+export const getClientCallLogs = /* GraphQL */ `
+  query GetClientCallLogs($callId: ID!) {
+    getClientCallLogs(callId: $callId) {
+      RecordingId
+      tenantId
+      callId
+      contactId
+      callType
+      callStatus
+      callStartTime
+      callEndTime
+      callDuration
+      charge
+      callerNumber
+      calleeNumber
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listClientCallLogs = /* GraphQL */ `
+  query ListClientCallLogs(
+    $callId: ID
+    $filter: ModelClientCallLogsFilterInput
+    $limit: Int
+    $nextToken: String
+    $sortDirection: ModelSortDirection
+  ) {
+    listClientCallLogs(
+      callId: $callId
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
+      items {
+        RecordingId
+        tenantId
+        callId
+        contactId
+        callType
+        callStatus
+        callStartTime
+        callEndTime
+        callDuration
+        charge
+        callerNumber
+        calleeNumber
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getPresolvedAudit = /* GraphQL */ `
+  query GetPresolvedAudit($id: ID!) {
+    getPresolvedAudit(id: $id) {
+      id
+      tenantId
+      resource
+      action
+      byUser
+      byDateTime
+      changesMade
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listPresolvedAudits = /* GraphQL */ `
+  query ListPresolvedAudits(
+    $filter: ModelPresolvedAuditFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listPresolvedAudits(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        tenantId
+        resource
+        action
+        byUser
+        byDateTime
+        changesMade
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;

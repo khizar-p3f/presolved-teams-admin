@@ -238,3 +238,126 @@ export const deleteClientUserWhitelisting = /* GraphQL */ `
     }
   }
 `;
+export const createClientCallLogs = /* GraphQL */ `
+  mutation CreateClientCallLogs(
+    $input: CreateClientCallLogsInput!
+    $condition: ModelClientCallLogsConditionInput
+  ) {
+    createClientCallLogs(input: $input, condition: $condition) {
+      RecordingId
+      tenantId
+      callId
+      contactId
+      callType
+      callStatus
+      callStartTime
+      callEndTime
+      callDuration
+      charge
+      callerNumber
+      calleeNumber
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateClientCallLogs = /* GraphQL */ `
+  mutation UpdateClientCallLogs(
+    $input: UpdateClientCallLogsInput!
+    $condition: ModelClientCallLogsConditionInput
+  ) {
+    updateClientCallLogs(input: $input, condition: $condition) {
+      RecordingId
+      tenantId
+      callId
+      contactId
+      callType
+      callStatus
+      callStartTime
+      callEndTime
+      callDuration
+      charge
+      callerNumber
+      calleeNumber
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteClientCallLogs = /* GraphQL */ `
+  mutation DeleteClientCallLogs(
+    $input: DeleteClientCallLogsInput!
+    $condition: ModelClientCallLogsConditionInput
+  ) {
+    deleteClientCallLogs(input: $input, condition: $condition) {
+      RecordingId
+      tenantId
+      callId
+      contactId
+      callType
+      callStatus
+      callStartTime
+      callEndTime
+      callDuration
+      charge
+      callerNumber
+      calleeNumber
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createPresolvedAudit = /* GraphQL */ `
+  mutation CreatePresolvedAudit(
+    $input: CreatePresolvedAuditInput!
+    $condition: ModelPresolvedAuditConditionInput
+  ) {
+    createPresolvedAudit(input: $input, condition: $condition) {
+      id
+      tenantId
+      resource
+      action
+      byUser
+      byDateTime
+      changesMade
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updatePresolvedAudit = /* GraphQL */ `
+  mutation UpdatePresolvedAudit(
+    $input: UpdatePresolvedAuditInput!
+    $condition: ModelPresolvedAuditConditionInput
+  ) {
+    updatePresolvedAudit(input: $input, condition: $condition) {
+      id
+      tenantId
+      resource
+      action
+      byUser
+      byDateTime
+      changesMade
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deletePresolvedAudit = /* GraphQL */ `
+  mutation DeletePresolvedAudit(
+    $input: DeletePresolvedAuditInput!
+    $condition: ModelPresolvedAuditConditionInput
+  ) {
+    deletePresolvedAudit(input: $input, condition: $condition) {
+      id
+      tenantId
+      resource
+      action
+      byUser
+      byDateTime
+      changesMade
+      createdAt
+      updatedAt
+    }
+  }
+`;
