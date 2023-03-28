@@ -9,5 +9,14 @@
       "environmentVariableName": "CallManagerURL"
     }
   ],
-  "permissions": {}
+  "permissions": {
+    "storage": {
+      "PresolvedAudit:@model(appsync)": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ]
+    }
+  }
 }
