@@ -17,7 +17,7 @@ import { updateClient, updateClientConfig, updateWhiteListedUsers } from '../sto
 import { getClientIntegration, getUsersWhiteListing } from './api';
 import TeamsIntegration from './pages/teamsIntegration';
 import TeamsUsersWhitelisting from './pages/usersWhitelist';
-
+import TenantsAdminManagement from './pages/tenantAdminManagement';
 
 const AdminIndexPage = (props) => {
     const dispatch = useDispatch()
@@ -76,6 +76,7 @@ const AdminIndexPage = (props) => {
                                 <AdminLoginPage path="/signup" />
                                 <TeamsIntegration path="/teams-integration" client={client} />
                                 <TeamsUsersWhitelisting path="/teams-users-whitelisting" client={client} />
+                                <TenantsAdminManagement path="/tenant-admin-management" />
                             </Router>
                         </Content>
                         :

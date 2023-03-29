@@ -11,7 +11,7 @@ import AppGlobal from "./widgets/global";
 import { globalTheme } from "./globals/style";
 import { ConfigProvider, theme } from "antd";
 
-import SuperAdminIndexPage from "./super-admin";
+import SuperAdminIndexPage from "./super-admin/index"
 
 const AdminPage = React.lazy(() => import("./admin/index"));
 const ClientSignupPage = React.lazy(() => import("./signup"));
