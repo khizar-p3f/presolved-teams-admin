@@ -8,7 +8,6 @@ class MSTeams {
   }
 
   async getUsers(tenantId, displayName) {
-    //Either get the users from DB based on Tenant Preference or get it directly from MS Teams
     const url = `${this.apiURL}/api/users?tenantId=${tenantId}&displayName=${displayName}`;
     const response = await axios.get(url);
     return response.data;

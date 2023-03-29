@@ -1,156 +1,83 @@
-import React from "react";
-import { API, Auth } from "aws-amplify";
+import React, { useState, useEffect } from 'react'
+import { Router } from '@gatsbyjs/reach-router';
+import { Layout, theme, Result, Spin, Space, Typography } from 'antd';
+import { Auth } from 'aws-amplify';
+import { useDispatch } from 'react-redux';
+import { updateUser } from '../store/reducers/user';
+import { getClientInformation } from '../signup/api';
+import { useSelector } from 'react-redux';
+import { updateClient, updateClientConfig } from '../store/reducers/client';
+import { getClientIntegration } from './api';
+import SuperAdminHeader from './layout/header';
+import SuperAdminSider from './layout/sider';
+import './assets/style/index.less';
+import 'antd/dist/reset.css';
 
-async function createUser() {
-  //Get Values from form
-  /*const name = document.forms["createUser"]["name"].value;
-  const email = document.forms["createUser"]["email"].value;
-  const password = document.forms["createUser"]["password"].value;
-  const role = document.forms["createUser"]["role"].value;*/
+const UsersManagement = React.lazy(() => import('./pages/usersManagement'))
+const TenantsManagement = React.lazy(() => import('./pages/tenantsManagement'))
 
-  const name = "siva3@gmail.com";
-  const email = name;
-  const password = "#P3Fusion135";
-  const role = "tenantUser";
-
-  const apiName = "AdminQueries"; // replace this with your api name.
-  const path = "/users"; //replace this with the path you have configured on your API
-  const myInit = {
-    body: {
-      username: name,
-      email: email,
-      password: password,
-      groupname: role,
-      userAttributes: JSON.stringify([
-        {
-          Name: "name",
-          Value: name,
-        },
-        {
-          Name: "custom:tenantId",
-          Value: "tenantId1",
-        },
-      ]),
-    }, // replace this with attributes you need
-    headers: {
-      Authorization: `Bearer ${(await Auth.currentSession())
-        .getAccessToken()
-        .getJwtToken()}`,
-    }, // OPTIONAL
-  };
-
-  // Alternatively, with Cognito User Pools use this:
-  // return { Authorization: `Bearer ${(await Auth.currentSession()).getAccessToken().getJwtToken()}` }
-  // return { Authorization: `Bearer ${(await Auth.currentSession()).getIdToken().getJwtToken()}` }
-
-  API.post(apiName, path, myInit)
-    .then((response) => {
-      // Add your code here
-      console.log("Response from CreateUser API is ", response);
-    })
-    .catch((error) => {
-      console.log(error.response);
-    });
-}
-
-async function listUsers() {
-  const apiName = "AdminQueries"; // replace this with your api name.
-  const path = "/listUsers"; //replace this with the path you have configured on your API
-  const myInit = {
-    // OPTIONAL
-    headers: {
-      Authorization: `Bearer ${(await Auth.currentSession())
-        .getAccessToken()
-        .getJwtToken()}`,
-    }, // OPTIONAL
-  };
-
-  API.get(apiName, path, myInit)
-    .then((response) => {
-      // Add your code here
-      console.log("Response from ListUsers API is ", response);
-    })
-    .catch((error) => {
-      console.log(error.response);
-    });
-}
-
-async function listTeamsUsers() {
-  const apiName = "PresolvedClientAPI"; // replace this with your api name.
-  const path = "/teams/users"; //replace this with the path you have configured on your API
-  const myInit = {
-    queryStringParameters: {
-      tenantId: "b0a714c6-6ab2-43b2-aae0-5e855bb3752f",
-      displayName: "Siv",
-    },
-    // OPTIONAL
-    headers: {
-      Authorization: `Bearer ${(await Auth.currentSession())
-        .getAccessToken()
-        .getJwtToken()}`,
-    }, // OPTIONAL
-  };
-
-  console.log("Calling MSTeamsClientsAPI API with ", myInit);
-
-  API.get(apiName, path, myInit)
-    .then((response) => {
-      // Add your code here
-      console.log("Response from ListTeamsUsers API is ", response);
-    })
-    .catch((error) => {
-      console.log("Error calling API ", error);
-    });
-}
 
 const SuperAdminIndexPage = () => {
-  return (
-    <div>
-      <h1>Super Admin Index Page</h1>
-      <br></br>
-      <p>Create User</p>
-      <form
-        name="createUser"
-        onSubmit={(e) => {
-          e.preventDefault();
-          createUser();
-        }}
-      >
-        <label>
-          Name:
-          <input type="text" name="name" />
-        </label>
-        <br></br>
-        <label>
-          Email:
-          <input type="text" name="email" />
-        </label>
-        <br></br>
-        <label>
-          Password:
-          <input type="text" name="password" />
-        </label>
-        <br></br>
-        <label>
-          Role:
-          <input type="text" name="role" />
-        </label>
-        <br></br>
-        <input type="submit" value="Submit" />
-      </form>
-      <br></br>
-      <p>List Users</p>
-      <button
-        onClick={(e) => {
-          e.preventDefault();
-          //listUsers();
-          listTeamsUsers();
-        }}
-      >
-        List Users
-      </button>
-    </div>
-  );
-};
 
-export default SuperAdminIndexPage;
+    const dispatch = useDispatch()
+    const { Content, Footer, } = Layout;
+
+    const client = useSelector(state => state.client)
+    const user = useSelector(state => state.user)
+
+    const [state, setState] = useState({
+        clientLoaded: false,
+        configsLoaded: false
+    })
+
+    useEffect(() => {
+        if (!user.isLoggedin || !client.isLoaded) {
+            Auth.currentAuthenticatedUser().then((login) => {
+                getClientInformation(login.attributes.email).then((res) => {
+                    dispatch(updateUser({ ...res }))
+                    dispatch(updateClient({ ...res }))
+                    if (!client.config.isLoaded) {
+                        getClientIntegration(res.clientId).then((gci) => {
+                            dispatch(updateClientConfig({ ...gci, clientId: res.clientId }))
+                            setState({ ...state, clientLoaded: true, configsLoaded: true })
+                        })
+                    }
+                })
+            }).catch((err) => {
+                navigate("/signup")
+            })
+        }
+    }, [])
+
+
+
+    return (
+        <Layout className="main-layout">
+            <SuperAdminSider />
+            <Layout className="site-layout">
+                <SuperAdminHeader />
+                {
+                    state.clientLoaded ?
+                        < Content className="main-container">
+                            <Router>
+                                <UsersManagement path="/" />
+                                <TenantsManagement path="/tenants" />
+                            </Router>
+                        </Content>
+                        :
+                        <section style={{ display: 'flex', minHeight: '100vh', padding: 24, justifyContent: 'center', alignItems: 'center' }}>
+                            <Space size={20}>
+                                <Spin size='large' />
+                                <Typography.Title level={3}>Please wait while we load the data...</Typography.Title>
+                            </Space>
+                        </section>
+                }
+                <Footer className="primary-footer">
+                    Presolved © 2020 Created by Presolved
+                </Footer>
+            </Layout>
+        </Layout >
+    )
+}
+
+export default SuperAdminIndexPage
