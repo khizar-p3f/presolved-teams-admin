@@ -2,8 +2,11 @@
 // this is an auto generated file. This will be overwritten
 
 export const onCreateClientSignup = /* GraphQL */ `
-  subscription OnCreateClientSignup {
-    onCreateClientSignup {
+  subscription OnCreateClientSignup(
+    $filter: ModelSubscriptionClientSignupFilterInput
+    $clientId: String
+  ) {
+    onCreateClientSignup(filter: $filter, clientId: $clientId) {
       id
       name
       email
@@ -16,12 +19,16 @@ export const onCreateClientSignup = /* GraphQL */ `
       country
       createdAt
       updatedAt
+      clientId
     }
   }
 `;
 export const onUpdateClientSignup = /* GraphQL */ `
-  subscription OnUpdateClientSignup {
-    onUpdateClientSignup {
+  subscription OnUpdateClientSignup(
+    $filter: ModelSubscriptionClientSignupFilterInput
+    $clientId: String
+  ) {
+    onUpdateClientSignup(filter: $filter, clientId: $clientId) {
       id
       name
       email
@@ -34,12 +41,16 @@ export const onUpdateClientSignup = /* GraphQL */ `
       country
       createdAt
       updatedAt
+      clientId
     }
   }
 `;
 export const onDeleteClientSignup = /* GraphQL */ `
-  subscription OnDeleteClientSignup {
-    onDeleteClientSignup {
+  subscription OnDeleteClientSignup(
+    $filter: ModelSubscriptionClientSignupFilterInput
+    $clientId: String
+  ) {
+    onDeleteClientSignup(filter: $filter, clientId: $clientId) {
       id
       name
       email
@@ -52,12 +63,16 @@ export const onDeleteClientSignup = /* GraphQL */ `
       country
       createdAt
       updatedAt
+      clientId
     }
   }
 `;
 export const onCreateClientUsers = /* GraphQL */ `
-  subscription OnCreateClientUsers {
-    onCreateClientUsers {
+  subscription OnCreateClientUsers(
+    $filter: ModelSubscriptionClientUsersFilterInput
+    $clientId: String
+  ) {
+    onCreateClientUsers(filter: $filter, clientId: $clientId) {
       id
       clientId
       name
@@ -70,8 +85,11 @@ export const onCreateClientUsers = /* GraphQL */ `
   }
 `;
 export const onUpdateClientUsers = /* GraphQL */ `
-  subscription OnUpdateClientUsers {
-    onUpdateClientUsers {
+  subscription OnUpdateClientUsers(
+    $filter: ModelSubscriptionClientUsersFilterInput
+    $clientId: String
+  ) {
+    onUpdateClientUsers(filter: $filter, clientId: $clientId) {
       id
       clientId
       name
@@ -84,8 +102,11 @@ export const onUpdateClientUsers = /* GraphQL */ `
   }
 `;
 export const onDeleteClientUsers = /* GraphQL */ `
-  subscription OnDeleteClientUsers {
-    onDeleteClientUsers {
+  subscription OnDeleteClientUsers(
+    $filter: ModelSubscriptionClientUsersFilterInput
+    $clientId: String
+  ) {
+    onDeleteClientUsers(filter: $filter, clientId: $clientId) {
       id
       clientId
       name
@@ -98,8 +119,11 @@ export const onDeleteClientUsers = /* GraphQL */ `
   }
 `;
 export const onCreateClientIntergrations = /* GraphQL */ `
-  subscription OnCreateClientIntergrations {
-    onCreateClientIntergrations {
+  subscription OnCreateClientIntergrations(
+    $filter: ModelSubscriptionClientIntergrationsFilterInput
+    $clientId: String
+  ) {
+    onCreateClientIntergrations(filter: $filter, clientId: $clientId) {
       id
       clientId
       tenantId
@@ -112,8 +136,11 @@ export const onCreateClientIntergrations = /* GraphQL */ `
   }
 `;
 export const onUpdateClientIntergrations = /* GraphQL */ `
-  subscription OnUpdateClientIntergrations {
-    onUpdateClientIntergrations {
+  subscription OnUpdateClientIntergrations(
+    $filter: ModelSubscriptionClientIntergrationsFilterInput
+    $clientId: String
+  ) {
+    onUpdateClientIntergrations(filter: $filter, clientId: $clientId) {
       id
       clientId
       tenantId
@@ -126,8 +153,11 @@ export const onUpdateClientIntergrations = /* GraphQL */ `
   }
 `;
 export const onDeleteClientIntergrations = /* GraphQL */ `
-  subscription OnDeleteClientIntergrations {
-    onDeleteClientIntergrations {
+  subscription OnDeleteClientIntergrations(
+    $filter: ModelSubscriptionClientIntergrationsFilterInput
+    $clientId: String
+  ) {
+    onDeleteClientIntergrations(filter: $filter, clientId: $clientId) {
       id
       clientId
       tenantId
@@ -140,8 +170,11 @@ export const onDeleteClientIntergrations = /* GraphQL */ `
   }
 `;
 export const onCreateClientUserWhitelisting = /* GraphQL */ `
-  subscription OnCreateClientUserWhitelisting {
-    onCreateClientUserWhitelisting {
+  subscription OnCreateClientUserWhitelisting(
+    $filter: ModelSubscriptionClientUserWhitelistingFilterInput
+    $clientId: String
+  ) {
+    onCreateClientUserWhitelisting(filter: $filter, clientId: $clientId) {
       id
       clientId
       displayName
@@ -161,8 +194,11 @@ export const onCreateClientUserWhitelisting = /* GraphQL */ `
   }
 `;
 export const onUpdateClientUserWhitelisting = /* GraphQL */ `
-  subscription OnUpdateClientUserWhitelisting {
-    onUpdateClientUserWhitelisting {
+  subscription OnUpdateClientUserWhitelisting(
+    $filter: ModelSubscriptionClientUserWhitelistingFilterInput
+    $clientId: String
+  ) {
+    onUpdateClientUserWhitelisting(filter: $filter, clientId: $clientId) {
       id
       clientId
       displayName
@@ -182,8 +218,11 @@ export const onUpdateClientUserWhitelisting = /* GraphQL */ `
   }
 `;
 export const onDeleteClientUserWhitelisting = /* GraphQL */ `
-  subscription OnDeleteClientUserWhitelisting {
-    onDeleteClientUserWhitelisting {
+  subscription OnDeleteClientUserWhitelisting(
+    $filter: ModelSubscriptionClientUserWhitelistingFilterInput
+    $clientId: String
+  ) {
+    onDeleteClientUserWhitelisting(filter: $filter, clientId: $clientId) {
       id
       clientId
       displayName
@@ -203,8 +242,11 @@ export const onDeleteClientUserWhitelisting = /* GraphQL */ `
   }
 `;
 export const onCreateClientCallLogs = /* GraphQL */ `
-  subscription OnCreateClientCallLogs {
-    onCreateClientCallLogs {
+  subscription OnCreateClientCallLogs(
+    $filter: ModelSubscriptionClientCallLogsFilterInput
+    $tenantId: String
+  ) {
+    onCreateClientCallLogs(filter: $filter, tenantId: $tenantId) {
       RecordingId
       tenantId
       callId
@@ -223,8 +265,11 @@ export const onCreateClientCallLogs = /* GraphQL */ `
   }
 `;
 export const onUpdateClientCallLogs = /* GraphQL */ `
-  subscription OnUpdateClientCallLogs {
-    onUpdateClientCallLogs {
+  subscription OnUpdateClientCallLogs(
+    $filter: ModelSubscriptionClientCallLogsFilterInput
+    $tenantId: String
+  ) {
+    onUpdateClientCallLogs(filter: $filter, tenantId: $tenantId) {
       RecordingId
       tenantId
       callId
@@ -243,8 +288,11 @@ export const onUpdateClientCallLogs = /* GraphQL */ `
   }
 `;
 export const onDeleteClientCallLogs = /* GraphQL */ `
-  subscription OnDeleteClientCallLogs {
-    onDeleteClientCallLogs {
+  subscription OnDeleteClientCallLogs(
+    $filter: ModelSubscriptionClientCallLogsFilterInput
+    $tenantId: String
+  ) {
+    onDeleteClientCallLogs(filter: $filter, tenantId: $tenantId) {
       RecordingId
       tenantId
       callId
@@ -263,8 +311,11 @@ export const onDeleteClientCallLogs = /* GraphQL */ `
   }
 `;
 export const onCreatePresolvedAudit = /* GraphQL */ `
-  subscription OnCreatePresolvedAudit {
-    onCreatePresolvedAudit {
+  subscription OnCreatePresolvedAudit(
+    $filter: ModelSubscriptionPresolvedAuditFilterInput
+    $tenantId: String
+  ) {
+    onCreatePresolvedAudit(filter: $filter, tenantId: $tenantId) {
       id
       tenantId
       resource
@@ -278,8 +329,11 @@ export const onCreatePresolvedAudit = /* GraphQL */ `
   }
 `;
 export const onUpdatePresolvedAudit = /* GraphQL */ `
-  subscription OnUpdatePresolvedAudit {
-    onUpdatePresolvedAudit {
+  subscription OnUpdatePresolvedAudit(
+    $filter: ModelSubscriptionPresolvedAuditFilterInput
+    $tenantId: String
+  ) {
+    onUpdatePresolvedAudit(filter: $filter, tenantId: $tenantId) {
       id
       tenantId
       resource
@@ -293,8 +347,11 @@ export const onUpdatePresolvedAudit = /* GraphQL */ `
   }
 `;
 export const onDeletePresolvedAudit = /* GraphQL */ `
-  subscription OnDeletePresolvedAudit {
-    onDeletePresolvedAudit {
+  subscription OnDeletePresolvedAudit(
+    $filter: ModelSubscriptionPresolvedAuditFilterInput
+    $tenantId: String
+  ) {
+    onDeletePresolvedAudit(filter: $filter, tenantId: $tenantId) {
       id
       tenantId
       resource

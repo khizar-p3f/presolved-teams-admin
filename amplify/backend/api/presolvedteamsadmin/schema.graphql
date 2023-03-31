@@ -3,7 +3,18 @@
 input AMPLIFY {
   globalAuthRule: AuthRule = { allow: public }
 } # FOR TESTING ONLY!
-type clientSignup @model {
+type clientSignup
+  @model
+  @auth(
+    rules: [
+      { allow: owner, ownerField: "clientId", operations: [read] }
+      {
+        allow: groups
+        groups: ["p3fAdmin"]
+        operations: [read, create, update, delete]
+      }
+    ]
+  ) {
   id: ID!
   name: String!
   email: String!
@@ -16,7 +27,28 @@ type clientSignup @model {
   country: String!
 }
 
-type clientUsers @model {
+type clientUsers
+  @model
+  @auth(
+    rules: [
+      {
+        allow: owner
+        ownerField: "clientId"
+        operations: [read, create, update, delete]
+      }
+      {
+        allow: groups
+        groups: ["tenantAdmin"]
+        operations: [read, create, update, delete]
+      }
+      { allow: groups, groups: ["tenantUser"], operations: [read] }
+      {
+        allow: groups
+        groups: ["p3fAdmin"]
+        operations: [read, create, update, delete]
+      }
+    ]
+  ) {
   id: ID!
   clientId: String!
   name: String!
@@ -25,7 +57,27 @@ type clientUsers @model {
   status: Int!
 }
 
-type clientIntergrations @model {
+type clientIntergrations
+  @model
+  @auth(
+    rules: [
+      {
+        allow: owner
+        ownerField: "clientId"
+        operations: [read, create, update, delete]
+      }
+      {
+        allow: groups
+        groups: ["tenantAdmin"]
+        operations: [read, create, update, delete]
+      }
+      {
+        allow: groups
+        groups: ["p3fAdmin"]
+        operations: [read, create, update, delete]
+      }
+    ]
+  ) {
   id: ID!
   clientId: String!
   tenantId: String!
@@ -34,7 +86,27 @@ type clientIntergrations @model {
   attributes: AWSJSON!
 }
 
-type clientUserWhitelisting @model {
+type clientUserWhitelisting
+  @model
+  @auth(
+    rules: [
+      {
+        allow: owner
+        ownerField: "clientId"
+        operations: [read, create, update, delete]
+      }
+      {
+        allow: groups
+        groups: ["tenantAdmin"]
+        operations: [read, create, update, delete]
+      }
+      {
+        allow: groups
+        groups: ["p3fAdmin"]
+        operations: [read, create, update, delete]
+      }
+    ]
+  ) {
   id: ID!
   clientId: String!
   displayName: String!
@@ -50,7 +122,19 @@ type clientUserWhitelisting @model {
   uid: String!
 }
 
-type ClientCallLogs @model {
+type ClientCallLogs
+  @model
+  @auth(
+    rules: [
+      { allow: owner, ownerField: "tenantId", operations: [read] }
+      { allow: groups, groups: ["tenantAdmin"], operations: [read] }
+      {
+        allow: groups
+        groups: ["p3fAdmin"]
+        operations: [read, create, update, delete]
+      }
+    ]
+  ) {
   RecordingId: String!
   tenantId: ID! @index(name: "byTenantId", sortKeyFields: ["contactId"])
   callId: ID! @primaryKey
@@ -65,11 +149,19 @@ type ClientCallLogs @model {
   calleeNumber: String!
 }
 
-type PresolvedAudit @model {
+type PresolvedAudit
+  @model
+  @auth(
+    rules: [
+      { allow: owner, ownerField: "tenantId", operations: [read, create] }
+      { allow: groups, groups: ["tenantAdmin"], operations: [read, create] }
+      { allow: groups, groups: ["p3fAdmin"], operations: [read, create] }
+    ]
+  ) {
   id: ID!
   tenantId: String!
   resource: String!
-  action: String!  
+  action: String!
   byUser: String!
   byDateTime: AWSDateTime!
   changesMade: AWSJSON

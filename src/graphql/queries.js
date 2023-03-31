@@ -16,6 +16,7 @@ export const getClientSignup = /* GraphQL */ `
       country
       createdAt
       updatedAt
+      clientId
     }
   }
 `;
@@ -39,6 +40,7 @@ export const listClientSignups = /* GraphQL */ `
         country
         createdAt
         updatedAt
+        clientId
       }
       nextToken
     }

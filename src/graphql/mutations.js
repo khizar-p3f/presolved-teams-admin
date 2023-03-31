@@ -19,6 +19,7 @@ export const createClientSignup = /* GraphQL */ `
       country
       createdAt
       updatedAt
+      clientId
     }
   }
 `;
@@ -40,6 +41,7 @@ export const updateClientSignup = /* GraphQL */ `
       country
       createdAt
       updatedAt
+      clientId
     }
   }
 `;
@@ -61,6 +63,7 @@ export const deleteClientSignup = /* GraphQL */ `
       country
       createdAt
       updatedAt
+      clientId
     }
   }
 `;
