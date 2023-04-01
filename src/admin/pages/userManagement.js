@@ -6,9 +6,16 @@ import './management.less'
 
 const { confirm } = Modal;
 
-const TenantsAdminManagement = () => {
-
+const UserManagement = (props) => {
+    const { client } = props
+    const [state, setState] = useState({
+        isLoaded: false,
+        clientId: null
+    })
     useEffect(() => {
+        if (client.clientId) {
+            setState({ ...state, isLoaded: true, clientId: client.clientId, ...client })
+        }
         getTenantList();
     }, [])
 
@@ -51,9 +58,8 @@ const TenantsAdminManagement = () => {
                     let attributes = response.Users[i].Attributes;
                     var email = getValue(attributes, 'email')
                     var name = getValue(attributes, 'name')
-                    var company = getValue(attributes, 'company')
                     var tenantId = getValue(attributes, 'custom:tenantId')
-                    getlistGroupsForTenant(response.Users[i].Username, email, name, company, tenantId);
+                    getlistGroupsForTenant(response.Users[i].Username, email, name, tenantId);
                 }
             })
             .catch((error) => {
@@ -69,7 +75,7 @@ const TenantsAdminManagement = () => {
         }
     }
 
-    const getlistGroupsForTenant = async (username, email, name, company, tenantId) => {
+    const getlistGroupsForTenant = async (username, email, name, tenantId) => {
 
         const path = "/listGroupsForUser";
         const myInit = {
@@ -100,16 +106,12 @@ const TenantsAdminManagement = () => {
                     setData(prev => [...prev, {
                         key: username,
                         name: name,
-                        company: "company name",
-                        tenantId: tenantId,
                         email: email,
                         role: role,
                     }])
                     setTableData(prev => [...prev, {
                         key: username,
                         name: name,
-                        company: "company name",
-                        tenantId: tenantId,
                         email: email,
                         role: role,
                     }])
@@ -149,7 +151,6 @@ const TenantsAdminManagement = () => {
         const password = values.password;
         const role = values.role;
         const phone = values.phone
-        const company = values.company
 
         const path = "/users";
 
@@ -164,10 +165,6 @@ const TenantsAdminManagement = () => {
                         Name: "name",
                         Value: name,
                     },
-                    // {
-                    //     Name: "company",
-                    //     Value: company,
-                    // },
                     // {
                     //     Name: "phone_number",
                     //     Value: phone,
@@ -352,16 +349,6 @@ const TenantsAdminManagement = () => {
             sorter: (a, b) => a.name.localeCompare(b.name)
         },
         {
-            title: 'Tenant Id',
-            dataIndex: 'tenantId',
-            key: 'tenantId',
-        },
-        {
-            title: 'Company',
-            dataIndex: 'company',
-            key: 'company',
-        },
-        {
             title: 'Email',
             dataIndex: 'email',
             key: 'email',
@@ -381,12 +368,12 @@ const TenantsAdminManagement = () => {
                         <Breadcrumb>
                             <Breadcrumb.Item>Home</Breadcrumb.Item>
                             <Breadcrumb.Item>Admin</Breadcrumb.Item>
-                            <Breadcrumb.Item>Tenants admin management</Breadcrumb.Item>
+                            <Breadcrumb.Item>Users management</Breadcrumb.Item>
                         </Breadcrumb>
                     </Col>
                 </Row>
                 <Row className='topic-container' justify="space-between">
-                    <Typography.Title level={3} > Tenants Admin Management </Typography.Title>
+                    <Typography.Title level={3} > Users Management </Typography.Title>
                     <Space>
                         <Input
                             placeholder="Search here"
@@ -395,7 +382,7 @@ const TenantsAdminManagement = () => {
                                 const currValue = e.target.value;
                                 setSearchValue(currValue);
                                 const filteredData = data.filter(entry =>
-                                    entry.email.toLowerCase().includes(currValue.toLowerCase()) || entry.role.toLowerCase().includes(currValue.toLowerCase()) || entry.name.toLowerCase().includes(currValue.toLowerCase()) ||  entry.company.toLowerCase().includes(currValue.toLowerCase())||  entry.tenantId.toLowerCase().includes(currValue.toLowerCase())
+                                    entry.email.toLowerCase().includes(currValue.toLowerCase()) || entry.role.toLowerCase().includes(currValue.toLowerCase()) || entry.name.toLowerCase().includes(currValue.toLowerCase()) 
                                 );
                                 setTableData(filteredData);
                             }}
@@ -453,20 +440,6 @@ const TenantsAdminManagement = () => {
                         </Form.Item>
 
                         <Form.Item
-                            label="Company"
-                            name="company"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Please provide your company!',
-                                },
-                            ]}
-
-                        >
-                            <Input />
-                        </Form.Item>
-
-                        <Form.Item
                             label="Email"
                             name="email"
                             rules={[
@@ -489,7 +462,7 @@ const TenantsAdminManagement = () => {
                             rules={[
                                 {
                                     required: true,
-                                    message: 'Please input your company Phone!'
+                                    message: 'Please input your Phone!'
                                 },
                                 {
                                     pattern: new RegExp(/^\+((?:9[679]|8[035789]|6[789]|5[90]|42|3[578]|2[1-689])|9[0-58]|8[1246]|6[0-6]|5[1-8]|4[013-9]|3[0-469]|2[70]|7|1)(?:\W*\d){0,13}\d$/),
@@ -601,4 +574,4 @@ const TenantsAdminManagement = () => {
     );
 }
 
-export default TenantsAdminManagement;
+export default UserManagement;
