@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Breadcrumb, Button, Col, Form, Row, Typography, Input, Select, Space, Modal, notification, Table } from 'antd';
 import { UserAddOutlined, UserDeleteOutlined, ExclamationCircleFilled } from '@ant-design/icons';
 import { API, Auth } from "aws-amplify";
-import './management.less'
+import './management.less';
+import { getClientSignupUserList, createSignup } from '../api/index';
 
 const { confirm } = Modal;
 
@@ -25,86 +26,35 @@ const TenantsManagement = () => {
     //-----------------Get User List Functionalities---------------------------------
 
     const getTenantList = async () => {
-        const path = "/listUsers";
-        const myInit = {
-            headers: {
-                Authorization: `Bearer ${(await Auth.currentSession())
-                    .getAccessToken()
-                    .getJwtToken()}`,
-            },
-        };
-
-        API.get(apiName, path, myInit)
-            .then((response) => {
-                console.log("Response from ListUsers API is ", response.Users);
-
-                //Data for grid view
-                for (let i = 0; i < Object.keys(response.Users).length; i++) {
-                    let attributes = response.Users[i].Attributes;
-                    var email = getValue(attributes, 'email')
-                    var name = getValue(attributes, 'name')
-                    var company = getValue(attributes, 'company')
-                    var tenantId = getValue(attributes, 'custom:tenantId')
-                    getlistGroupsForTenant(response.Users[i].Username, email, name, company, tenantId);
-                }
-            })
-            .catch((error) => {
-                console.log(error.response);
-            });
-    }
-
-    const getValue = (attributes, value) => {
-        for (let j = 0; j < Object.keys(attributes).length; j++) {
-            if (attributes[j].Name == value) {
-                return attributes[j].Value
+        getClientSignupUserList().then((res) => {
+            let data = res.listClientSignups.items
+            for (let i = 0; i < Object.keys(data).length; i++) {
+                setData(prev => [...prev, {
+                    key: data[i].id,
+                    name: data[i].name,
+                    company: data[i].company,
+                    tenantId: data[i].id,
+                    email: data[i].email,
+                    phone: data[i].phone
+                }])
+                setTableData(prev => [...prev, {
+                    key: data[i].id,
+                    name: data[i].name,
+                    company: data[i].company,
+                    tenantId: data[i].id,
+                    email: data[i].email,
+                    phone: data[i].phone
+                }])
             }
-        }
-    }
-
-    const getlistGroupsForTenant = async (username, email, name, company, tenantId) => {
-
-        const path = "/listGroupsForUser";
-        const myInit = {
-            headers: {
-                Authorization: `Bearer ${(await Auth.currentSession())
-                    .getAccessToken()
-                    .getJwtToken()}`,
-            },
-            queryStringParameters: {
-                username: username
-            }
-        };
-
-        API.get(apiName, path, myInit)
-            .then((response) => {
-                console.log("Response from listGroupsForUser API is ", response);
-                var role = "";
-                if (response.Groups[0].GroupName === 'tenantAdmin')
-                    role = 'Admin';
-                else {
-                    role = null;
-                }
-                if (role !== null) {
-                    setData(prev => [...prev, {
-                        key: username,
-                        name: name,
-                        company: "company name",
-                        tenantId: tenantId,
-                        email: email,
-                    }])
-                    setTableData(prev => [...prev, {
-                        key: username,
-                        name: name,
-                        company: "company name",
-                        tenantId: tenantId,
-                        email: email,
-                    }])
-                }
+        }).catch((err) => {
+            notification.error({
+                message: 'Error',
+                description: 'Error while fetching list'
             })
-            .catch((error) => {
-                console.log(error.response);
-            });
+        })
     }
+
+
     //-------------------Create User Functionalities-------------
 
     const showCreateModal = () => {
@@ -112,7 +62,6 @@ const TenantsManagement = () => {
     }
 
     const handleCreateSubmit = (values) => {
-        console.log(values)
         setCreateModalVisible(false)
         createTenant(values)
     }
@@ -126,17 +75,28 @@ const TenantsManagement = () => {
         console.log('Failed:', errorInfo);
     };
 
+    const randomPasswordGenerator = () => {
+        var length = 8,
+            charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+~`|}{[]\:;?><,./-=",
+            retVal = "";
+        for (var i = 0, n = charset.length; i < length; ++i) {
+            retVal += charset.charAt(Math.floor(Math.random() * n));
+        }
+        return retVal;
+    }
+
+
 
     async function createTenant(values) {
         //Get Values from form
 
         const name = values.name;
         const email = values.email;
-        const password = values.password;
+        const password = randomPasswordGenerator();
         const role = "tenantAdmin";
         const phone = values.phone
         const company = values.company
-
+        console.log('password',password)
         const path = "/users";
 
         const myInit = {
@@ -172,11 +132,22 @@ const TenantsManagement = () => {
         };
         API.post(apiName, path, myInit)
             .then((response) => {
-                console.log("Response from CreateTenant API is ", response);
-                notification.success({
-                    message: 'Success',
-                    description: 'Tenant created successfully',
-                });
+                console.log("Response from CreateTenant API in Cognito is ", response);
+                // if signup is successful in cognito, create a signup record in dynamodb
+                createSignup({
+                    name: name,
+                    company: company,
+                    email: email,
+                    phone: phone,
+                    role: role,
+                }).then((data) => {
+                    notification.success({
+                        message: 'Success',
+                        description: 'Please check your email for verification code'
+                    })
+                }).catch((err) => {
+                    throw err;
+                })
                 setTableData([]);
                 getTenantList();
                 form.resetFields()
@@ -195,11 +166,8 @@ const TenantsManagement = () => {
 
     const removeTenant = async (selectedRow, check) => {
 
-        var role = selectedRow.role;
+        var role = 'tenantAdmin';
         var username = selectedRow.email;
-        if (selectedRow.role === 'Admin')
-            role = 'tenantAdmin';
-
         const path = "/removeUserFromGroup";
         const myInit = {
             body: {
@@ -281,6 +249,11 @@ const TenantsManagement = () => {
             dataIndex: 'email',
             key: 'email',
         },
+        {
+            title: 'Phone',
+            dataIndex: 'phone',
+            key: 'phone',
+        },
     ];
 
     return (
@@ -314,7 +287,7 @@ const TenantsManagement = () => {
                             }}
                         />
                         <Button type='primary' size='large' onClick={showCreateModal}><UserAddOutlined />Add</Button>
-                        <Button type='primary' size='large' onClick={showRemoveConfirm}><UserDeleteOutlined />Remove</Button>
+                        <Button type='primary' size='large' onClick={showRemoveConfirm}><UserDeleteOutlined />Disable</Button>
                     </Space>
                 </Row>
                 <Row >
@@ -331,7 +304,24 @@ const TenantsManagement = () => {
                         />
                     </Col>
                 </Row>
-                <Modal title={<h3> Create Tenant</h3>} className='CreateModal' open={createModalVisible} onOk={form.submit} onCancel={handleCreateCancel} >
+                <Modal
+                    title={<h3>Onboarding Tenant</h3>}
+                    className='CreateModal'
+                    open={createModalVisible}
+                    onOk={form.submit}
+                    onCancel={handleCreateCancel}
+                    footer={[
+                        <Button
+                            type="default"
+                            onClick={handleCreateCancel}
+                        >
+                            Cancel
+                        </Button>,
+                        <Button key="submit" type="primary" onClick={form.submit}>
+                            Save
+                        </Button>
+                    ]}
+                >
                     <Form
                         form={form}
                         name="createForm"
@@ -410,32 +400,6 @@ const TenantsManagement = () => {
                             ]}>
                             <Input datatype='number' />
                         </Form.Item>
-
-                        <Form.Item
-                            label="Password"
-                            name="password"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Please provide your password!',
-                                },
-                                {
-                                    validator: (_, value) => {
-                                        if (strongRegex.test(value)) {
-                                            return Promise.resolve();
-                                        } else if (mediumRegex.test(value)) {
-                                            return Promise.reject('Password strength : fair');
-                                        }
-                                        else {
-                                            return Promise.reject('Password strength is weak. Include aphabets/numbers/special characters');
-                                        }
-                                    }
-                                }
-                            ]}
-                        >
-                            <Input.Password />
-                        </Form.Item>
-
                     </Form>
                 </Modal>
 

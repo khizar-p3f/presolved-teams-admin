@@ -10,7 +10,6 @@ const { confirm } = Modal;
 const UsersManagement = () => {
 
     useEffect(() => {
-        //updateUser();
         getUsersList();
     }, [])
 
@@ -146,12 +145,12 @@ const UsersManagement = () => {
 
     async function createUser(values) {
         //Get Values from form
-
+console.log('values',values)
         const name = values.name;
         const email = values.email;
         const password = values.password;
         const role = values.role;
-        const phone = values.phone
+        const phone = '+919655678788'
 
         const path = "/users";
 
@@ -162,6 +161,7 @@ const UsersManagement = () => {
                 password: password,
                 groupname: role,
                 userAttributes: JSON.stringify([
+                    
                     // {
                     //     Name: "phone_number",
                     //     Value: phone,
@@ -307,15 +307,11 @@ const UsersManagement = () => {
     }
 
     const UpdateUserRole = async (values) => {
-
         var username = formValues.email
         var role = values.role
-
         // removing user from the previous group
         let selectedRow = { 'email': username, 'role': formValues.role, 'newRole': role }
         removeUser(selectedRow, true);
-        // Adding the user in the new group
-
     }
 
     const handleEditSubmit = (values) => {
@@ -370,7 +366,7 @@ const UsersManagement = () => {
                     </Col>
                 </Row>
                 <Row className='topic-container' justify="space-between">
-                    <Typography.Title level={3} > Users Management </Typography.Title>
+                    <Typography.Title level={3} > Presolved Users </Typography.Title>
                     <Space>
                         <Input
                             placeholder="Search here"
