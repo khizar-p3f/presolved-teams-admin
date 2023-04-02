@@ -22,16 +22,38 @@
       "providerPlugin": "awscloudformation",
       "service": "API Gateway"
     },
+    "PresolvedClientAPI": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "MSTeamsClientsAPI"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    },
     "presolvedteamsadmin": {
-      "dependsOn": [],
+      "dependsOn": [
+        {
+          "attributes": [
+            "UserPoolId"
+          ],
+          "category": "auth",
+          "resourceName": "presolvedteamsadmine76efdae"
+        }
+      ],
       "output": {
         "authConfig": {
           "additionalAuthenticationProviders": [],
           "defaultAuthentication": {
-            "apiKeyConfig": {
-              "apiKeyExpirationDays": 7
-            },
-            "authenticationType": "API_KEY"
+            "authenticationType": "AMAZON_COGNITO_USER_POOLS",
+            "userPoolConfig": {
+              "userPoolId": "authpresolvedteamsadmine76efdae"
+            }
           }
         }
       },
@@ -69,14 +91,14 @@
     "userPoolGroups": {
       "dependsOn": [
         {
+          "category": "auth",
+          "resourceName": "presolvedteamsadmine76efdae",
           "attributes": [
             "UserPoolId",
             "AppClientIDWeb",
             "AppClientID",
             "IdentityPoolId"
-          ],
-          "category": "auth",
-          "resourceName": "presolvedteamsadmine76efdae"
+          ]
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -97,13 +119,26 @@
       ],
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
+    },
+    "MSTeamsClientsAPI": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "GraphQLAPIIdOutput"
+          ],
+          "category": "api",
+          "resourceName": "presolvedteamsadmin"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
     }
   },
   "hosting": {
-    "amplifyhosting": {
+    "S3AndCloudFront": {
       "providerPlugin": "awscloudformation",
-      "service": "amplifyhosting",
-      "type": "manual"
+      "service": "S3AndCloudFront"
     }
   },
   "parameters": {
@@ -123,19 +158,35 @@
         }
       ]
     },
-    "AMPLIFY_hosting_amplifyhosting_appId": {
+    "AMPLIFY_function_MSTeamsClientsAPI_callManagerUrl": {
       "usedBy": [
         {
-          "category": "hosting",
-          "resourceName": "amplifyhosting"
+          "category": "function",
+          "resourceName": "MSTeamsClientsAPI"
         }
       ]
     },
-    "AMPLIFY_hosting_amplifyhosting_type": {
+    "AMPLIFY_function_MSTeamsClientsAPI_deploymentBucketName": {
       "usedBy": [
         {
-          "category": "hosting",
-          "resourceName": "amplifyhosting"
+          "category": "function",
+          "resourceName": "MSTeamsClientsAPI"
+        }
+      ]
+    },
+    "AMPLIFY_function_MSTeamsClientsAPI_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "MSTeamsClientsAPI"
+        }
+      ]
+    },
+    "AMPLIFY_function_MSTeamsClientsAPI_secretsPathAmplifyAppId": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "MSTeamsClientsAPI"
         }
       ]
     }

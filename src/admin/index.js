@@ -17,6 +17,7 @@ import { updateClient, updateClientConfig, updateWhiteListedUsers } from '../sto
 import { getClientIntegration, getUsersWhiteListing } from './api';
 import TeamsIntegration from './pages/teamsIntegration';
 import TeamsUsersWhitelisting from './pages/usersWhitelist';
+import UserManagement from './pages/userManagement';
 
 
 const AdminIndexPage = (props) => {
@@ -76,6 +77,7 @@ const AdminIndexPage = (props) => {
                                 <AdminLoginPage path="/signup" />
                                 <TeamsIntegration path="/teams-integration" client={client} />
                                 <TeamsUsersWhitelisting path="/teams-users-whitelisting" client={client} />
+                                <UserManagement path="/user-management" client={client}/>
                             </Router>
                         </Content>
                         :

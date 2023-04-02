@@ -1,8 +1,20 @@
 # This "input" configures a global authorization rule to enable public access to
 # all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
-input AMPLIFY { globalAuthRule: AuthRule = { allow: public } } # FOR TESTING ONLY!
-
-type clientSignup @model {
+input AMPLIFY {
+  globalAuthRule: AuthRule = { allow: public }
+} # FOR TESTING ONLY!
+type clientSignup
+  @model
+  @auth(
+    rules: [
+      { allow: owner, ownerField: "clientId", operations: [read] }
+      {
+        allow: groups
+        groups: ["p3fAdmin"]
+        operations: [read, create, update, delete]
+      }
+    ]
+  ) {
   id: ID!
   name: String!
   email: String!
@@ -12,10 +24,31 @@ type clientSignup @model {
   city: String!
   state: String!
   zip: String!
-  country: String! 
+  country: String!
 }
 
-type clientUsers @model {
+type clientUsers
+  @model
+  @auth(
+    rules: [
+      {
+        allow: owner
+        ownerField: "clientId"
+        operations: [read, create, update, delete]
+      }
+      {
+        allow: groups
+        groups: ["tenantAdmin"]
+        operations: [read, create, update, delete]
+      }
+      { allow: groups, groups: ["tenantUser"], operations: [read] }
+      {
+        allow: groups
+        groups: ["p3fAdmin"]
+        operations: [read, create, update, delete]
+      }
+    ]
+  ) {
   id: ID!
   clientId: String!
   name: String!
@@ -24,7 +57,27 @@ type clientUsers @model {
   status: Int!
 }
 
-type clientIntergrations @model {
+type clientIntergrations
+  @model
+  @auth(
+    rules: [
+      {
+        allow: owner
+        ownerField: "clientId"
+        operations: [read, create, update, delete]
+      }
+      {
+        allow: groups
+        groups: ["tenantAdmin"]
+        operations: [read, create, update, delete]
+      }
+      {
+        allow: groups
+        groups: ["p3fAdmin"]
+        operations: [read, create, update, delete]
+      }
+    ]
+  ) {
   id: ID!
   clientId: String!
   tenantId: String!
@@ -33,7 +86,27 @@ type clientIntergrations @model {
   attributes: AWSJSON!
 }
 
-type clientUserWhitelisting @model {
+type clientUserWhitelisting
+  @model
+  @auth(
+    rules: [
+      {
+        allow: owner
+        ownerField: "clientId"
+        operations: [read, create, update, delete]
+      }
+      {
+        allow: groups
+        groups: ["tenantAdmin"]
+        operations: [read, create, update, delete]
+      }
+      {
+        allow: groups
+        groups: ["p3fAdmin"]
+        operations: [read, create, update, delete]
+      }
+    ]
+  ) {
   id: ID!
   clientId: String!
   displayName: String!
@@ -47,4 +120,49 @@ type clientUserWhitelisting @model {
   surname: String!
   userPrincipalName: String!
   uid: String!
+}
+
+type ClientCallLogs
+  @model
+  @auth(
+    rules: [
+      { allow: owner, ownerField: "tenantId", operations: [read] }
+      { allow: groups, groups: ["tenantAdmin"], operations: [read] }
+      {
+        allow: groups
+        groups: ["p3fAdmin"]
+        operations: [read, create, update, delete]
+      }
+    ]
+  ) {
+  RecordingId: String!
+  tenantId: ID! @index(name: "byTenantId", sortKeyFields: ["contactId"])
+  callId: ID! @primaryKey
+  contactId: ID!
+  callType: String!
+  callStatus: String!
+  callStartTime: AWSDateTime!
+  callEndTime: AWSDateTime!
+  callDuration: Int!
+  charge: Float!
+  callerNumber: String!
+  calleeNumber: String!
+}
+
+type PresolvedAudit
+  @model
+  @auth(
+    rules: [
+      { allow: owner, ownerField: "tenantId", operations: [read, create] }
+      { allow: groups, groups: ["tenantAdmin"], operations: [read, create] }
+      { allow: groups, groups: ["p3fAdmin"], operations: [read, create] }
+    ]
+  ) {
+  id: ID!
+  tenantId: String!
+  resource: String!
+  action: String!
+  byUser: String!
+  byDateTime: AWSDateTime!
+  changesMade: AWSJSON
 }

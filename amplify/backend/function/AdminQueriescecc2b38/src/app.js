@@ -47,7 +47,7 @@ app.use((req, res, next) => {
 
 // Only perform tasks if the user is in a specific group
 const allowedGroup = process.env.GROUP;
-
+const allowedGroup2 = "tenantAdmin";
 const checkGroup = function (req, res, next) {
   if (req.path == "/signUserOut") {
     return next();
@@ -63,7 +63,7 @@ const checkGroup = function (req, res, next) {
       req.apiGateway.event.requestContext.authorizer.claims[
         "cognito:groups"
       ].split(",");
-    if (!(allowedGroup && groups.indexOf(allowedGroup) > -1)) {
+    if (!(allowedGroup2 || allowedGroup && groups.indexOf(allowedGroup) > -1 ))  {
       const err = new Error(
         `User does not have permissions to perform administrative tasks`
       );

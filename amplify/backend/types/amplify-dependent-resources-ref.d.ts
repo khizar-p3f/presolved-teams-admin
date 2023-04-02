@@ -1,41 +1,64 @@
 export type AmplifyDependentResourcesAttributes = {
-  "api": {
-    "AdminQueries": {
-      "ApiId": "string",
-      "ApiName": "string",
-      "RootUrl": "string"
+    "api": {
+        "AdminQueries": {
+            "RootUrl": "string",
+            "ApiName": "string",
+            "ApiId": "string"
+        },
+        "presolvedteamsadmin": {
+            "GraphQLAPIIdOutput": "string",
+            "GraphQLAPIEndpointOutput": "string"
+        },
+        "PresolvedClientAPI": {
+            "RootUrl": "string",
+            "ApiName": "string",
+            "ApiId": "string"
+        }
     },
-    "presolvedteamsadmin": {
-      "GraphQLAPIEndpointOutput": "string",
-      "GraphQLAPIIdOutput": "string",
-      "GraphQLAPIKeyOutput": "string"
-    }
-  },
-  "auth": {
-    "presolvedteamsadmine76efdae": {
-      "AppClientID": "string",
-      "AppClientIDWeb": "string",
-      "IdentityPoolId": "string",
-      "IdentityPoolName": "string",
-      "UserPoolArn": "string",
-      "UserPoolId": "string",
-      "UserPoolName": "string"
+    "auth": {
+        "presolvedteamsadmine76efdae": {
+            "IdentityPoolId": "string",
+            "IdentityPoolName": "string",
+            "UserPoolId": "string",
+            "UserPoolArn": "string",
+            "UserPoolName": "string",
+            "AppClientIDWeb": "string",
+            "AppClientID": "string"
+        },
+        "userPoolGroups": {
+            "p3fAdminGroupRole": "string",
+            "p3fSupportGroupRole": "string",
+            "tenantAdminGroupRole": "string",
+            "tenantSupervisorGroupRole": "string",
+            "tenantUserGroupRole": "string"
+        }
     },
-    "userPoolGroups": {
-      "p3fAdminGroupRole": "string",
-      "p3fSupportGroupRole": "string",
-      "tenantAdminGroupRole": "string",
-      "tenantSupervisorGroupRole": "string",
-      "tenantUserGroupRole": "string"
+    "function": {
+        "AdminQueriescecc2b38": {
+            "Name": "string",
+            "Arn": "string",
+            "Region": "string",
+            "LambdaExecutionRole": "string",
+            "LambdaExecutionRoleArn": "string"
+        },
+        "MSTeamsClientsAPI": {
+            "Name": "string",
+            "Arn": "string",
+            "Region": "string",
+            "LambdaExecutionRole": "string",
+            "LambdaExecutionRoleArn": "string"
+        }
+    },
+    "hosting": {
+        "S3AndCloudFront": {
+            "Region": "string",
+            "HostingBucketName": "string",
+            "WebsiteURL": "string",
+            "S3BucketSecureURL": "string",
+            "CloudFrontDistributionID": "string",
+            "CloudFrontDomainName": "string",
+            "CloudFrontSecureURL": "string",
+            "CloudFrontOriginAccessIdentity": "string"
+        }
     }
-  },
-  "function": {
-    "AdminQueriescecc2b38": {
-      "Arn": "string",
-      "LambdaExecutionRole": "string",
-      "LambdaExecutionRoleArn": "string",
-      "Name": "string",
-      "Region": "string"
-    }
-  }
 }

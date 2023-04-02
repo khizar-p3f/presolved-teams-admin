@@ -28,6 +28,11 @@ const items = [
         icon: <DesktopOutlined />,
         label: 'Settings',
     },
+    {
+        key: 'userManagement',
+        icon: <UserOutlined />,
+        label: <Link to="/user-management">Users Management</Link>,
+    },
 
     {
         key: 'code',

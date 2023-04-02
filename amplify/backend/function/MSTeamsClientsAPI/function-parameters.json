@@ -1,0 +1,22 @@
+{
+  "lambdaLayers": [],
+  "secretNames": [
+    "CallManagerAPIKey"
+  ],
+  "environmentVariableList": [
+    {
+      "cloudFormationParameterName": "callManagerUrl",
+      "environmentVariableName": "CallManagerURL"
+    }
+  ],
+  "permissions": {
+    "storage": {
+      "PresolvedAudit:@model(appsync)": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ]
+    }
+  }
+}
