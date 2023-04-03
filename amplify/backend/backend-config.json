@@ -100,14 +100,14 @@
     "userPoolGroups": {
       "dependsOn": [
         {
+          "category": "auth",
+          "resourceName": "presolvedteamsadmine76efdae",
           "attributes": [
             "UserPoolId",
             "AppClientIDWeb",
             "AppClientID",
             "IdentityPoolId"
-          ],
-          "category": "auth",
-          "resourceName": "presolvedteamsadmine76efdae"
+          ]
         }
       ],
       "providerPlugin": "awscloudformation",

@@ -29,9 +29,9 @@ const items = [
         label: 'Settings',
     },
     {
-        key: 'tenantAdminManagement',
+        key: 'userManagement',
         icon: <UserOutlined />,
-        label: <Link to="/tenant-admin-management">Tenant Management</Link>,
+        label: <Link to="/user-management">Users Management</Link>,
     },
 
     {
