@@ -1,27 +1,6 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const createClientSignup = /* GraphQL */ `
-  mutation CreateClientSignup(
-    $input: CreateClientSignupInput!
-    $condition: ModelClientSignupConditionInput
-  ) {
-    createClientSignup(input: $input, condition: $condition) {
-      id
-      name
-      email
-      phone
-      company
-      address
-      city
-      state
-      zip
-      country
-      createdAt
-      updatedAt
-    }
-  }
-`;
 export const updateClientSignup = /* GraphQL */ `
   mutation UpdateClientSignup(
     $input: UpdateClientSignupInput!
@@ -59,23 +38,6 @@ export const deleteClientSignup = /* GraphQL */ `
       state
       zip
       country
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const createClientUsers = /* GraphQL */ `
-  mutation CreateClientUsers(
-    $input: CreateClientUsersInput!
-    $condition: ModelClientUsersConditionInput
-  ) {
-    createClientUsers(input: $input, condition: $condition) {
-      id
-      tenantId
-      name
-      email
-      role
-      status
       createdAt
       updatedAt
     }
@@ -356,6 +318,44 @@ export const deletePresolvedAudit = /* GraphQL */ `
       byUser
       byDateTime
       changesMade
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createClientSignup = /* GraphQL */ `
+  mutation CreateClientSignup(
+    $input: CreateClientSignupInput!
+    $condition: ModelClientSignupConditionInput
+  ) {
+    createClientSignup(input: $input, condition: $condition) {
+      id
+      name
+      email
+      phone
+      company
+      address
+      city
+      state
+      zip
+      country
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createClientUsers = /* GraphQL */ `
+  mutation CreateClientUsers(
+    $input: CreateClientUsersInput!
+    $condition: ModelClientUsersConditionInput
+  ) {
+    createClientUsers(input: $input, condition: $condition) {
+      id
+      tenantId
+      name
+      email
+      role
+      status
       createdAt
       updatedAt
     }

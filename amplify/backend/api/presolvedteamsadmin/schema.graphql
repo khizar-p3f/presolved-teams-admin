@@ -13,6 +13,7 @@ type clientSignup
         groups: ["p3fAdmin"]
         operations: [read, create, update, delete]
       }
+      { allow: public, operations: [create, read] }
     ]
   ) {
   id: ID!
@@ -47,6 +48,7 @@ type clientUsers
         groups: ["p3fAdmin"]
         operations: [read, create, update, delete]
       }
+      { allow: public, operations: [create, read] }
     ]
   ) {
   id: ID!

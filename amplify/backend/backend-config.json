@@ -51,7 +51,7 @@
           "additionalAuthenticationProviders": [
             {
               "apiKeyConfig": {
-                "apiKeyExpirationDate": "2024-04-02T04:36:06.374Z",
+                "apiKeyExpirationDate": "2024-04-02T05:35:42.801Z",
                 "apiKeyExpirationDays": 365,
                 "description": "TeamsAdminAPIKey"
               },
@@ -100,14 +100,14 @@
     "userPoolGroups": {
       "dependsOn": [
         {
-          "category": "auth",
-          "resourceName": "presolvedteamsadmine76efdae",
           "attributes": [
             "UserPoolId",
             "AppClientIDWeb",
             "AppClientID",
             "IdentityPoolId"
-          ]
+          ],
+          "category": "auth",
+          "resourceName": "presolvedteamsadmine76efdae"
         }
       ],
       "providerPlugin": "awscloudformation",
