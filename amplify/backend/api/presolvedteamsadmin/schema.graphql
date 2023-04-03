@@ -7,7 +7,12 @@ type clientSignup
   @model
   @auth(
     rules: [
-      { allow: owner, ownerField: "id", operations: [read] }
+      {
+        allow: owner
+        ownerField: "id"
+        operations: [read]
+        identityClaim: "custom:tenantId"
+      }
       {
         allow: groups
         groups: ["p3fAdmin"]
@@ -36,6 +41,7 @@ type clientUsers
         allow: owner
         ownerField: "tenantId"
         operations: [read, create, update, delete]
+        identityClaim: "custom:tenantId"
       }
       {
         allow: groups
@@ -67,6 +73,7 @@ type clientIntergrations
         allow: owner
         ownerField: "tenantId"
         operations: [read, create, update, delete]
+        identityClaim: "custom:tenantId"
       }
       {
         allow: groups
@@ -96,6 +103,7 @@ type clientUserWhitelisting
         allow: owner
         ownerField: "tenantId"
         operations: [read, create, update, delete]
+        identityClaim: "custom:tenantId"
       }
       {
         allow: groups
@@ -128,7 +136,12 @@ type ClientCallLogs
   @model
   @auth(
     rules: [
-      { allow: owner, ownerField: "tenantId", operations: [read] }
+      {
+        allow: owner
+        ownerField: "tenantId"
+        operations: [read]
+        identityClaim: "custom:tenantId"
+      }
       { allow: groups, groups: ["tenantAdmin"], operations: [read] }
       {
         allow: groups
@@ -155,7 +168,12 @@ type PresolvedAudit
   @model
   @auth(
     rules: [
-      { allow: owner, ownerField: "tenantId", operations: [read, create] }
+      {
+        allow: owner
+        ownerField: "tenantId"
+        operations: [read, create]
+        identityClaim: "custom:tenantId"
+      }
       { allow: groups, groups: ["tenantAdmin"], operations: [read, create] }
       { allow: groups, groups: ["p3fAdmin"], operations: [read, create] }
     ]

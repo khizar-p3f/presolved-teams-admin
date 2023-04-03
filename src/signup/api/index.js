@@ -86,12 +86,16 @@ export const getClientInformation = async (emailId) => {
             },
           },
         },
+        authMode: "AMAZON_COGNITO_USER_POOLS",
       })
         .then((response) => {
           console.log({
             getClientInformation: response.data.listClientUsers.items[0],
           });
-
+          console.log(
+            "Querying Signup Info for Tenant Id: ",
+            response.data.listClientUsers.items[0].tenantId
+          );
           getClientSignup(response.data.listClientUsers.items[0].tenantId)
             .then((clientInfo) => {
               console.log({ getClientInformation: clientInfo });
@@ -125,6 +129,7 @@ export const getClientSignup = async (id) => {
         variables: {
           id: id,
         },
+        authMode: "AMAZON_COGNITO_USER_POOLS",
       })
         .then((response) => {
           resolve(response.data.getClientSignup);
