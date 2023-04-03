@@ -7,7 +7,14 @@
       "mode": "AMAZON_COGNITO_USER_POOLS",
       "cognitoUserPoolId": "authpresolvedteamsadmine76efdae"
     },
-    "additionalAuthTypes": [],
+    "additionalAuthTypes": [
+      {
+        "mode": "API_KEY",
+        "expirationTime": 365,
+        "apiKeyExpirationDate": "2024-04-02T04:36:06.374Z",
+        "keyDescription": "TeamsAdminAPIKey"
+      }
+    ],
     "conflictResolution": {}
   }
 }

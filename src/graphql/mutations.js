@@ -19,7 +19,6 @@ export const createClientSignup = /* GraphQL */ `
       country
       createdAt
       updatedAt
-      clientId
     }
   }
 `;
@@ -41,7 +40,6 @@ export const updateClientSignup = /* GraphQL */ `
       country
       createdAt
       updatedAt
-      clientId
     }
   }
 `;
@@ -63,7 +61,6 @@ export const deleteClientSignup = /* GraphQL */ `
       country
       createdAt
       updatedAt
-      clientId
     }
   }
 `;
@@ -74,7 +71,7 @@ export const createClientUsers = /* GraphQL */ `
   ) {
     createClientUsers(input: $input, condition: $condition) {
       id
-      clientId
+      tenantId
       name
       email
       role
@@ -91,7 +88,7 @@ export const updateClientUsers = /* GraphQL */ `
   ) {
     updateClientUsers(input: $input, condition: $condition) {
       id
-      clientId
+      tenantId
       name
       email
       role
@@ -108,7 +105,7 @@ export const deleteClientUsers = /* GraphQL */ `
   ) {
     deleteClientUsers(input: $input, condition: $condition) {
       id
-      clientId
+      tenantId
       name
       email
       role
@@ -125,8 +122,8 @@ export const createClientIntergrations = /* GraphQL */ `
   ) {
     createClientIntergrations(input: $input, condition: $condition) {
       id
-      clientId
       tenantId
+      mstenantId
       loginMS
       consentMS
       attributes
@@ -142,8 +139,8 @@ export const updateClientIntergrations = /* GraphQL */ `
   ) {
     updateClientIntergrations(input: $input, condition: $condition) {
       id
-      clientId
       tenantId
+      mstenantId
       loginMS
       consentMS
       attributes
@@ -159,8 +156,8 @@ export const deleteClientIntergrations = /* GraphQL */ `
   ) {
     deleteClientIntergrations(input: $input, condition: $condition) {
       id
-      clientId
       tenantId
+      mstenantId
       loginMS
       consentMS
       attributes
@@ -176,7 +173,7 @@ export const createClientUserWhitelisting = /* GraphQL */ `
   ) {
     createClientUserWhitelisting(input: $input, condition: $condition) {
       id
-      clientId
+      tenantId
       displayName
       businessPhones
       givenName
@@ -200,7 +197,7 @@ export const updateClientUserWhitelisting = /* GraphQL */ `
   ) {
     updateClientUserWhitelisting(input: $input, condition: $condition) {
       id
-      clientId
+      tenantId
       displayName
       businessPhones
       givenName
@@ -224,7 +221,7 @@ export const deleteClientUserWhitelisting = /* GraphQL */ `
   ) {
     deleteClientUserWhitelisting(input: $input, condition: $condition) {
       id
-      clientId
+      tenantId
       displayName
       businessPhones
       givenName

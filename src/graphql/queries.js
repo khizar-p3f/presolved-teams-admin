@@ -16,7 +16,6 @@ export const getClientSignup = /* GraphQL */ `
       country
       createdAt
       updatedAt
-      clientId
     }
   }
 `;
@@ -40,7 +39,6 @@ export const listClientSignups = /* GraphQL */ `
         country
         createdAt
         updatedAt
-        clientId
       }
       nextToken
     }
@@ -50,7 +48,7 @@ export const getClientUsers = /* GraphQL */ `
   query GetClientUsers($id: ID!) {
     getClientUsers(id: $id) {
       id
-      clientId
+      tenantId
       name
       email
       role
@@ -69,7 +67,7 @@ export const listClientUsers = /* GraphQL */ `
     listClientUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        clientId
+        tenantId
         name
         email
         role
@@ -85,8 +83,8 @@ export const getClientIntergrations = /* GraphQL */ `
   query GetClientIntergrations($id: ID!) {
     getClientIntergrations(id: $id) {
       id
-      clientId
       tenantId
+      mstenantId
       loginMS
       consentMS
       attributes
@@ -108,8 +106,8 @@ export const listClientIntergrations = /* GraphQL */ `
     ) {
       items {
         id
-        clientId
         tenantId
+        mstenantId
         loginMS
         consentMS
         attributes
@@ -124,7 +122,7 @@ export const getClientUserWhitelisting = /* GraphQL */ `
   query GetClientUserWhitelisting($id: ID!) {
     getClientUserWhitelisting(id: $id) {
       id
-      clientId
+      tenantId
       displayName
       businessPhones
       givenName
@@ -154,7 +152,7 @@ export const listClientUserWhitelistings = /* GraphQL */ `
     ) {
       items {
         id
-        clientId
+        tenantId
         displayName
         businessPhones
         givenName

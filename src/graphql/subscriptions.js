@@ -4,9 +4,9 @@
 export const onCreateClientSignup = /* GraphQL */ `
   subscription OnCreateClientSignup(
     $filter: ModelSubscriptionClientSignupFilterInput
-    $clientId: String
+    $id: String
   ) {
-    onCreateClientSignup(filter: $filter, clientId: $clientId) {
+    onCreateClientSignup(filter: $filter, id: $id) {
       id
       name
       email
@@ -19,16 +19,15 @@ export const onCreateClientSignup = /* GraphQL */ `
       country
       createdAt
       updatedAt
-      clientId
     }
   }
 `;
 export const onUpdateClientSignup = /* GraphQL */ `
   subscription OnUpdateClientSignup(
     $filter: ModelSubscriptionClientSignupFilterInput
-    $clientId: String
+    $id: String
   ) {
-    onUpdateClientSignup(filter: $filter, clientId: $clientId) {
+    onUpdateClientSignup(filter: $filter, id: $id) {
       id
       name
       email
@@ -41,16 +40,15 @@ export const onUpdateClientSignup = /* GraphQL */ `
       country
       createdAt
       updatedAt
-      clientId
     }
   }
 `;
 export const onDeleteClientSignup = /* GraphQL */ `
   subscription OnDeleteClientSignup(
     $filter: ModelSubscriptionClientSignupFilterInput
-    $clientId: String
+    $id: String
   ) {
-    onDeleteClientSignup(filter: $filter, clientId: $clientId) {
+    onDeleteClientSignup(filter: $filter, id: $id) {
       id
       name
       email
@@ -63,18 +61,17 @@ export const onDeleteClientSignup = /* GraphQL */ `
       country
       createdAt
       updatedAt
-      clientId
     }
   }
 `;
 export const onCreateClientUsers = /* GraphQL */ `
   subscription OnCreateClientUsers(
     $filter: ModelSubscriptionClientUsersFilterInput
-    $clientId: String
+    $tenantId: String
   ) {
-    onCreateClientUsers(filter: $filter, clientId: $clientId) {
+    onCreateClientUsers(filter: $filter, tenantId: $tenantId) {
       id
-      clientId
+      tenantId
       name
       email
       role
@@ -87,11 +84,11 @@ export const onCreateClientUsers = /* GraphQL */ `
 export const onUpdateClientUsers = /* GraphQL */ `
   subscription OnUpdateClientUsers(
     $filter: ModelSubscriptionClientUsersFilterInput
-    $clientId: String
+    $tenantId: String
   ) {
-    onUpdateClientUsers(filter: $filter, clientId: $clientId) {
+    onUpdateClientUsers(filter: $filter, tenantId: $tenantId) {
       id
-      clientId
+      tenantId
       name
       email
       role
@@ -104,11 +101,11 @@ export const onUpdateClientUsers = /* GraphQL */ `
 export const onDeleteClientUsers = /* GraphQL */ `
   subscription OnDeleteClientUsers(
     $filter: ModelSubscriptionClientUsersFilterInput
-    $clientId: String
+    $tenantId: String
   ) {
-    onDeleteClientUsers(filter: $filter, clientId: $clientId) {
+    onDeleteClientUsers(filter: $filter, tenantId: $tenantId) {
       id
-      clientId
+      tenantId
       name
       email
       role
@@ -121,12 +118,12 @@ export const onDeleteClientUsers = /* GraphQL */ `
 export const onCreateClientIntergrations = /* GraphQL */ `
   subscription OnCreateClientIntergrations(
     $filter: ModelSubscriptionClientIntergrationsFilterInput
-    $clientId: String
+    $tenantId: String
   ) {
-    onCreateClientIntergrations(filter: $filter, clientId: $clientId) {
+    onCreateClientIntergrations(filter: $filter, tenantId: $tenantId) {
       id
-      clientId
       tenantId
+      mstenantId
       loginMS
       consentMS
       attributes
@@ -138,12 +135,12 @@ export const onCreateClientIntergrations = /* GraphQL */ `
 export const onUpdateClientIntergrations = /* GraphQL */ `
   subscription OnUpdateClientIntergrations(
     $filter: ModelSubscriptionClientIntergrationsFilterInput
-    $clientId: String
+    $tenantId: String
   ) {
-    onUpdateClientIntergrations(filter: $filter, clientId: $clientId) {
+    onUpdateClientIntergrations(filter: $filter, tenantId: $tenantId) {
       id
-      clientId
       tenantId
+      mstenantId
       loginMS
       consentMS
       attributes
@@ -155,12 +152,12 @@ export const onUpdateClientIntergrations = /* GraphQL */ `
 export const onDeleteClientIntergrations = /* GraphQL */ `
   subscription OnDeleteClientIntergrations(
     $filter: ModelSubscriptionClientIntergrationsFilterInput
-    $clientId: String
+    $tenantId: String
   ) {
-    onDeleteClientIntergrations(filter: $filter, clientId: $clientId) {
+    onDeleteClientIntergrations(filter: $filter, tenantId: $tenantId) {
       id
-      clientId
       tenantId
+      mstenantId
       loginMS
       consentMS
       attributes
@@ -172,11 +169,11 @@ export const onDeleteClientIntergrations = /* GraphQL */ `
 export const onCreateClientUserWhitelisting = /* GraphQL */ `
   subscription OnCreateClientUserWhitelisting(
     $filter: ModelSubscriptionClientUserWhitelistingFilterInput
-    $clientId: String
+    $tenantId: String
   ) {
-    onCreateClientUserWhitelisting(filter: $filter, clientId: $clientId) {
+    onCreateClientUserWhitelisting(filter: $filter, tenantId: $tenantId) {
       id
-      clientId
+      tenantId
       displayName
       businessPhones
       givenName
@@ -196,11 +193,11 @@ export const onCreateClientUserWhitelisting = /* GraphQL */ `
 export const onUpdateClientUserWhitelisting = /* GraphQL */ `
   subscription OnUpdateClientUserWhitelisting(
     $filter: ModelSubscriptionClientUserWhitelistingFilterInput
-    $clientId: String
+    $tenantId: String
   ) {
-    onUpdateClientUserWhitelisting(filter: $filter, clientId: $clientId) {
+    onUpdateClientUserWhitelisting(filter: $filter, tenantId: $tenantId) {
       id
-      clientId
+      tenantId
       displayName
       businessPhones
       givenName
@@ -220,11 +217,11 @@ export const onUpdateClientUserWhitelisting = /* GraphQL */ `
 export const onDeleteClientUserWhitelisting = /* GraphQL */ `
   subscription OnDeleteClientUserWhitelisting(
     $filter: ModelSubscriptionClientUserWhitelistingFilterInput
-    $clientId: String
+    $tenantId: String
   ) {
-    onDeleteClientUserWhitelisting(filter: $filter, clientId: $clientId) {
+    onDeleteClientUserWhitelisting(filter: $filter, tenantId: $tenantId) {
       id
-      clientId
+      tenantId
       displayName
       businessPhones
       givenName

@@ -7,7 +7,7 @@ type clientSignup
   @model
   @auth(
     rules: [
-      { allow: owner, ownerField: "clientId", operations: [read] }
+      { allow: owner, ownerField: "id", operations: [read] }
       {
         allow: groups
         groups: ["p3fAdmin"]
@@ -33,7 +33,7 @@ type clientUsers
     rules: [
       {
         allow: owner
-        ownerField: "clientId"
+        ownerField: "tenantId"
         operations: [read, create, update, delete]
       }
       {
@@ -50,10 +50,10 @@ type clientUsers
     ]
   ) {
   id: ID!
-  clientId: String!
+  tenantId: String!
   name: String!
   email: String!
-  role: Int!
+  role: String!
   status: Int!
 }
 
@@ -63,7 +63,7 @@ type clientIntergrations
     rules: [
       {
         allow: owner
-        ownerField: "clientId"
+        ownerField: "tenantId"
         operations: [read, create, update, delete]
       }
       {
@@ -79,8 +79,8 @@ type clientIntergrations
     ]
   ) {
   id: ID!
-  clientId: String!
   tenantId: String!
+  mstenantId: String!
   loginMS: Int!
   consentMS: Int!
   attributes: AWSJSON!
@@ -92,7 +92,7 @@ type clientUserWhitelisting
     rules: [
       {
         allow: owner
-        ownerField: "clientId"
+        ownerField: "tenantId"
         operations: [read, create, update, delete]
       }
       {
@@ -108,7 +108,7 @@ type clientUserWhitelisting
     ]
   ) {
   id: ID!
-  clientId: String!
+  tenantId: String!
   displayName: String!
   businessPhones: AWSJSON!
   givenName: String!
