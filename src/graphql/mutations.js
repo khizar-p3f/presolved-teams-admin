@@ -1,28 +1,6 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const createClientSignup = /* GraphQL */ `
-  mutation CreateClientSignup(
-    $input: CreateClientSignupInput!
-    $condition: ModelClientSignupConditionInput
-  ) {
-    createClientSignup(input: $input, condition: $condition) {
-      id
-      name
-      email
-      phone
-      company
-      address
-      city
-      state
-      zip
-      country
-      createdAt
-      updatedAt
-      clientId
-    }
-  }
-`;
 export const updateClientSignup = /* GraphQL */ `
   mutation UpdateClientSignup(
     $input: UpdateClientSignupInput!
@@ -41,7 +19,6 @@ export const updateClientSignup = /* GraphQL */ `
       country
       createdAt
       updatedAt
-      clientId
     }
   }
 `;
@@ -63,24 +40,6 @@ export const deleteClientSignup = /* GraphQL */ `
       country
       createdAt
       updatedAt
-      clientId
-    }
-  }
-`;
-export const createClientUsers = /* GraphQL */ `
-  mutation CreateClientUsers(
-    $input: CreateClientUsersInput!
-    $condition: ModelClientUsersConditionInput
-  ) {
-    createClientUsers(input: $input, condition: $condition) {
-      id
-      clientId
-      name
-      email
-      role
-      status
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -91,7 +50,7 @@ export const updateClientUsers = /* GraphQL */ `
   ) {
     updateClientUsers(input: $input, condition: $condition) {
       id
-      clientId
+      tenantId
       name
       email
       role
@@ -108,7 +67,7 @@ export const deleteClientUsers = /* GraphQL */ `
   ) {
     deleteClientUsers(input: $input, condition: $condition) {
       id
-      clientId
+      tenantId
       name
       email
       role
@@ -125,8 +84,8 @@ export const createClientIntergrations = /* GraphQL */ `
   ) {
     createClientIntergrations(input: $input, condition: $condition) {
       id
-      clientId
       tenantId
+      mstenantId
       loginMS
       consentMS
       attributes
@@ -142,8 +101,8 @@ export const updateClientIntergrations = /* GraphQL */ `
   ) {
     updateClientIntergrations(input: $input, condition: $condition) {
       id
-      clientId
       tenantId
+      mstenantId
       loginMS
       consentMS
       attributes
@@ -159,8 +118,8 @@ export const deleteClientIntergrations = /* GraphQL */ `
   ) {
     deleteClientIntergrations(input: $input, condition: $condition) {
       id
-      clientId
       tenantId
+      mstenantId
       loginMS
       consentMS
       attributes
@@ -176,7 +135,7 @@ export const createClientUserWhitelisting = /* GraphQL */ `
   ) {
     createClientUserWhitelisting(input: $input, condition: $condition) {
       id
-      clientId
+      tenantId
       displayName
       businessPhones
       givenName
@@ -200,7 +159,7 @@ export const updateClientUserWhitelisting = /* GraphQL */ `
   ) {
     updateClientUserWhitelisting(input: $input, condition: $condition) {
       id
-      clientId
+      tenantId
       displayName
       businessPhones
       givenName
@@ -224,7 +183,7 @@ export const deleteClientUserWhitelisting = /* GraphQL */ `
   ) {
     deleteClientUserWhitelisting(input: $input, condition: $condition) {
       id
-      clientId
+      tenantId
       displayName
       businessPhones
       givenName
@@ -359,6 +318,44 @@ export const deletePresolvedAudit = /* GraphQL */ `
       byUser
       byDateTime
       changesMade
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createClientSignup = /* GraphQL */ `
+  mutation CreateClientSignup(
+    $input: CreateClientSignupInput!
+    $condition: ModelClientSignupConditionInput
+  ) {
+    createClientSignup(input: $input, condition: $condition) {
+      id
+      name
+      email
+      phone
+      company
+      address
+      city
+      state
+      zip
+      country
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createClientUsers = /* GraphQL */ `
+  mutation CreateClientUsers(
+    $input: CreateClientUsersInput!
+    $condition: ModelClientUsersConditionInput
+  ) {
+    createClientUsers(input: $input, condition: $condition) {
+      id
+      tenantId
+      name
+      email
+      role
+      status
       createdAt
       updatedAt
     }

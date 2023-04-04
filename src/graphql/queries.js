@@ -1,92 +1,12 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const getClientSignup = /* GraphQL */ `
-  query GetClientSignup($id: ID!) {
-    getClientSignup(id: $id) {
-      id
-      name
-      email
-      phone
-      company
-      address
-      city
-      state
-      zip
-      country
-      createdAt
-      updatedAt
-      clientId
-    }
-  }
-`;
-export const listClientSignups = /* GraphQL */ `
-  query ListClientSignups(
-    $filter: ModelClientSignupFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listClientSignups(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        name
-        email
-        phone
-        company
-        address
-        city
-        state
-        zip
-        country
-        createdAt
-        updatedAt
-        clientId
-      }
-      nextToken
-    }
-  }
-`;
-export const getClientUsers = /* GraphQL */ `
-  query GetClientUsers($id: ID!) {
-    getClientUsers(id: $id) {
-      id
-      clientId
-      name
-      email
-      role
-      status
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listClientUsers = /* GraphQL */ `
-  query ListClientUsers(
-    $filter: ModelClientUsersFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listClientUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        clientId
-        name
-        email
-        role
-        status
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
 export const getClientIntergrations = /* GraphQL */ `
   query GetClientIntergrations($id: ID!) {
     getClientIntergrations(id: $id) {
       id
-      clientId
       tenantId
+      mstenantId
       loginMS
       consentMS
       attributes
@@ -108,8 +28,8 @@ export const listClientIntergrations = /* GraphQL */ `
     ) {
       items {
         id
-        clientId
         tenantId
+        mstenantId
         loginMS
         consentMS
         attributes
@@ -124,7 +44,7 @@ export const getClientUserWhitelisting = /* GraphQL */ `
   query GetClientUserWhitelisting($id: ID!) {
     getClientUserWhitelisting(id: $id) {
       id
-      clientId
+      tenantId
       displayName
       businessPhones
       givenName
@@ -154,7 +74,7 @@ export const listClientUserWhitelistings = /* GraphQL */ `
     ) {
       items {
         id
-        clientId
+        tenantId
         displayName
         businessPhones
         givenName
@@ -258,6 +178,84 @@ export const listPresolvedAudits = /* GraphQL */ `
         byUser
         byDateTime
         changesMade
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getClientSignup = /* GraphQL */ `
+  query GetClientSignup($id: ID!) {
+    getClientSignup(id: $id) {
+      id
+      name
+      email
+      phone
+      company
+      address
+      city
+      state
+      zip
+      country
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listClientSignups = /* GraphQL */ `
+  query ListClientSignups(
+    $filter: ModelClientSignupFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listClientSignups(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        name
+        email
+        phone
+        company
+        address
+        city
+        state
+        zip
+        country
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getClientUsers = /* GraphQL */ `
+  query GetClientUsers($id: ID!) {
+    getClientUsers(id: $id) {
+      id
+      tenantId
+      name
+      email
+      role
+      status
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listClientUsers = /* GraphQL */ `
+  query ListClientUsers(
+    $filter: ModelClientUsersFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listClientUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        tenantId
+        name
+        email
+        role
+        status
         createdAt
         updatedAt
       }

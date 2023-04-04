@@ -1,132 +1,15 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const onCreateClientSignup = /* GraphQL */ `
-  subscription OnCreateClientSignup(
-    $filter: ModelSubscriptionClientSignupFilterInput
-    $clientId: String
-  ) {
-    onCreateClientSignup(filter: $filter, clientId: $clientId) {
-      id
-      name
-      email
-      phone
-      company
-      address
-      city
-      state
-      zip
-      country
-      createdAt
-      updatedAt
-      clientId
-    }
-  }
-`;
-export const onUpdateClientSignup = /* GraphQL */ `
-  subscription OnUpdateClientSignup(
-    $filter: ModelSubscriptionClientSignupFilterInput
-    $clientId: String
-  ) {
-    onUpdateClientSignup(filter: $filter, clientId: $clientId) {
-      id
-      name
-      email
-      phone
-      company
-      address
-      city
-      state
-      zip
-      country
-      createdAt
-      updatedAt
-      clientId
-    }
-  }
-`;
-export const onDeleteClientSignup = /* GraphQL */ `
-  subscription OnDeleteClientSignup(
-    $filter: ModelSubscriptionClientSignupFilterInput
-    $clientId: String
-  ) {
-    onDeleteClientSignup(filter: $filter, clientId: $clientId) {
-      id
-      name
-      email
-      phone
-      company
-      address
-      city
-      state
-      zip
-      country
-      createdAt
-      updatedAt
-      clientId
-    }
-  }
-`;
-export const onCreateClientUsers = /* GraphQL */ `
-  subscription OnCreateClientUsers(
-    $filter: ModelSubscriptionClientUsersFilterInput
-    $clientId: String
-  ) {
-    onCreateClientUsers(filter: $filter, clientId: $clientId) {
-      id
-      clientId
-      name
-      email
-      role
-      status
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onUpdateClientUsers = /* GraphQL */ `
-  subscription OnUpdateClientUsers(
-    $filter: ModelSubscriptionClientUsersFilterInput
-    $clientId: String
-  ) {
-    onUpdateClientUsers(filter: $filter, clientId: $clientId) {
-      id
-      clientId
-      name
-      email
-      role
-      status
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onDeleteClientUsers = /* GraphQL */ `
-  subscription OnDeleteClientUsers(
-    $filter: ModelSubscriptionClientUsersFilterInput
-    $clientId: String
-  ) {
-    onDeleteClientUsers(filter: $filter, clientId: $clientId) {
-      id
-      clientId
-      name
-      email
-      role
-      status
-      createdAt
-      updatedAt
-    }
-  }
-`;
 export const onCreateClientIntergrations = /* GraphQL */ `
   subscription OnCreateClientIntergrations(
     $filter: ModelSubscriptionClientIntergrationsFilterInput
-    $clientId: String
+    $tenantId: String
   ) {
-    onCreateClientIntergrations(filter: $filter, clientId: $clientId) {
+    onCreateClientIntergrations(filter: $filter, tenantId: $tenantId) {
       id
-      clientId
       tenantId
+      mstenantId
       loginMS
       consentMS
       attributes
@@ -138,12 +21,12 @@ export const onCreateClientIntergrations = /* GraphQL */ `
 export const onUpdateClientIntergrations = /* GraphQL */ `
   subscription OnUpdateClientIntergrations(
     $filter: ModelSubscriptionClientIntergrationsFilterInput
-    $clientId: String
+    $tenantId: String
   ) {
-    onUpdateClientIntergrations(filter: $filter, clientId: $clientId) {
+    onUpdateClientIntergrations(filter: $filter, tenantId: $tenantId) {
       id
-      clientId
       tenantId
+      mstenantId
       loginMS
       consentMS
       attributes
@@ -155,12 +38,12 @@ export const onUpdateClientIntergrations = /* GraphQL */ `
 export const onDeleteClientIntergrations = /* GraphQL */ `
   subscription OnDeleteClientIntergrations(
     $filter: ModelSubscriptionClientIntergrationsFilterInput
-    $clientId: String
+    $tenantId: String
   ) {
-    onDeleteClientIntergrations(filter: $filter, clientId: $clientId) {
+    onDeleteClientIntergrations(filter: $filter, tenantId: $tenantId) {
       id
-      clientId
       tenantId
+      mstenantId
       loginMS
       consentMS
       attributes
@@ -172,11 +55,11 @@ export const onDeleteClientIntergrations = /* GraphQL */ `
 export const onCreateClientUserWhitelisting = /* GraphQL */ `
   subscription OnCreateClientUserWhitelisting(
     $filter: ModelSubscriptionClientUserWhitelistingFilterInput
-    $clientId: String
+    $tenantId: String
   ) {
-    onCreateClientUserWhitelisting(filter: $filter, clientId: $clientId) {
+    onCreateClientUserWhitelisting(filter: $filter, tenantId: $tenantId) {
       id
-      clientId
+      tenantId
       displayName
       businessPhones
       givenName
@@ -196,11 +79,11 @@ export const onCreateClientUserWhitelisting = /* GraphQL */ `
 export const onUpdateClientUserWhitelisting = /* GraphQL */ `
   subscription OnUpdateClientUserWhitelisting(
     $filter: ModelSubscriptionClientUserWhitelistingFilterInput
-    $clientId: String
+    $tenantId: String
   ) {
-    onUpdateClientUserWhitelisting(filter: $filter, clientId: $clientId) {
+    onUpdateClientUserWhitelisting(filter: $filter, tenantId: $tenantId) {
       id
-      clientId
+      tenantId
       displayName
       businessPhones
       givenName
@@ -220,11 +103,11 @@ export const onUpdateClientUserWhitelisting = /* GraphQL */ `
 export const onDeleteClientUserWhitelisting = /* GraphQL */ `
   subscription OnDeleteClientUserWhitelisting(
     $filter: ModelSubscriptionClientUserWhitelistingFilterInput
-    $clientId: String
+    $tenantId: String
   ) {
-    onDeleteClientUserWhitelisting(filter: $filter, clientId: $clientId) {
+    onDeleteClientUserWhitelisting(filter: $filter, tenantId: $tenantId) {
       id
-      clientId
+      tenantId
       displayName
       businessPhones
       givenName
@@ -359,6 +242,120 @@ export const onDeletePresolvedAudit = /* GraphQL */ `
       byUser
       byDateTime
       changesMade
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateClientSignup = /* GraphQL */ `
+  subscription OnCreateClientSignup(
+    $filter: ModelSubscriptionClientSignupFilterInput
+    $id: String
+  ) {
+    onCreateClientSignup(filter: $filter, id: $id) {
+      id
+      name
+      email
+      phone
+      company
+      address
+      city
+      state
+      zip
+      country
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateClientSignup = /* GraphQL */ `
+  subscription OnUpdateClientSignup(
+    $filter: ModelSubscriptionClientSignupFilterInput
+    $id: String
+  ) {
+    onUpdateClientSignup(filter: $filter, id: $id) {
+      id
+      name
+      email
+      phone
+      company
+      address
+      city
+      state
+      zip
+      country
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteClientSignup = /* GraphQL */ `
+  subscription OnDeleteClientSignup(
+    $filter: ModelSubscriptionClientSignupFilterInput
+    $id: String
+  ) {
+    onDeleteClientSignup(filter: $filter, id: $id) {
+      id
+      name
+      email
+      phone
+      company
+      address
+      city
+      state
+      zip
+      country
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateClientUsers = /* GraphQL */ `
+  subscription OnCreateClientUsers(
+    $filter: ModelSubscriptionClientUsersFilterInput
+    $tenantId: String
+  ) {
+    onCreateClientUsers(filter: $filter, tenantId: $tenantId) {
+      id
+      tenantId
+      name
+      email
+      role
+      status
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateClientUsers = /* GraphQL */ `
+  subscription OnUpdateClientUsers(
+    $filter: ModelSubscriptionClientUsersFilterInput
+    $tenantId: String
+  ) {
+    onUpdateClientUsers(filter: $filter, tenantId: $tenantId) {
+      id
+      tenantId
+      name
+      email
+      role
+      status
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteClientUsers = /* GraphQL */ `
+  subscription OnDeleteClientUsers(
+    $filter: ModelSubscriptionClientUsersFilterInput
+    $tenantId: String
+  ) {
+    onDeleteClientUsers(filter: $filter, tenantId: $tenantId) {
+      id
+      tenantId
+      name
+      email
+      role
+      status
       createdAt
       updatedAt
     }
