@@ -124,75 +124,6 @@ export const onDeleteClientUserWhitelisting = /* GraphQL */ `
     }
   }
 `;
-export const onCreateClientCallLogs = /* GraphQL */ `
-  subscription OnCreateClientCallLogs(
-    $filter: ModelSubscriptionClientCallLogsFilterInput
-    $tenantId: String
-  ) {
-    onCreateClientCallLogs(filter: $filter, tenantId: $tenantId) {
-      RecordingId
-      tenantId
-      callId
-      contactId
-      callType
-      callStatus
-      callStartTime
-      callEndTime
-      callDuration
-      charge
-      callerNumber
-      calleeNumber
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onUpdateClientCallLogs = /* GraphQL */ `
-  subscription OnUpdateClientCallLogs(
-    $filter: ModelSubscriptionClientCallLogsFilterInput
-    $tenantId: String
-  ) {
-    onUpdateClientCallLogs(filter: $filter, tenantId: $tenantId) {
-      RecordingId
-      tenantId
-      callId
-      contactId
-      callType
-      callStatus
-      callStartTime
-      callEndTime
-      callDuration
-      charge
-      callerNumber
-      calleeNumber
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onDeleteClientCallLogs = /* GraphQL */ `
-  subscription OnDeleteClientCallLogs(
-    $filter: ModelSubscriptionClientCallLogsFilterInput
-    $tenantId: String
-  ) {
-    onDeleteClientCallLogs(filter: $filter, tenantId: $tenantId) {
-      RecordingId
-      tenantId
-      callId
-      contactId
-      callType
-      callStatus
-      callStartTime
-      callEndTime
-      callDuration
-      charge
-      callerNumber
-      calleeNumber
-      createdAt
-      updatedAt
-    }
-  }
-`;
 export const onCreatePresolvedAudit = /* GraphQL */ `
   subscription OnCreatePresolvedAudit(
     $filter: ModelSubscriptionPresolvedAuditFilterInput
@@ -356,6 +287,66 @@ export const onDeleteClientUsers = /* GraphQL */ `
       email
       role
       status
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateClientCallLogs = /* GraphQL */ `
+  subscription OnCreateClientCallLogs(
+    $filter: ModelSubscriptionClientCallLogsFilterInput
+    $tenantId: String
+  ) {
+    onCreateClientCallLogs(filter: $filter, tenantId: $tenantId) {
+      tenantId
+      callRecordId
+      callType
+      callStartTime
+      callEndTime
+      callDuration
+      charge
+      callerNumber
+      calleeNumber
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateClientCallLogs = /* GraphQL */ `
+  subscription OnUpdateClientCallLogs(
+    $filter: ModelSubscriptionClientCallLogsFilterInput
+    $tenantId: String
+  ) {
+    onUpdateClientCallLogs(filter: $filter, tenantId: $tenantId) {
+      tenantId
+      callRecordId
+      callType
+      callStartTime
+      callEndTime
+      callDuration
+      charge
+      callerNumber
+      calleeNumber
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteClientCallLogs = /* GraphQL */ `
+  subscription OnDeleteClientCallLogs(
+    $filter: ModelSubscriptionClientCallLogsFilterInput
+    $tenantId: String
+  ) {
+    onDeleteClientCallLogs(filter: $filter, tenantId: $tenantId) {
+      tenantId
+      callRecordId
+      callType
+      callStartTime
+      callEndTime
+      callDuration
+      charge
+      callerNumber
+      calleeNumber
       createdAt
       updatedAt
     }

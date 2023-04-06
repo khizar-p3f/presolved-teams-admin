@@ -45,12 +45,6 @@ type clientUsers
       }
       {
         allow: groups
-        groups: ["tenantAdmin"]
-        operations: [read, create, update, delete]
-      }
-      { allow: groups, groups: ["tenantUser"], operations: [read] }
-      {
-        allow: groups
         groups: ["p3fAdmin"]
         operations: [read, create, update, delete]
       }
@@ -148,14 +142,12 @@ type ClientCallLogs
         groups: ["p3fAdmin"]
         operations: [read, create, update, delete]
       }
+      { allow: public, operations: [create, read] }
     ]
   ) {
-  RecordingId: String!
-  tenantId: ID! @index(name: "byTenantId", sortKeyFields: ["contactId"])
-  callId: ID! @primaryKey
-  contactId: ID!
+  tenantId: ID! @index(name: "byTenantId")
+  callRecordId: ID! @primaryKey
   callType: String!
-  callStatus: String!
   callStartTime: AWSDateTime!
   callEndTime: AWSDateTime!
   callDuration: Int!

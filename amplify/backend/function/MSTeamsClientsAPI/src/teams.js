@@ -1,6 +1,5 @@
 const axios = require("axios");
 const validate = require("validate-azure-ad-token").default;
-const DynamoDB = require("./utils/ddb");
 
 class MSTeams {
   constructor() {
@@ -19,23 +18,11 @@ class MSTeams {
       const decodedToken = await validate(idToken, {
         tenantId: tenantId,
         audience: "00000003-0000-0000-c000-000000000000",
-        applicationId: "32c21b01-f645-4433-8726-456c9f46958e",
+        applicationId: "35a2ff7a-28a5-466d-9f84-1cefbe80c187",
         scopes: ["User.Read"], // for example ["User.Read"]
       });
 
-      const ddb = new DynamoDB();
-      const data = {
-        id: decodedToken.payload.oid,
-        displayName: decodedToken.payload.name,
-        tenantId: decodedToken.payload.tid,
-        email: decodedToken.payload.preferred_username,
-        roles: decodedToken.payload.roles,
-        created: new Date().toISOString(),
-      };
-      await ddb.writeToAuditTable(data);
-
-
-      //console.log("Decoded Token is ", decodedToken);
+      console.log("Decoded Token is ", decodedToken);
       //let expiryTime = decodedToken.payload.exp;
       //Convert Expiry time to Date Time Format
       //let expiryDate = new Date(0);

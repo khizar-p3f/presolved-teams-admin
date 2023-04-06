@@ -19,15 +19,24 @@
       "function": {
         "AdminQueriescecc2b38": {
           "deploymentBucketName": "amplify-presolvedteamsadmin-develop-201120-deployment",
-          "s3Key": "amplify-builds/AdminQueriescecc2b38-6e797051694a73665a6a-build.zip"
+          "s3Key": "amplify-builds/AdminQueriescecc2b38-6b452b384d3052473379-build.zip"
         },
         "MSTeamsClientsAPI": {
           "secretsPathAmplifyAppId": "d2sg3m2pawykox",
           "deploymentBucketName": "amplify-presolvedteamsadmin-develop-201120-deployment",
-          "s3Key": "amplify-builds/MSTeamsClientsAPI-4b6e45686536314d7930-build.zip",
-          "callManagerUrl": "https://td7y4pmq4a.execute-api.us-east-1.amazonaws.com/staging"
+          "s3Key": "amplify-builds/MSTeamsClientsAPI-706a6d6c36773738396b-build.zip",
+          "callManagerUrl": "https://cjycxmjgdb.execute-api.us-east-1.amazonaws.com/qa"
         },
-        "graphQlLambdaAuthorizerd08aa087": {}
+        "graphQlLambdaAuthorizerd08aa087": {},
+        "downloadPSTNCallLogs": {
+          "msGraphSecretKeyName": "presolved/reports/key",
+          "deploymentBucketName": "amplify-presolvedteamsadmin-develop-201120-deployment",
+          "s3Key": "amplify-builds/downloadPSTNCallLogs-4877392b396f4d764f54-build.zip"
+        },
+        "ItemsHandler": {
+          "deploymentBucketName": "amplify-presolvedteamsadmin-develop-201120-deployment",
+          "s3Key": "amplify-builds/ItemsHandler-634445414d66444d4841-build.zip"
+        }
       },
       "api": {
         "AdminQueries": {},

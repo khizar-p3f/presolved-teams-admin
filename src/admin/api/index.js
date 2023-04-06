@@ -55,6 +55,7 @@ export const updateLoginWithMS = async (clientIntegration) => {
 };
 
 export const updateConsent = async (clientIntegration) => {
+  console.log("clientIntegration", clientIntegration);
   return new Promise((resolve, reject) => {
     try {
       API.graphql({
