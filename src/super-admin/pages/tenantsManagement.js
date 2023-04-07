@@ -20,8 +20,6 @@ const TenantsManagement = () => {
     const [selectedRow, setSelectedRow] = useState(null);
     const [searchValue, setSearchValue] = useState('');
     const [form] = Form.useForm();
-    const strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
-    const mediumRegex = new RegExp("^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})");
 
     //-----------------Get User List Functionalities---------------------------------
 
@@ -85,18 +83,29 @@ const TenantsManagement = () => {
         return retVal;
     }
 
+    const UUIDGenerator = () => {
+        var dt = new Date().getTime();
+        var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+            var r = (dt + Math.random() * 16) % 16 | 0;
+            dt = Math.floor(dt / 16);
+            return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+        });
+        return uuid;
+    }
+
 
 
     async function createTenant(values) {
-        //Get Values from form
 
+        //Get Values from form
         const name = values.name;
         const email = values.email;
+        const phone = values.phone
         const password = randomPasswordGenerator();
         const role = "tenantAdmin";
-        const phone = values.phone
+        const tenantId = UUIDGenerator();
         const company = values.company
-        console.log('password',password)
+        console.log('password', password)
         const path = "/users";
 
         const myInit = {
@@ -110,17 +119,13 @@ const TenantsManagement = () => {
                         Name: "name",
                         Value: name,
                     },
-                    // {
-                    //     Name: "company",
-                    //     Value: company,
-                    // },
-                    // {
-                    //     Name: "phone_number",
-                    //     Value: phone,
-                    // },
+                    {
+                        Name: "phone_number",
+                        Value: phone,
+                    },
                     {
                         Name: "custom:tenantId",
-                        Value: "tenantId1",
+                        Value: tenantId,
                     },
                 ]),
             },
@@ -135,6 +140,7 @@ const TenantsManagement = () => {
                 console.log("Response from CreateTenant API in Cognito is ", response);
                 // if signup is successful in cognito, create a signup record in dynamodb
                 createSignup({
+                    id: tenantId,
                     name: name,
                     company: company,
                     email: email,
@@ -143,20 +149,22 @@ const TenantsManagement = () => {
                 }).then((data) => {
                     notification.success({
                         message: 'Success',
-                        description: 'Please check your email for verification code'
+                        description: 'Tenant created successfully'
                     })
+                    setTableData([]);
+                    getTenantList();
+                    form.resetFields()
                 }).catch((err) => {
                     throw err;
                 })
-                setTableData([]);
-                getTenantList();
-                form.resetFields()
             })
             .catch((error) => {
                 console.log(error.response);
             });
     }
+
     //----------------Remove User functionalities-----------------------------
+
     const rowSelection = {
         onChange: (selectedRowKeys, selectedRows) => {
             setSelectedRow(selectedRows)
@@ -164,15 +172,13 @@ const TenantsManagement = () => {
     };
 
 
-    const removeTenant = async (selectedRow, check) => {
+    const disableTenant = async (selectedRow) => {
 
-        var role = 'tenantAdmin';
         var username = selectedRow.email;
-        const path = "/removeUserFromGroup";
+        const path = "/disableUser";
         const myInit = {
             body: {
                 username: username,
-                groupname: role
             },
             headers: {
                 Authorization: `Bearer ${(await Auth.currentSession())
@@ -182,36 +188,30 @@ const TenantsManagement = () => {
         };
         API.post(apiName, path, myInit)
             .then((response) => {
-                console.log("Response from RemoveTenant API is ", response);
-                if (!check)
-                    notification.info({
-                        message: 'Success',
-                        description: 'Tenant removed successfully',
-                    });
-                if (check)
-                    addTenantToGroup(username, selectedRow.newRole)
-                else {
-                    setTableData([]);
-                    getTenantList();
-                }
+                console.log("Response from Disable user API is ", response);
+                notification.info({
+                    message: "Success",
+                    description: "Tenant diasabled successfully",
+                });
+                setTableData([]);
+                getTenantList();
             }).catch((error) => {
                 console.log(error.response);
             });
-
     }
 
     const showRemoveConfirm = () => {
         if (selectedRow !== null) {
             confirm({
-                title: 'Are you sure remove this tenant?',
+                title: 'Are you sure disable this tenant?',
                 icon: <ExclamationCircleFilled />,
-                content: 'Tenant will be removed from these groups.',
+                content: 'Tenant will be disabled from these groups.',
                 okText: 'Yes',
                 okType: 'danger',
                 cancelText: 'No',
                 onOk() {
                     console.log('OK');
-                    removeTenant(selectedRow[0], false);
+                    disableTenant(selectedRow[0]);
                 },
                 onCancel() {
                     console.log('Cancel');
@@ -221,7 +221,7 @@ const TenantsManagement = () => {
         else (
             notification.error({
                 message: 'Error',
-                description: 'Please select the tenant to remove'
+                description: 'Please select the tenant to disable'
             })
         )
     };
