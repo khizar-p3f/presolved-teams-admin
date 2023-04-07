@@ -24,7 +24,7 @@
         "MSTeamsClientsAPI": {
           "secretsPathAmplifyAppId": "d2sg3m2pawykox",
           "deploymentBucketName": "amplify-presolvedteamsadmin-develop-201120-deployment",
-          "s3Key": "amplify-builds/MSTeamsClientsAPI-706a6d6c36773738396b-build.zip",
+          "s3Key": "amplify-builds/MSTeamsClientsAPI-48554c6e672b7246744c-build.zip",
           "callManagerUrl": "https://cjycxmjgdb.execute-api.us-east-1.amazonaws.com/qa"
         },
         "graphQlLambdaAuthorizerd08aa087": {},

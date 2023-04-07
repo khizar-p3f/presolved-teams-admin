@@ -2,21 +2,22 @@ import React, { useState, useEffect } from 'react';
 import { Breadcrumb, Button, Col, Form, Row, Typography, Input, Select, Space, Modal, notification, Table } from 'antd';
 import { UserAddOutlined, UserDeleteOutlined, ExclamationCircleFilled } from '@ant-design/icons';
 import { API, Auth } from "aws-amplify";
-import './management.less'
+import './management.less';
+import { getClientUsersList, createClientUser, updateClientUser } from '../api/index';
 
 const { confirm } = Modal;
 
 const UserManagement = (props) => {
-    const { client } = props
+    const { client: tenant } = props
     const [state, setState] = useState({
         isLoaded: false,
-        clientId: null
+        tenantId: null
     })
     useEffect(() => {
-        if (client.clientId) {
-            setState({ ...state, isLoaded: true, clientId: client.clientId, ...client })
+        if (tenant.tenantId) {
+            setState({ ...state, isLoaded: true, tenantId: tenant.tenantId, ...tenant })
         }
-        getTenantList();
+        getUsersList();
     }, [])
 
     const apiName = "AdminQueries";
@@ -34,93 +35,43 @@ const UserManagement = (props) => {
     });
     const [form] = Form.useForm();
     const [formEdit] = Form.useForm();
-    const strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
-    const mediumRegex = new RegExp("^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})");
 
     //-----------------Get User List Functionalities---------------------------------
 
-    const getTenantList = async () => {
-        const path = "/listUsers";
-        const myInit = {
-            headers: {
-                Authorization: `Bearer ${(await Auth.currentSession())
-                    .getAccessToken()
-                    .getJwtToken()}`,
-            },
-        };
+    const getUsersList = async () => {
 
-        API.get(apiName, path, myInit)
-            .then((response) => {
-                console.log("Response from ListUsers API is ", response.Users);
-
-                //Data for grid view
-                for (let i = 0; i < Object.keys(response.Users).length; i++) {
-                    let attributes = response.Users[i].Attributes;
-                    var email = getValue(attributes, 'email')
-                    var name = getValue(attributes, 'name')
-                    var tenantId = getValue(attributes, 'custom:tenantId')
-                    getlistGroupsForTenant(response.Users[i].Username, email, name, tenantId);
-                }
-            })
-            .catch((error) => {
-                console.log(error.response);
-            });
-    }
-
-    const getValue = (attributes, value) => {
-        for (let j = 0; j < Object.keys(attributes).length; j++) {
-            if (attributes[j].Name == value) {
-                return attributes[j].Value
-            }
-        }
-    }
-
-    const getlistGroupsForTenant = async (username, email, name, tenantId) => {
-
-        const path = "/listGroupsForUser";
-        const myInit = {
-            headers: {
-                Authorization: `Bearer ${(await Auth.currentSession())
-                    .getAccessToken()
-                    .getJwtToken()}`,
-            },
-            queryStringParameters: {
-                username: username
-            }
-        };
-
-        API.get(apiName, path, myInit)
-            .then((response) => {
-                console.log("Response from listGroupsForUser API is ", response);
-                var role = "";
-                if (response.Groups[0].GroupName === 'tenantAdmin')
+        getClientUsersList(tenant.tenantId).then((res) => {
+            let data = res.listClientUsers.items
+            for (let i = 0; i < Object.keys(data).length; i++) {
+                let role = "";
+                if (data[i].role === 'tenantAdmin')
                     role = 'Admin';
-                else if (response.Groups[0].GroupName === 'tenantSupervisor')
+                else if (data[i].role === 'tenantSupervisor')
                     role = 'Supervisor';
-                else if (response.Groups[0].GroupName === 'tenantUser')
+                else if (data[i].role === 'tenantUser')
                     role = 'User';
-                else {
-                    role = null;
-                }
-                if (role !== null) {
-                    setData(prev => [...prev, {
-                        key: username,
-                        name: name,
-                        email: email,
-                        role: role,
-                    }])
-                    setTableData(prev => [...prev, {
-                        key: username,
-                        name: name,
-                        email: email,
-                        role: role,
-                    }])
-                }
+
+                setData(prev => [...prev, {
+                    key: data[i].id,
+                    name: data[i].name,
+                    email: data[i].email,
+                    role: role
+                }])
+                setTableData(prev => [...prev, {
+                    key: data[i].id,
+                    name: data[i].name,
+                    email: data[i].email,
+                    role: role
+                }])
+            }
+        }).catch((err) => {
+            notification.error({
+                message: 'Error',
+                description: 'Error while fetching list'
             })
-            .catch((error) => {
-                console.log(error.response);
-            });
+        })
     }
+
     //-------------------Create User Functionalities-------------
 
     const showCreateModal = () => {
@@ -130,7 +81,7 @@ const UserManagement = (props) => {
     const handleCreateSubmit = (values) => {
         console.log(values)
         setCreateModalVisible(false)
-        createTenant(values)
+        createUser(values)
     }
 
     const handleCreateCancel = () => {
@@ -142,13 +93,23 @@ const UserManagement = (props) => {
         console.log('Failed:', errorInfo);
     };
 
+    const randomPasswordGenerator = () => {
+        var length = 8,
+            charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+~`|}{[]\:;?><,./-=",
+            retVal = "";
+        for (var i = 0, n = charset.length; i < length; ++i) {
+            retVal += charset.charAt(Math.floor(Math.random() * n));
+        }
+        return retVal;
+    }
 
-    async function createTenant(values) {
+
+
+    async function createUser(values) {
         //Get Values from form
-
         const name = values.name;
         const email = values.email;
-        const password = values.password;
+        const password = randomPasswordGenerator();
         const role = values.role;
         const phone = values.phone
 
@@ -171,7 +132,7 @@ const UserManagement = (props) => {
                     // },
                     {
                         Name: "custom:tenantId",
-                        Value: "tenantId1",
+                        Value: state.tenantId,
                     },
                 ]),
             },
@@ -184,13 +145,23 @@ const UserManagement = (props) => {
         API.post(apiName, path, myInit)
             .then((response) => {
                 console.log("Response from CreateTenant API is ", response);
-                notification.success({
-                    message: 'Success',
-                    description: 'Tenant created successfully',
-                });
-                setTableData([]);
-                getTenantList();
-                form.resetFields()
+                // if signup is successful in cognito, create a clientUser record in dynamodb
+                createClientUser({
+                    name: name,
+                    email: email,
+                    role: role,
+                    tenantId: state.tenantId
+                }).then((data) => {
+                    notification.success({
+                        message: 'Success',
+                        description: 'User created successfully'
+                    })
+                    setTableData([]);
+                    getUsersList();
+                    form.resetFields()
+                }).catch((err) => {
+                    throw err;
+                })
             })
             .catch((error) => {
                 console.log(error.response);
@@ -204,7 +175,7 @@ const UserManagement = (props) => {
     };
 
 
-    const removeTenant = async (selectedRow, check) => {
+    const removeUserInCognito = async (selectedRow, isUpdate) => {
 
         var role = selectedRow.role;
         var username = selectedRow.email;
@@ -230,16 +201,16 @@ const UserManagement = (props) => {
         API.post(apiName, path, myInit)
             .then((response) => {
                 console.log("Response from RemoveTenant API is ", response);
-                if (!check)
+                if (!isUpdate)
                     notification.info({
                         message: 'Success',
-                        description: 'Tenant removed successfully',
+                        description: 'User removed successfully',
                     });
-                if (check)
-                    addTenantToGroup(username, selectedRow.newRole)
+                if (isUpdate)
+                    updateUserRole(username, selectedRow.newRole)
                 else {
                     setTableData([]);
-                    getTenantList();
+                    getUsersList();
                 }
             }).catch((error) => {
                 console.log(error.response);
@@ -250,15 +221,15 @@ const UserManagement = (props) => {
     const showRemoveConfirm = () => {
         if (selectedRow !== null) {
             confirm({
-                title: 'Are you sure remove this tenant?',
+                title: 'Are you sure remove this user?',
                 icon: <ExclamationCircleFilled />,
-                content: 'Tenant will be removed from these groups.',
+                content: 'User will be removed from these groups.',
                 okText: 'Yes',
                 okType: 'danger',
                 cancelText: 'No',
                 onOk() {
                     console.log('OK');
-                    removeTenant(selectedRow[0], false);
+                    removeUserInCognito(selectedRow[0], false);
                 },
                 onCancel() {
                     console.log('Cancel');
@@ -268,7 +239,7 @@ const UserManagement = (props) => {
         else (
             notification.error({
                 message: 'Error',
-                description: 'Please select the tenant to remove'
+                description: 'Please select the user to remove'
             })
         )
     };
@@ -278,9 +249,10 @@ const UserManagement = (props) => {
         setEditModalVisible(true)
     }
 
-    const addTenantToGroup = async (username, role) => {
-        const path = "/addUserToGroup";
+    const updateUserRole = async (username, role) => {
 
+        //1. upade user role in cognito
+        const path = "/addUserToGroup";
         const myInit = {
             body: {
                 username: username,
@@ -295,36 +267,45 @@ const UserManagement = (props) => {
         API.post(apiName, path, myInit)
             .then((response) => {
                 console.log("Response from addUser API is ", response);
-                notification.success({
-                    message: 'Success',
-                    description: 'User added successfully',
-                });
-                setTableData([]);
-                getTenantList();
-                formEdit.resetFields();
-                setFormValues([]);
             })
             .catch((error) => {
-                console.log(error.response);
+                console.log(error);
             });
 
+            // 2. updating user role in clientUser
+            updateClientUser({
+                id: formValues.key,
+                role: role
+            }).then((res) => {
+                notification.success({
+                    message: 'Success',
+                    description: 'User updated successfully',
+                });
+                setTableData([]);
+                getUsersList();
+                formEdit.resetFields();
+                setFormValues([]);
+    
+            }).catch((err) => {
+                console.log(err);
+            })
     }
 
-    const UpdateTenantRole = async (values) => {
+
+    const UpdateUserRole = async (values) => {
 
         var username = formValues.email
         var role = values.role
-
         // removing user from the previous group
         let selectedRow = { 'email': username, 'role': formValues.role, 'newRole': role }
-        removeTenant(selectedRow, true);
+        removeUserInCognito(selectedRow, true);
         // Adding the user in the new group
 
     }
 
     const handleEditSubmit = (values) => {
         setEditModalVisible(false)
-        UpdateTenantRole(values);
+        UpdateUserRole(values);
     }
 
     const handleEditCancel = () => {
@@ -382,7 +363,7 @@ const UserManagement = (props) => {
                                 const currValue = e.target.value;
                                 setSearchValue(currValue);
                                 const filteredData = data.filter(entry =>
-                                    entry.email.toLowerCase().includes(currValue.toLowerCase()) || entry.role.toLowerCase().includes(currValue.toLowerCase()) || entry.name.toLowerCase().includes(currValue.toLowerCase()) 
+                                    entry.email.toLowerCase().includes(currValue.toLowerCase()) || entry.role.toLowerCase().includes(currValue.toLowerCase()) || entry.name.toLowerCase().includes(currValue.toLowerCase())
                                 );
                                 setTableData(filteredData);
                             }}
@@ -405,7 +386,7 @@ const UserManagement = (props) => {
                         />
                     </Col>
                 </Row>
-                <Modal title={<h3> Create Tenant</h3>} className='CreateModal' open={createModalVisible} onOk={form.submit} onCancel={handleCreateCancel} >
+                <Modal title={<h3> Create User</h3>} className='CreateModal' open={createModalVisible} onOk={form.submit} onCancel={handleCreateCancel} >
                     <Form
                         form={form}
                         name="createForm"
@@ -490,32 +471,6 @@ const UserManagement = (props) => {
                                 <Select.Option value='tenantUser'>User</Select.Option>
                             </Select>
                         </Form.Item>
-
-                        <Form.Item
-                            label="Password"
-                            name="password"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Please provide your password!',
-                                },
-                                {
-                                    validator: (_, value) => {
-                                        if (strongRegex.test(value)) {
-                                            return Promise.resolve();
-                                        } else if (mediumRegex.test(value)) {
-                                            return Promise.reject('Password strength : fair');
-                                        }
-                                        else {
-                                            return Promise.reject('Password strength is weak. Include aphabets/numbers/special characters');
-                                        }
-                                    }
-                                }
-                            ]}
-                        >
-                            <Input.Password />
-                        </Form.Item>
-
                     </Form>
                 </Modal>
                 <Modal title={<h2> Edit Tenant</h2>} className='editModal' open={editModalVisible} onOk={formEdit.submit} onCancel={handleEditCancel} >

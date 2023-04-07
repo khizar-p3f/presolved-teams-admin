@@ -48,6 +48,7 @@ const UsersManagement = () => {
   const [selectedRow, setSelectedRow] = useState(null);
   const [searchValue, setSearchValue] = useState("");
   const [formValues, setFormValues] = useState({
+    enable: true,
     name: "",
     email: "",
     role: "",
@@ -83,7 +84,8 @@ const UsersManagement = () => {
           let attributes = response.Users[i].Attributes;
           var name = getName(attributes);
           var email = getEmail(attributes);
-          getlistGroupsForUser(response.Users[i].Username, email, name);
+          var enable = response.Users[i].Enabled;
+          getlistGroupsForUser(response.Users[i].Username, email, name, enable);
         }
       })
       .catch((error) => {
@@ -107,7 +109,8 @@ const UsersManagement = () => {
     }
   };
 
-  const getlistGroupsForUser = async (username, email, name) => {
+  const getlistGroupsForUser = async (username, email, name, enable) => {
+    
     const path = "/listGroupsForUser";
     const myInit = {
       headers: {
@@ -138,6 +141,7 @@ const UsersManagement = () => {
               name: name,
               email: email,
               role: role,
+              enable: enable,
             },
           ]);
           setTableData((prev) => [
@@ -147,6 +151,7 @@ const UsersManagement = () => {
               name: name,
               email: email,
               role: role,
+              enable: enable,
             },
           ]);
         }
@@ -176,14 +181,35 @@ const UsersManagement = () => {
     console.log("Failed:", errorInfo);
   };
 
+  const randomPasswordGenerator = () => {
+    var length = 8,
+      charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+~`|}{[]\:;?><,./-=",
+      retVal = "";
+    for (var i = 0, n = charset.length; i < length; ++i) {
+      retVal += charset.charAt(Math.floor(Math.random() * n));
+    }
+    return retVal;
+  }
+
+  const UUIDGenerator = () => {
+    var dt = new Date().getTime();
+    var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+      var r = (dt + Math.random() * 16) % 16 | 0;
+      dt = Math.floor(dt / 16);
+      return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+    });
+    return uuid;
+
+  }
+
   async function createUser(values) {
     //Get Values from form
-    console.log("values", values);
     const name = values.name;
     const email = values.email;
-    const password = values.password;
     const role = values.role;
-    const phone = "+919655678788";
+    const password = randomPasswordGenerator();
+    const tenantId = UUIDGenerator();
+    const phone = values.phone;
 
     const path = "/users";
 
@@ -194,13 +220,17 @@ const UsersManagement = () => {
         password: password,
         groupname: role,
         userAttributes: JSON.stringify([
-          // {
-          //     Name: "phone_number",
-          //     Value: phone,
-          // },
+          {
+              Name: "phone_number",
+              Value: phone,
+          },
           {
             Name: "name",
             Value: name,
+          },
+          {
+            Name: "custom:tenantId",
+            Value: tenantId,
           },
         ]),
       },
@@ -218,6 +248,10 @@ const UsersManagement = () => {
           description: "User created successfully",
         });
 
+        setTableData([]);
+        getUsersList();
+        form.resetFields();
+        
         //Add an entry to audit table
         let loggedUser = Auth.currentAuthenticatedUser();
 
@@ -238,14 +272,13 @@ const UsersManagement = () => {
 
         await createAuditRecord(auditRecord);
 
-        setTableData([]);
-        getUsersList();
-        form.resetFields();
+       
       })
       .catch((error) => {
         console.log(error.response);
       });
   }
+
   //----------------Remove User functionalities-----------------------------
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
@@ -253,7 +286,74 @@ const UsersManagement = () => {
     },
   };
 
-  const removeUser = async (selectedRow, check) => {
+  const disableUser = async (selectedRow) => {
+    var username = selectedRow.email;
+    const path = "/disableUser";
+    const myInit = {
+      body: {
+        username: username,
+      },
+      headers: {
+        Authorization: `Bearer ${(await Auth.currentSession())
+          .getAccessToken()
+          .getJwtToken()}`,
+      },
+    };
+    API.post(apiName, path, myInit)
+      .then((response) => {
+        console.log("Response from Disable user API is ", response);
+          notification.info({
+            message: "Success",
+            description: "User diasabled successfully",
+          });
+          setTableData([]);
+          getUsersList();
+      })
+      .catch((error) => {
+        console.log(error.response);
+      });
+  };
+ 
+
+  const showRemoveConfirm = () => {
+    if (selectedRow !== null) {
+      confirm({
+        title: "Are you sure remove this user?",
+        icon: <ExclamationCircleFilled />,
+        content: "User will be removed from these groups.",
+        okText: "Yes",
+        okType: "danger",
+        cancelText: "No",
+        onOk() {
+          console.log("OK");
+          disableUser(selectedRow[0], false);
+        },
+        onCancel() {
+          console.log("Cancel");
+        },
+      });
+    } else
+      notification.error({
+        message: "Error",
+        description: "Please select the user to remove",
+      });
+  };
+  //----------------------Update User Functionalities--------------------------------------------------
+
+  const showEditModal = () => {
+    setEditModalVisible(true);
+  };
+
+  const UpdateUserRole = async (values) => {
+    var username = formValues.email;
+    var role = values.role;
+    // removing user from the previous group
+    let selectedRow = { email: username, role: formValues.role, newRole: role };
+    removeUser(selectedRow, true);
+  };
+
+
+  const removeUser = async (selectedRow) => {
     var role = selectedRow.role;
     var username = selectedRow.email;
     if (selectedRow.role === "Admin") role = "p3fAdmin";
@@ -274,49 +374,12 @@ const UsersManagement = () => {
     API.post(apiName, path, myInit)
       .then((response) => {
         console.log("Response from RemoveUser API is ", response);
-        if (!check)
-          notification.info({
-            message: "Success",
-            description: "User removed successfully",
-          });
-        if (check) addUserToGroup(username, selectedRow.newRole);
-        else {
-          setTableData([]);
-          getUsersList();
-        }
+        //adding user to the new group
+        addUserToGroup(username, selectedRow.newRole); 
       })
       .catch((error) => {
         console.log(error.response);
       });
-  };
-
-  const showRemoveConfirm = () => {
-    if (selectedRow !== null) {
-      confirm({
-        title: "Are you sure remove this user?",
-        icon: <ExclamationCircleFilled />,
-        content: "User will be removed from these groups.",
-        okText: "Yes",
-        okType: "danger",
-        cancelText: "No",
-        onOk() {
-          console.log("OK");
-          removeUser(selectedRow[0], false);
-        },
-        onCancel() {
-          console.log("Cancel");
-        },
-      });
-    } else
-      notification.error({
-        message: "Error",
-        description: "Please select the user to remove",
-      });
-  };
-  //----------------------Update User Functionalities--------------------------------------------------
-
-  const showEditModal = () => {
-    setEditModalVisible(true);
   };
 
   const addUserToGroup = async (username, role) => {
@@ -338,7 +401,7 @@ const UsersManagement = () => {
         console.log("Response from addUser API is ", response);
         notification.success({
           message: "Success",
-          description: "User added successfully",
+          description: "User role updated successfully",
         });
         setTableData([]);
         getUsersList();
@@ -348,14 +411,6 @@ const UsersManagement = () => {
       .catch((error) => {
         console.log(error.response);
       });
-  };
-
-  const UpdateUserRole = async (values) => {
-    var username = formValues.email;
-    var role = values.role;
-    // removing user from the previous group
-    let selectedRow = { email: username, role: formValues.role, newRole: role };
-    removeUser(selectedRow, true);
   };
 
   const handleEditSubmit = (values) => {
@@ -404,6 +459,12 @@ const UsersManagement = () => {
       dataIndex: "role",
       key: "role",
     },
+    {
+      title: "Enable",
+      dataIndex: "enable",
+      key: "enable",
+      render : (text) => text?"Enabled":"Disabled",
+    },
   ];
 
   return (
@@ -446,7 +507,7 @@ const UsersManagement = () => {
             </Button>
             <Button type="primary" size="large" onClick={showRemoveConfirm}>
               <UserDeleteOutlined />
-              Remove
+              Disable
             </Button>
           </Space>
         </Row>
@@ -517,21 +578,21 @@ const UsersManagement = () => {
               <Input />
             </Form.Item>
 
-            {/* <Form.Item
-                            label='Phone # with country code (Eg:+1)'
-                            name='phone'
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Please input your company Phone!'
-                                },
-                                {
-                                    pattern: new RegExp(/^\+((?:9[679]|8[035789]|6[789]|5[90]|42|3[578]|2[1-689])|9[0-58]|8[1246]|6[0-6]|5[1-8]|4[013-9]|3[0-469]|2[70]|7|1)(?:\W*\d){0,13}\d$/),
-                                    message: 'Please input a valid phone number!'
-                                }
-                            ]}>
-                            <Input datatype='number' />
-                        </Form.Item> */}
+            <Form.Item
+              label='Phone # with country code (Eg:+1)'
+              name='phone'
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input your company Phone!'
+                },
+                {
+                  pattern: new RegExp(/^\+((?:9[679]|8[035789]|6[789]|5[90]|42|3[578]|2[1-689])|9[0-58]|8[1246]|6[0-6]|5[1-8]|4[013-9]|3[0-469]|2[70]|7|1)(?:\W*\d){0,13}\d$/),
+                  message: 'Please input a valid phone number!'
+                }
+              ]}>
+              <Input datatype='number' />
+            </Form.Item>
 
             <Form.Item
               name="role"
@@ -548,31 +609,6 @@ const UsersManagement = () => {
               </Select>
             </Form.Item>
 
-            <Form.Item
-              label="Password"
-              name="password"
-              rules={[
-                {
-                  required: true,
-                  message: "Please provide your password!",
-                },
-                {
-                  validator: (_, value) => {
-                    if (strongRegex.test(value)) {
-                      return Promise.resolve();
-                    } else if (mediumRegex.test(value)) {
-                      return Promise.reject("Password strength : fair");
-                    } else {
-                      return Promise.reject(
-                        "Password strength is weak. Include aphabets/numbers/special characters"
-                      );
-                    }
-                  },
-                },
-              ]}
-            >
-              <Input.Password />
-            </Form.Item>
           </Form>
         </Modal>
         <Modal
