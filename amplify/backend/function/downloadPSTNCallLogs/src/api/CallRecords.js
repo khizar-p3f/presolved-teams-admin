@@ -19,7 +19,7 @@ class CallRecords {
         ) {
           createClientCallLogs(input: $input, condition: $condition) {            
             tenantId
-            callId            
+            callRecordId            
             callType            
             callStartTime
             callEndTime

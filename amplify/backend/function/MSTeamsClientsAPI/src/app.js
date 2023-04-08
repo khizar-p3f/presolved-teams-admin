@@ -4,7 +4,7 @@
 	API_PRESOLVEDTEAMSADMIN_PRESOLVEDAUDITTABLE_NAME
 	ENV
 	REGION
-Amplify Params - DO NOT EDIT *//*
+Amplify Params - DO NOT EDIT */ /*
 Use the following code to retrieve configured secrets from SSM:
 
 const aws = require('aws-sdk');
@@ -31,6 +31,7 @@ const bodyParser = require("body-parser");
 const awsServerlessExpressMiddleware = require("aws-serverless-express/middleware");
 const MSTeams = require("./teams");
 const msteams = new MSTeams();
+const { TransferToTeams } = require("./TransferToTeams");
 
 // declare a new express app
 const app = express();
@@ -96,6 +97,60 @@ app.get("/teams/*", function (req, res) {
 app.post("/teams", function (req, res) {
   // Add your code here
   res.json({ success: "post call succeed!", url: req.url, body: req.body });
+});
+
+app.post("/teams/Call", async function (req, res) {
+  // Add your code here
+  //Authenticate the call
+  //authenticateAllCalls(req, res, next);
+  //Validate the user using the authtoken
+  let authToken = req.headers.authorization;
+  //Remove Bearer from the token
+  authToken = authToken.replace("Bearer ", "");
+  //console.log("Auth Token is ", authToken);
+  // let userDetails = await msteams.validateAuthToken(authToken);
+  //Load the Tenant Id from the DB
+
+  let validatedTokenResult = await msteams.validateIdToken(
+    authToken,
+    req.query.tenantId
+  );
+  //console.log("Validated Token Result is ", validatedTokenResult);
+  // console.log("User Details are ", userDetails);
+  if (validatedTokenResult) {
+    let from = req.body.from;
+    let to = req.body.to;
+    const transferToTeams = {
+      from: from,
+      to: to,
+    };
+
+    console.log("Call is from a authenticated client from MS Teams");
+    let transferResponse = await TransferToTeams(transferToTeams);
+    console.log("Transfer Response is ", transferResponse);
+
+    if (transferResponse.success) {
+      //Set expiry time of 30 seconds
+      let expiryTime = new Date();
+      expiryTime.setSeconds(expiryTime.getSeconds() + 30);
+      let phonetoCall = "+16028122928";
+
+      transferResponse.expiryTime = expiryTime;
+      transferResponse.phonetoCall = phonetoCall;
+
+      res.json({
+        success: transferResponse.success,
+        result: transferResponse,
+      });
+    } else {
+      res
+        .status(503)
+        .send({ success: transferResponse.success, result: transferResponse });
+    }
+  } else {
+    //Send 401
+    res.status(401).send("Unauthorized");
+  }
 });
 
 app.post("/teams/*", function (req, res) {

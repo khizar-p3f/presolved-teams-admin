@@ -45,12 +45,6 @@ type clientUsers
       }
       {
         allow: groups
-        groups: ["tenantAdmin"]
-        operations: [read, create, update, delete]
-      }
-      { allow: groups, groups: ["tenantUser"], operations: [read] }
-      {
-        allow: groups
         groups: ["p3fAdmin"]
         operations: [read, create, update, delete]
       }
@@ -133,7 +127,7 @@ type clientUserWhitelisting
 }
 
 type ClientCallLogs
-  @model  
+  @model
   @auth(
     rules: [
       {
@@ -152,8 +146,8 @@ type ClientCallLogs
     ]
   ) {
   tenantId: ID! @index(name: "byTenantId")
-  callId: ID! @primaryKey  
-  callType: String!  
+  callRecordId: ID! @primaryKey
+  callType: String!
   callStartTime: AWSDateTime!
   callEndTime: AWSDateTime!
   callDuration: Int!

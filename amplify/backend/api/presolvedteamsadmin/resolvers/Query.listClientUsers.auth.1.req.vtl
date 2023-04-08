@@ -1,0 +1,41 @@
+## [Start] Authorization Steps. **
+$util.qr($ctx.stash.put("hasAuth", true))
+#set( $isAuthorized = false )
+#set( $primaryFieldMap = {} )
+#if( $util.authType() == "API Key Authorization" )
+  #set( $isAuthorized = true )
+#end
+#if( $util.authType() == "User Pool Authorization" )
+  #if( !$isAuthorized )
+    #set( $staticGroupRoles = [{"claim":"cognito:groups","entity":"p3fAdmin"}] )
+    #foreach( $groupRole in $staticGroupRoles )
+      #set( $groupsInToken = $util.defaultIfNull($ctx.identity.claims.get($groupRole.claim), []) )
+      #if( $groupsInToken.contains($groupRole.entity) )
+        #set( $isAuthorized = true )
+        #break
+      #end
+    #end
+  #end
+  #if( !$isAuthorized )
+    #set( $staticGroupRoles = [{"claim":"cognito:groups","entity":"tenantAdmin"}] )
+    #foreach( $groupRole in $staticGroupRoles )
+      #set( $groupsInToken = $util.defaultIfNull($ctx.identity.claims.get($groupRole.claim), []) )
+      #if( $groupsInToken.contains($groupRole.entity) )
+        #set( $authFilter = [] )
+        #set( $role0 = $util.defaultIfNull($ctx.identity.claims.get("custom:tenantId"), null) )
+        #if( !$util.isNull($role0) )
+          $util.qr($authFilter.add({"tenantId": { "eq": $role0 }}))
+          #set( $isAuthorized = true )
+        #end
+        #if( !$authFilter.isEmpty() )
+          $util.qr($ctx.stash.put("authFilter", { "or": $authFilter }))          
+        #end
+      #end
+    #end
+  #end  
+#end
+#if( !$isAuthorized  )
+$util.unauthorized()
+#end
+$util.toJson({"version":"2018-05-29","payload":{}})
+## [End] Authorization Steps. **

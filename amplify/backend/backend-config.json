@@ -31,6 +31,14 @@
           ],
           "category": "function",
           "resourceName": "MSTeamsClientsAPI"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "ItemsHandler"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -129,6 +137,11 @@
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
+    "ItemsHandler": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
     "MSTeamsClientsAPI": {
       "build": true,
       "dependsOn": [
@@ -183,6 +196,22 @@
         }
       ]
     },
+    "AMPLIFY_function_ItemsHandler_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "ItemsHandler"
+        }
+      ]
+    },
+    "AMPLIFY_function_ItemsHandler_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "ItemsHandler"
+        }
+      ]
+    },
     "AMPLIFY_function_MSTeamsClientsAPI_callManagerUrl": {
       "usedBy": [
         {
@@ -212,6 +241,22 @@
         {
           "category": "function",
           "resourceName": "MSTeamsClientsAPI"
+        }
+      ]
+    },
+    "AMPLIFY_function_downloadPSTNCallLogs_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "downloadPSTNCallLogs"
+        }
+      ]
+    },
+    "AMPLIFY_function_downloadPSTNCallLogs_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "downloadPSTNCallLogs"
         }
       ]
     }

@@ -11,7 +11,8 @@
     "azure-ad-verify-token": "^3.0.1",
     "body-parser": "^1.17.1",
     "express": "^4.15.2",
-    "validate-azure-ad-token": "^1.0.1"
+    "validate-azure-ad-token": "^1.0.1",
+    "isomorphic-fetch": "^3.0.0"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.92"
