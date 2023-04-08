@@ -24,13 +24,14 @@
         "MSTeamsClientsAPI": {
           "secretsPathAmplifyAppId": "d2sg3m2pawykox",
           "deploymentBucketName": "amplify-presolvedteamsadmin-develop-201120-deployment",
-          "s3Key": "amplify-builds/MSTeamsClientsAPI-48554c6e672b7246744c-build.zip",
+          "s3Key": "amplify-builds/MSTeamsClientsAPI-61466e4270564e4c6c49-build.zip",
           "callManagerUrl": "https://td7y4pmq4a.execute-api.us-east-1.amazonaws.com/staging"
         },
         "graphQlLambdaAuthorizerd08aa087": {},
         "downloadPSTNCallLogs": {
           "deploymentBucketName": "amplify-presolvedteamsadmin-develop-201120-deployment",
-          "s3Key": "amplify-builds/downloadPSTNCallLogs-4877392b396f4d764f54-build.zip"
+          "s3Key": "amplify-builds/downloadPSTNCallLogs-4877392b396f4d764f54-build.zip",
+          "msGraphSecretKeyName": "presolved/reports/key"
         },
         "ItemsHandler": {
           "deploymentBucketName": "amplify-presolvedteamsadmin-develop-201120-deployment",

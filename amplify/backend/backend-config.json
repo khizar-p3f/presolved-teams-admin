@@ -108,14 +108,14 @@
     "userPoolGroups": {
       "dependsOn": [
         {
-          "category": "auth",
-          "resourceName": "presolvedteamsadmine76efdae",
           "attributes": [
             "UserPoolId",
             "AppClientIDWeb",
             "AppClientID",
             "IdentityPoolId"
-          ]
+          ],
+          "category": "auth",
+          "resourceName": "presolvedteamsadmine76efdae"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -245,6 +245,14 @@
       ]
     },
     "AMPLIFY_function_downloadPSTNCallLogs_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "downloadPSTNCallLogs"
+        }
+      ]
+    },
+    "AMPLIFY_function_downloadPSTNCallLogs_msGraphSecretKeyName": {
       "usedBy": [
         {
           "category": "function",

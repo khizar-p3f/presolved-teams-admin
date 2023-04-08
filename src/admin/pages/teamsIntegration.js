@@ -196,9 +196,9 @@ const LoginWithMSWidget = ({ client, setCurrent }) => {
   const dispatch = useDispatch();
   const authCallback = (err, data) => {
     if (data.tenantId) {
-      let clientIntegration = {
-        clientId: client.clientId,
-        tenantId: data.tenantId,
+      let clientIntegrationclientIntegration = {
+        tenantId: client.clientId,
+        mstenantId: data.tenantId,
         loginMS: 1,
         consentMS: 0,
         attributes: JSON.stringify(data),

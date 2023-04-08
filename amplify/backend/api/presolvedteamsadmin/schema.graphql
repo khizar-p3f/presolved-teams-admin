@@ -79,6 +79,7 @@ type clientIntergrations
         groups: ["p3fAdmin"]
         operations: [read, create, update, delete]
       }
+      { allow: public, operations: [read] }
     ]
   ) {
   id: ID!
@@ -109,6 +110,7 @@ type clientUserWhitelisting
         groups: ["p3fAdmin"]
         operations: [read, create, update, delete]
       }
+       { allow: public, operations: [read] }
     ]
   ) {
   id: ID!

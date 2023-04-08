@@ -1,98 +1,6 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const getClientIntergrations = /* GraphQL */ `
-  query GetClientIntergrations($id: ID!) {
-    getClientIntergrations(id: $id) {
-      id
-      tenantId
-      mstenantId
-      loginMS
-      consentMS
-      attributes
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listClientIntergrations = /* GraphQL */ `
-  query ListClientIntergrations(
-    $filter: ModelClientIntergrationsFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listClientIntergrations(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        tenantId
-        mstenantId
-        loginMS
-        consentMS
-        attributes
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const getClientUserWhitelisting = /* GraphQL */ `
-  query GetClientUserWhitelisting($id: ID!) {
-    getClientUserWhitelisting(id: $id) {
-      id
-      tenantId
-      displayName
-      businessPhones
-      givenName
-      jobTitle
-      mail
-      mobilePhone
-      officeLocation
-      preferredLanguage
-      surname
-      userPrincipalName
-      uid
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listClientUserWhitelistings = /* GraphQL */ `
-  query ListClientUserWhitelistings(
-    $filter: ModelClientUserWhitelistingFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listClientUserWhitelistings(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        tenantId
-        displayName
-        businessPhones
-        givenName
-        jobTitle
-        mail
-        mobilePhone
-        officeLocation
-        preferredLanguage
-        surname
-        userPrincipalName
-        uid
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
 export const getPresolvedAudit = /* GraphQL */ `
   query GetPresolvedAudit($id: ID!) {
     getPresolvedAudit(id: $id) {
@@ -201,6 +109,98 @@ export const listClientUsers = /* GraphQL */ `
         email
         role
         status
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getClientIntergrations = /* GraphQL */ `
+  query GetClientIntergrations($id: ID!) {
+    getClientIntergrations(id: $id) {
+      id
+      tenantId
+      mstenantId
+      loginMS
+      consentMS
+      attributes
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listClientIntergrations = /* GraphQL */ `
+  query ListClientIntergrations(
+    $filter: ModelClientIntergrationsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listClientIntergrations(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        tenantId
+        mstenantId
+        loginMS
+        consentMS
+        attributes
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getClientUserWhitelisting = /* GraphQL */ `
+  query GetClientUserWhitelisting($id: ID!) {
+    getClientUserWhitelisting(id: $id) {
+      id
+      tenantId
+      displayName
+      businessPhones
+      givenName
+      jobTitle
+      mail
+      mobilePhone
+      officeLocation
+      preferredLanguage
+      surname
+      userPrincipalName
+      uid
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listClientUserWhitelistings = /* GraphQL */ `
+  query ListClientUserWhitelistings(
+    $filter: ModelClientUserWhitelistingFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listClientUserWhitelistings(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        tenantId
+        displayName
+        businessPhones
+        givenName
+        jobTitle
+        mail
+        mobilePhone
+        officeLocation
+        preferredLanguage
+        surname
+        userPrincipalName
+        uid
         createdAt
         updatedAt
       }

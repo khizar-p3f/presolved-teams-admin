@@ -1,129 +1,6 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const onCreateClientIntergrations = /* GraphQL */ `
-  subscription OnCreateClientIntergrations(
-    $filter: ModelSubscriptionClientIntergrationsFilterInput
-    $tenantId: String
-  ) {
-    onCreateClientIntergrations(filter: $filter, tenantId: $tenantId) {
-      id
-      tenantId
-      mstenantId
-      loginMS
-      consentMS
-      attributes
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onUpdateClientIntergrations = /* GraphQL */ `
-  subscription OnUpdateClientIntergrations(
-    $filter: ModelSubscriptionClientIntergrationsFilterInput
-    $tenantId: String
-  ) {
-    onUpdateClientIntergrations(filter: $filter, tenantId: $tenantId) {
-      id
-      tenantId
-      mstenantId
-      loginMS
-      consentMS
-      attributes
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onDeleteClientIntergrations = /* GraphQL */ `
-  subscription OnDeleteClientIntergrations(
-    $filter: ModelSubscriptionClientIntergrationsFilterInput
-    $tenantId: String
-  ) {
-    onDeleteClientIntergrations(filter: $filter, tenantId: $tenantId) {
-      id
-      tenantId
-      mstenantId
-      loginMS
-      consentMS
-      attributes
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onCreateClientUserWhitelisting = /* GraphQL */ `
-  subscription OnCreateClientUserWhitelisting(
-    $filter: ModelSubscriptionClientUserWhitelistingFilterInput
-    $tenantId: String
-  ) {
-    onCreateClientUserWhitelisting(filter: $filter, tenantId: $tenantId) {
-      id
-      tenantId
-      displayName
-      businessPhones
-      givenName
-      jobTitle
-      mail
-      mobilePhone
-      officeLocation
-      preferredLanguage
-      surname
-      userPrincipalName
-      uid
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onUpdateClientUserWhitelisting = /* GraphQL */ `
-  subscription OnUpdateClientUserWhitelisting(
-    $filter: ModelSubscriptionClientUserWhitelistingFilterInput
-    $tenantId: String
-  ) {
-    onUpdateClientUserWhitelisting(filter: $filter, tenantId: $tenantId) {
-      id
-      tenantId
-      displayName
-      businessPhones
-      givenName
-      jobTitle
-      mail
-      mobilePhone
-      officeLocation
-      preferredLanguage
-      surname
-      userPrincipalName
-      uid
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onDeleteClientUserWhitelisting = /* GraphQL */ `
-  subscription OnDeleteClientUserWhitelisting(
-    $filter: ModelSubscriptionClientUserWhitelistingFilterInput
-    $tenantId: String
-  ) {
-    onDeleteClientUserWhitelisting(filter: $filter, tenantId: $tenantId) {
-      id
-      tenantId
-      displayName
-      businessPhones
-      givenName
-      jobTitle
-      mail
-      mobilePhone
-      officeLocation
-      preferredLanguage
-      surname
-      userPrincipalName
-      uid
-      createdAt
-      updatedAt
-    }
-  }
-`;
 export const onCreatePresolvedAudit = /* GraphQL */ `
   subscription OnCreatePresolvedAudit(
     $filter: ModelSubscriptionPresolvedAuditFilterInput
@@ -287,6 +164,129 @@ export const onDeleteClientUsers = /* GraphQL */ `
       email
       role
       status
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateClientIntergrations = /* GraphQL */ `
+  subscription OnCreateClientIntergrations(
+    $filter: ModelSubscriptionClientIntergrationsFilterInput
+    $tenantId: String
+  ) {
+    onCreateClientIntergrations(filter: $filter, tenantId: $tenantId) {
+      id
+      tenantId
+      mstenantId
+      loginMS
+      consentMS
+      attributes
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateClientIntergrations = /* GraphQL */ `
+  subscription OnUpdateClientIntergrations(
+    $filter: ModelSubscriptionClientIntergrationsFilterInput
+    $tenantId: String
+  ) {
+    onUpdateClientIntergrations(filter: $filter, tenantId: $tenantId) {
+      id
+      tenantId
+      mstenantId
+      loginMS
+      consentMS
+      attributes
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteClientIntergrations = /* GraphQL */ `
+  subscription OnDeleteClientIntergrations(
+    $filter: ModelSubscriptionClientIntergrationsFilterInput
+    $tenantId: String
+  ) {
+    onDeleteClientIntergrations(filter: $filter, tenantId: $tenantId) {
+      id
+      tenantId
+      mstenantId
+      loginMS
+      consentMS
+      attributes
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateClientUserWhitelisting = /* GraphQL */ `
+  subscription OnCreateClientUserWhitelisting(
+    $filter: ModelSubscriptionClientUserWhitelistingFilterInput
+    $tenantId: String
+  ) {
+    onCreateClientUserWhitelisting(filter: $filter, tenantId: $tenantId) {
+      id
+      tenantId
+      displayName
+      businessPhones
+      givenName
+      jobTitle
+      mail
+      mobilePhone
+      officeLocation
+      preferredLanguage
+      surname
+      userPrincipalName
+      uid
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateClientUserWhitelisting = /* GraphQL */ `
+  subscription OnUpdateClientUserWhitelisting(
+    $filter: ModelSubscriptionClientUserWhitelistingFilterInput
+    $tenantId: String
+  ) {
+    onUpdateClientUserWhitelisting(filter: $filter, tenantId: $tenantId) {
+      id
+      tenantId
+      displayName
+      businessPhones
+      givenName
+      jobTitle
+      mail
+      mobilePhone
+      officeLocation
+      preferredLanguage
+      surname
+      userPrincipalName
+      uid
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteClientUserWhitelisting = /* GraphQL */ `
+  subscription OnDeleteClientUserWhitelisting(
+    $filter: ModelSubscriptionClientUserWhitelistingFilterInput
+    $tenantId: String
+  ) {
+    onDeleteClientUserWhitelisting(filter: $filter, tenantId: $tenantId) {
+      id
+      tenantId
+      displayName
+      businessPhones
+      givenName
+      jobTitle
+      mail
+      mobilePhone
+      officeLocation
+      preferredLanguage
+      surname
+      userPrincipalName
+      uid
       createdAt
       updatedAt
     }
