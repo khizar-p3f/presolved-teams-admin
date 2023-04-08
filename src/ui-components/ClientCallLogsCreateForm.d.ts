@@ -13,12 +13,9 @@ export declare type ValidationResponse = {
 };
 export declare type ValidationFunction<T> = (value: T, validationResponse: ValidationResponse) => ValidationResponse | Promise<ValidationResponse>;
 export declare type ClientCallLogsCreateFormInputValues = {
-    RecordingId?: string;
     tenantId?: string;
-    callId?: string;
-    contactId?: string;
+    callRecordId?: string;
     callType?: string;
-    callStatus?: string;
     callStartTime?: string;
     callEndTime?: string;
     callDuration?: number;
@@ -27,12 +24,9 @@ export declare type ClientCallLogsCreateFormInputValues = {
     calleeNumber?: string;
 };
 export declare type ClientCallLogsCreateFormValidationValues = {
-    RecordingId?: ValidationFunction<string>;
     tenantId?: ValidationFunction<string>;
-    callId?: ValidationFunction<string>;
-    contactId?: ValidationFunction<string>;
+    callRecordId?: ValidationFunction<string>;
     callType?: ValidationFunction<string>;
-    callStatus?: ValidationFunction<string>;
     callStartTime?: ValidationFunction<string>;
     callEndTime?: ValidationFunction<string>;
     callDuration?: ValidationFunction<number>;
@@ -43,12 +37,9 @@ export declare type ClientCallLogsCreateFormValidationValues = {
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type ClientCallLogsCreateFormOverridesProps = {
     ClientCallLogsCreateFormGrid?: PrimitiveOverrideProps<GridProps>;
-    RecordingId?: PrimitiveOverrideProps<TextFieldProps>;
     tenantId?: PrimitiveOverrideProps<TextFieldProps>;
-    callId?: PrimitiveOverrideProps<TextFieldProps>;
-    contactId?: PrimitiveOverrideProps<TextFieldProps>;
+    callRecordId?: PrimitiveOverrideProps<TextFieldProps>;
     callType?: PrimitiveOverrideProps<TextFieldProps>;
-    callStatus?: PrimitiveOverrideProps<TextFieldProps>;
     callStartTime?: PrimitiveOverrideProps<TextFieldProps>;
     callEndTime?: PrimitiveOverrideProps<TextFieldProps>;
     callDuration?: PrimitiveOverrideProps<TextFieldProps>;

@@ -23,12 +23,9 @@ export default function ClientCallLogsCreateForm(props) {
     ...rest
   } = props;
   const initialValues = {
-    RecordingId: "",
     tenantId: "",
-    callId: "",
-    contactId: "",
+    callRecordId: "",
     callType: "",
-    callStatus: "",
     callStartTime: "",
     callEndTime: "",
     callDuration: "",
@@ -36,14 +33,11 @@ export default function ClientCallLogsCreateForm(props) {
     callerNumber: "",
     calleeNumber: "",
   };
-  const [RecordingId, setRecordingId] = React.useState(
-    initialValues.RecordingId
-  );
   const [tenantId, setTenantId] = React.useState(initialValues.tenantId);
-  const [callId, setCallId] = React.useState(initialValues.callId);
-  const [contactId, setContactId] = React.useState(initialValues.contactId);
+  const [callRecordId, setCallRecordId] = React.useState(
+    initialValues.callRecordId
+  );
   const [callType, setCallType] = React.useState(initialValues.callType);
-  const [callStatus, setCallStatus] = React.useState(initialValues.callStatus);
   const [callStartTime, setCallStartTime] = React.useState(
     initialValues.callStartTime
   );
@@ -62,12 +56,9 @@ export default function ClientCallLogsCreateForm(props) {
   );
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
-    setRecordingId(initialValues.RecordingId);
     setTenantId(initialValues.tenantId);
-    setCallId(initialValues.callId);
-    setContactId(initialValues.contactId);
+    setCallRecordId(initialValues.callRecordId);
     setCallType(initialValues.callType);
-    setCallStatus(initialValues.callStatus);
     setCallStartTime(initialValues.callStartTime);
     setCallEndTime(initialValues.callEndTime);
     setCallDuration(initialValues.callDuration);
@@ -77,12 +68,9 @@ export default function ClientCallLogsCreateForm(props) {
     setErrors({});
   };
   const validations = {
-    RecordingId: [{ type: "Required" }],
     tenantId: [{ type: "Required" }],
-    callId: [{ type: "Required" }],
-    contactId: [{ type: "Required" }],
+    callRecordId: [{ type: "Required" }],
     callType: [{ type: "Required" }],
-    callStatus: [{ type: "Required" }],
     callStartTime: [{ type: "Required" }],
     callEndTime: [{ type: "Required" }],
     callDuration: [{ type: "Required" }],
@@ -133,12 +121,9 @@ export default function ClientCallLogsCreateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
-          RecordingId,
           tenantId,
-          callId,
-          contactId,
+          callRecordId,
           callType,
-          callStatus,
           callStartTime,
           callEndTime,
           callDuration,
@@ -191,41 +176,6 @@ export default function ClientCallLogsCreateForm(props) {
       {...rest}
     >
       <TextField
-        label="Recording id"
-        isRequired={true}
-        isReadOnly={false}
-        value={RecordingId}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              RecordingId: value,
-              tenantId,
-              callId,
-              contactId,
-              callType,
-              callStatus,
-              callStartTime,
-              callEndTime,
-              callDuration,
-              charge,
-              callerNumber,
-              calleeNumber,
-            };
-            const result = onChange(modelFields);
-            value = result?.RecordingId ?? value;
-          }
-          if (errors.RecordingId?.hasError) {
-            runValidationTasks("RecordingId", value);
-          }
-          setRecordingId(value);
-        }}
-        onBlur={() => runValidationTasks("RecordingId", RecordingId)}
-        errorMessage={errors.RecordingId?.errorMessage}
-        hasError={errors.RecordingId?.hasError}
-        {...getOverrideProps(overrides, "RecordingId")}
-      ></TextField>
-      <TextField
         label="Tenant id"
         isRequired={true}
         isReadOnly={false}
@@ -234,12 +184,9 @@ export default function ClientCallLogsCreateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              RecordingId,
               tenantId: value,
-              callId,
-              contactId,
+              callRecordId,
               callType,
-              callStatus,
               callStartTime,
               callEndTime,
               callDuration,
@@ -261,20 +208,17 @@ export default function ClientCallLogsCreateForm(props) {
         {...getOverrideProps(overrides, "tenantId")}
       ></TextField>
       <TextField
-        label="Call id"
+        label="Call record id"
         isRequired={true}
         isReadOnly={false}
-        value={callId}
+        value={callRecordId}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              RecordingId,
               tenantId,
-              callId: value,
-              contactId,
+              callRecordId: value,
               callType,
-              callStatus,
               callStartTime,
               callEndTime,
               callDuration,
@@ -283,52 +227,17 @@ export default function ClientCallLogsCreateForm(props) {
               calleeNumber,
             };
             const result = onChange(modelFields);
-            value = result?.callId ?? value;
+            value = result?.callRecordId ?? value;
           }
-          if (errors.callId?.hasError) {
-            runValidationTasks("callId", value);
+          if (errors.callRecordId?.hasError) {
+            runValidationTasks("callRecordId", value);
           }
-          setCallId(value);
+          setCallRecordId(value);
         }}
-        onBlur={() => runValidationTasks("callId", callId)}
-        errorMessage={errors.callId?.errorMessage}
-        hasError={errors.callId?.hasError}
-        {...getOverrideProps(overrides, "callId")}
-      ></TextField>
-      <TextField
-        label="Contact id"
-        isRequired={true}
-        isReadOnly={false}
-        value={contactId}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              RecordingId,
-              tenantId,
-              callId,
-              contactId: value,
-              callType,
-              callStatus,
-              callStartTime,
-              callEndTime,
-              callDuration,
-              charge,
-              callerNumber,
-              calleeNumber,
-            };
-            const result = onChange(modelFields);
-            value = result?.contactId ?? value;
-          }
-          if (errors.contactId?.hasError) {
-            runValidationTasks("contactId", value);
-          }
-          setContactId(value);
-        }}
-        onBlur={() => runValidationTasks("contactId", contactId)}
-        errorMessage={errors.contactId?.errorMessage}
-        hasError={errors.contactId?.hasError}
-        {...getOverrideProps(overrides, "contactId")}
+        onBlur={() => runValidationTasks("callRecordId", callRecordId)}
+        errorMessage={errors.callRecordId?.errorMessage}
+        hasError={errors.callRecordId?.hasError}
+        {...getOverrideProps(overrides, "callRecordId")}
       ></TextField>
       <TextField
         label="Call type"
@@ -339,12 +248,9 @@ export default function ClientCallLogsCreateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              RecordingId,
               tenantId,
-              callId,
-              contactId,
+              callRecordId,
               callType: value,
-              callStatus,
               callStartTime,
               callEndTime,
               callDuration,
@@ -366,41 +272,6 @@ export default function ClientCallLogsCreateForm(props) {
         {...getOverrideProps(overrides, "callType")}
       ></TextField>
       <TextField
-        label="Call status"
-        isRequired={true}
-        isReadOnly={false}
-        value={callStatus}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              RecordingId,
-              tenantId,
-              callId,
-              contactId,
-              callType,
-              callStatus: value,
-              callStartTime,
-              callEndTime,
-              callDuration,
-              charge,
-              callerNumber,
-              calleeNumber,
-            };
-            const result = onChange(modelFields);
-            value = result?.callStatus ?? value;
-          }
-          if (errors.callStatus?.hasError) {
-            runValidationTasks("callStatus", value);
-          }
-          setCallStatus(value);
-        }}
-        onBlur={() => runValidationTasks("callStatus", callStatus)}
-        errorMessage={errors.callStatus?.errorMessage}
-        hasError={errors.callStatus?.hasError}
-        {...getOverrideProps(overrides, "callStatus")}
-      ></TextField>
-      <TextField
         label="Call start time"
         isRequired={true}
         isReadOnly={false}
@@ -411,12 +282,9 @@ export default function ClientCallLogsCreateForm(props) {
             e.target.value === "" ? "" : new Date(e.target.value).toISOString();
           if (onChange) {
             const modelFields = {
-              RecordingId,
               tenantId,
-              callId,
-              contactId,
+              callRecordId,
               callType,
-              callStatus,
               callStartTime: value,
               callEndTime,
               callDuration,
@@ -448,12 +316,9 @@ export default function ClientCallLogsCreateForm(props) {
             e.target.value === "" ? "" : new Date(e.target.value).toISOString();
           if (onChange) {
             const modelFields = {
-              RecordingId,
               tenantId,
-              callId,
-              contactId,
+              callRecordId,
               callType,
-              callStatus,
               callStartTime,
               callEndTime: value,
               callDuration,
@@ -487,12 +352,9 @@ export default function ClientCallLogsCreateForm(props) {
             : parseInt(e.target.value);
           if (onChange) {
             const modelFields = {
-              RecordingId,
               tenantId,
-              callId,
-              contactId,
+              callRecordId,
               callType,
-              callStatus,
               callStartTime,
               callEndTime,
               callDuration: value,
@@ -526,12 +388,9 @@ export default function ClientCallLogsCreateForm(props) {
             : parseFloat(e.target.value);
           if (onChange) {
             const modelFields = {
-              RecordingId,
               tenantId,
-              callId,
-              contactId,
+              callRecordId,
               callType,
-              callStatus,
               callStartTime,
               callEndTime,
               callDuration,
@@ -561,12 +420,9 @@ export default function ClientCallLogsCreateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              RecordingId,
               tenantId,
-              callId,
-              contactId,
+              callRecordId,
               callType,
-              callStatus,
               callStartTime,
               callEndTime,
               callDuration,
@@ -596,12 +452,9 @@ export default function ClientCallLogsCreateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              RecordingId,
               tenantId,
-              callId,
-              contactId,
+              callRecordId,
               callType,
-              callStatus,
               callStartTime,
               callEndTime,
               callDuration,

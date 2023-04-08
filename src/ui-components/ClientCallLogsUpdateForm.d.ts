@@ -14,12 +14,9 @@ export declare type ValidationResponse = {
 };
 export declare type ValidationFunction<T> = (value: T, validationResponse: ValidationResponse) => ValidationResponse | Promise<ValidationResponse>;
 export declare type ClientCallLogsUpdateFormInputValues = {
-    RecordingId?: string;
     tenantId?: string;
-    callId?: string;
-    contactId?: string;
+    callRecordId?: string;
     callType?: string;
-    callStatus?: string;
     callStartTime?: string;
     callEndTime?: string;
     callDuration?: number;
@@ -28,12 +25,9 @@ export declare type ClientCallLogsUpdateFormInputValues = {
     calleeNumber?: string;
 };
 export declare type ClientCallLogsUpdateFormValidationValues = {
-    RecordingId?: ValidationFunction<string>;
     tenantId?: ValidationFunction<string>;
-    callId?: ValidationFunction<string>;
-    contactId?: ValidationFunction<string>;
+    callRecordId?: ValidationFunction<string>;
     callType?: ValidationFunction<string>;
-    callStatus?: ValidationFunction<string>;
     callStartTime?: ValidationFunction<string>;
     callEndTime?: ValidationFunction<string>;
     callDuration?: ValidationFunction<number>;
@@ -44,12 +38,9 @@ export declare type ClientCallLogsUpdateFormValidationValues = {
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type ClientCallLogsUpdateFormOverridesProps = {
     ClientCallLogsUpdateFormGrid?: PrimitiveOverrideProps<GridProps>;
-    RecordingId?: PrimitiveOverrideProps<TextFieldProps>;
     tenantId?: PrimitiveOverrideProps<TextFieldProps>;
-    callId?: PrimitiveOverrideProps<TextFieldProps>;
-    contactId?: PrimitiveOverrideProps<TextFieldProps>;
+    callRecordId?: PrimitiveOverrideProps<TextFieldProps>;
     callType?: PrimitiveOverrideProps<TextFieldProps>;
-    callStatus?: PrimitiveOverrideProps<TextFieldProps>;
     callStartTime?: PrimitiveOverrideProps<TextFieldProps>;
     callEndTime?: PrimitiveOverrideProps<TextFieldProps>;
     callDuration?: PrimitiveOverrideProps<TextFieldProps>;
@@ -60,7 +51,7 @@ export declare type ClientCallLogsUpdateFormOverridesProps = {
 export declare type ClientCallLogsUpdateFormProps = React.PropsWithChildren<{
     overrides?: ClientCallLogsUpdateFormOverridesProps | undefined | null;
 } & {
-    callId?: string;
+    callRecordId?: string;
     clientCallLogs?: ClientCallLogs;
     onSubmit?: (fields: ClientCallLogsUpdateFormInputValues) => ClientCallLogsUpdateFormInputValues;
     onSuccess?: (fields: ClientCallLogsUpdateFormInputValues) => void;

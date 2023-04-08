@@ -94,6 +94,7 @@ export const createSignup = async (data) => {
           console.log({ createSignup: response.data });
           createClientUser({
             ...data,
+            id: undefined,
             tenantId: response.data.createClientSignup.id,
             company: undefined,
             phone: undefined,
@@ -125,7 +126,6 @@ export const createClientUser = async (data) => {
         variables: {
           input: {
             ...data,
-            role: 1,
             status: 1,
           },
         },
