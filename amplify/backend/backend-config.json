@@ -252,14 +252,6 @@
         }
       ]
     },
-    "AMPLIFY_function_downloadPSTNCallLogs_msGraphSecretKeyName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "downloadPSTNCallLogs"
-        }
-      ]
-    },
     "AMPLIFY_function_downloadPSTNCallLogs_s3Key": {
       "usedBy": [
         {
