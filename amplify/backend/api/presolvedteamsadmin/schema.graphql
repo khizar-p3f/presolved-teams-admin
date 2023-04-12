@@ -115,6 +115,8 @@ type clientUserWhitelisting
   ) {
   id: ID!
   tenantId: String!
+  groupId: ID! @index(name: "byGroupId")
+  groupUser: clientUsersGroup @belongsTo(fields: ["groupId"])
   displayName: String!
   businessPhones: AWSJSON!
   givenName: String!
@@ -180,3 +182,33 @@ type PresolvedAudit
   byDateTime: AWSDateTime!
   changesMade: AWSJSON
 }
+
+type clientUsersGroup
+  @model
+  @auth(
+    rules: [
+      {
+        allow: owner
+        ownerField: "tenantId"
+        operations: [read, create, update, delete]
+        identityClaim: "custom:tenantId"
+      }
+      {
+        allow: groups
+        groups: ["tenantAdmin"]
+        operations: [read, create, update, delete]
+      }
+      {
+        allow: groups
+        groups: ["p3fAdmin"]
+        operations: [read, create, update, delete]
+      }
+       { allow: public, operations: [read] }
+    ]
+  ){
+  id: ID!
+  tenantId: String!
+  name: String!
+  description: String!
+  users:[clientUserWhitelisting] @hasMany(indexName: "byGroupId", fields: ["id"])
+  }

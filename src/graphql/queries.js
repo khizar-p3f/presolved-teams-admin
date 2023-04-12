@@ -160,6 +160,18 @@ export const getClientUserWhitelisting = /* GraphQL */ `
     getClientUserWhitelisting(id: $id) {
       id
       tenantId
+      groupId
+      groupUser {
+        id
+        tenantId
+        name
+        description
+        users {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
       displayName
       businessPhones
       givenName
@@ -190,6 +202,15 @@ export const listClientUserWhitelistings = /* GraphQL */ `
       items {
         id
         tenantId
+        groupId
+        groupUser {
+          id
+          tenantId
+          name
+          description
+          createdAt
+          updatedAt
+        }
         displayName
         businessPhones
         givenName
@@ -250,6 +271,65 @@ export const listClientCallLogs = /* GraphQL */ `
         charge
         callerNumber
         calleeNumber
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getClientUsersGroup = /* GraphQL */ `
+  query GetClientUsersGroup($id: ID!) {
+    getClientUsersGroup(id: $id) {
+      id
+      tenantId
+      name
+      description
+      users {
+        items {
+          id
+          tenantId
+          groupId
+          displayName
+          businessPhones
+          givenName
+          jobTitle
+          mail
+          mobilePhone
+          officeLocation
+          preferredLanguage
+          surname
+          userPrincipalName
+          uid
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listClientUsersGroups = /* GraphQL */ `
+  query ListClientUsersGroups(
+    $filter: ModelClientUsersGroupFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listClientUsersGroups(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        tenantId
+        name
+        description
+        users {
+          nextToken
+        }
         createdAt
         updatedAt
       }

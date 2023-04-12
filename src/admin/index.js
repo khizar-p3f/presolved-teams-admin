@@ -18,6 +18,7 @@ import { getClientIntegration, getUsersWhiteListing } from './api';
 import TeamsIntegration from './pages/teamsIntegration';
 import TeamsUsersWhitelisting from './pages/usersWhitelist';
 import UserManagement from './pages/userManagement';
+import { getGroupsUsers } from './api/groups';
 
 
 const AdminIndexPage = (props) => {
@@ -44,19 +45,20 @@ const AdminIndexPage = (props) => {
     
     const postLoginCheks = (login) => {
         getClientInformation(login.attributes.email).then((res) => {
+
+            console.log({res});
             dispatch(updateUser({ ...res }))
             dispatch(updateClient({ ...res }))
             if (!client.config.isLoaded) {
-                getClientIntegration(res.clientId).then((gci) => {
-                    dispatch(updateClientConfig({ ...gci, clientId: res.clientId }))
+                getClientIntegration(res.tenantId).then((gci) => {
+                    dispatch(updateClientConfig({ ...gci, clientId: res.tenantId }))
                     setState({ ...state, clientLoaded: true, configsLoaded: true })
                 })
             }
             if (!client.whiteListedUsers.isLoaded) {
-                getUsersWhiteListing(res.clientId).then((gwl) => {
-                    dispatch(updateWhiteListedUsers(gwl))
-
-                })
+                getGroupsUsers(res.tenantId).then((response) => {
+                    dispatch(updateWhiteListedUsers(response?.listClientUsersGroups?.items))                 
+                })               
             }
 
         })
