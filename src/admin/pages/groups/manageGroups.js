@@ -1,29 +1,52 @@
-import { Button, Drawer, Space, Table, Typography } from 'antd'
+import { Button, Drawer, Space, Table, Typography, Row, Col, Form, Input, Divider, notification } from 'antd'
+import {PlusOutlined, UserSwitchOutlined} from '@ant-design/icons'
 import React, { useState } from 'react'
 import GetUsersFromGraph from './searchUsers'
+import { createNewGroupAPI } from '../../api/groups'
 
 const AdminManageGroups = ({ client }) => {
 
-    const [showAddUserModal, setShowAddUserModal] = useState({
+    const [state, setState] = useState({
         visible: false,
         record: null,
-        showUserslist: false
+        showUserslist: false,
+        showAddgroup: false
     })
+    const [form]=Form.useForm()
 
 
-    const addUserHandler = (record) => 
-        setShowAddUserModal({
+    const addUserHandler = (record) =>
+        setState({
             visible: true,
             record: record
         })
-    
 
-    const showUserslistHandler = (record) => setShowAddUserModal({
-            visible: true,
-            record,
-            showUserslist: true
+
+    const showUserslistHandler = (record) => setState({
+        visible: true,
+        record,
+        showUserslist: true
+    })
+    const addGroupHandler=(values)=>{
+        const addGroupInput={
+            name:values.name,
+            description:values.description,
+            tenantId:client.config.clientId
+        }
+        createNewGroupAPI(addGroupInput).then((res)=>{
+            console.log({res});
+            notification.success({
+                message: 'Group Created',
+                description: 'Group created successfully'
+            })
+        }).catch((err)=>{
+            notification.error({
+                message: 'Error',
+                description: err.message || 'Unable to create group'
+            })
         })
-    
+    }
+
 
     const columns = [
         {
@@ -64,12 +87,39 @@ const AdminManageGroups = ({ client }) => {
     ]
     return (
         <section className='manage-groups'>
+            <Row align='middle' justify='space-between' gutter={[16,16]} style={{marginBottom:30}}>
+                <Col flex={1}>&nbsp;</Col>
+                <Col flex={0}>
+                    <Button icon={<PlusOutlined/>} type='default' size='large' onClick={() => setState({ showAddgroup: true })}>Create New Group</Button>
+                </Col>
+            </Row>
+
             <Table columns={columns} dataSource={client.whiteListedUsers.items} />
-            <Drawer width={showAddUserModal.showUserslist ? "80%" : "30%"} title={showAddUserModal.showUserslist ? <span>View Users belongs to {showAddUserModal.record?.name} group </span> : <span>Add User to the {showAddUserModal.record?.name} group</span>} open={showAddUserModal.visible} closable onClose={() => setShowAddUserModal({
+            <Drawer width={state.showUserslist ? "80%" : "30%"} title={state.showUserslist ? <span>View Users belongs to {state.record?.name} group </span> : <span>Add User to the {state.record?.name} group</span>} open={state.visible} closable onClose={() => setState({
                 visible: false,
                 record: null
             })}>
-                <GetUsersFromGraph client={client} group={showAddUserModal.record} showUserslist={showAddUserModal.showUserslist} />
+                <GetUsersFromGraph client={client} group={state.record} showUserslist={state.showUserslist} />
+            </Drawer>
+
+            <Drawer mask={false} open={state.showAddgroup} title="create new group" width={720} closable onClose={() => setState({ showAddgroup: false })} >
+                <Form size='large' form={form} layout='vertical' onFinish={addGroupHandler}>
+                    <Form.Item label="Group Name" name="name" rules={[{ required: true, message: 'Please input group name!' }]}>
+                        <Input />
+                    </Form.Item>
+                    <Form.Item label="Group Description" name="description" rules={[{ required: true, message: 'Please input group description!' }]}>
+                        <Input.TextArea rows={3} />
+                    </Form.Item>
+                    <Divider />
+                    <Form.Item>
+                        <Space size={10}>
+                        <Button type="primary" htmlType="submit">Create</Button>
+                        <Button type="default" htmlType="reset">Reset</Button>
+                        </Space>
+
+
+                    </Form.Item>
+                </Form>
             </Drawer>
 
         </section>

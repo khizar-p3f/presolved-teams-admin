@@ -1,11 +1,13 @@
-import { Breadcrumb, Card, Col, Row, Typography, Table, Result, Button, Input, Space, Spin, Divider, List, Empty, Avatar, notification, Tabs } from 'antd';
+import { Breadcrumb, Card, Col, Row, Typography, Table, Result, Button, Input, Space, Spin, Divider, List, Empty, Avatar, notification, Tabs, Modal } from 'antd';
 import React, { useEffect, useState } from 'react';
 
 import { PlusOutlined, UserOutlined, UserSwitchOutlined, CloseOutlined } from '@ant-design/icons';
 
 import { useSelector } from 'react-redux';
 import axios from 'axios';
-import { addUserWhiteListing } from '../../api';
+import { addUserWhiteListing, } from '../../api';
+import { deleteUserFromGroupAPI } from '../../api/groups';
+
 
 
 
@@ -69,6 +71,36 @@ const GetUsersFromGraph = ({ client, group, showUserslist }) => {
 
 
     }
+    const removeUser = (user) => {
+        Modal.confirm({
+            title: 'Are you sure you want to remove this user from the group?',
+            content: 'This action cannot be undone.',
+            okText: 'Yes',
+            okType: 'danger',
+            cancelText: 'No',
+            onOk() {
+                deleteUserFromGroupAPI({
+                    input: {
+                        id: user.id,
+                    }
+                }).then((res) => {
+                    notification.success({
+                        message: 'Success',
+                        description: 'User removed from the group ' + group.name + ' successfully',
+                    });
+                }).catch((err) => {
+                    notification.error({
+                        message: 'Error',
+                        description: err.message || 'Unable to remove user from group',
+                    });
+                })
+            },
+            onCancel() {
+                console.log('Cancel');
+            },
+        });
+    }
+
     const columns = [
         {
             title: 'Name',
@@ -101,82 +133,82 @@ const GetUsersFromGraph = ({ client, group, showUserslist }) => {
             dataIndex: 'action',
             key: 'action',
             render: (text, record) => (
-                <Button type='primary' danger icon={<CloseOutlined />} onClick={() => null } title='Remove from the Group' />
+                <Button type='primary' danger icon={<CloseOutlined />} onClick={() => removeUser(record)} title='Remove from the Group' />
             ),
         },
     ]
     return (
-        <Row className='user-container' gutter={[16,16]}>
-           
-                <Col span={24} className="input-section">
-                    <Space style={{ width: '95%' }} direction='vertical' size={10}>
-                        <Typography.Text strong>Search Users</Typography.Text>
-                        <Input.Search style={{ width: '100%' }} placeholder="Search By Name" enterButton="Search" size="large" onSearch={performSearch} />
-                        <Typography.Text disabled>
-                            Hint: Search by name or email
-                        </Typography.Text>
-                    </Space>
-                    <Divider />
-                    <Space style={{ width: '100%' }} direction='vertical' size={30}>
-                        <Typography.Text strong>Search Results</Typography.Text>
-                        {searchInProgress && <Spin size='large' />}
+        <Row className='user-container' gutter={[16, 16]}>
 
-                        {searchResults.length < 1 && !searchInProgress && <Typography.Text disabled>
-                            <Empty description="No users data" />
-                        </Typography.Text>}
-                        {searchResults.length > 0 && !searchInProgress && <Space style={{ width: '100%' }} direction='vertical' size={20}>
-                            <List
-                                style={{ width: '50%' }}
-                                pagination={{
-                                    position: 'bottom',
-                                    align: 'center',
-                                }}
-                                dataSource={searchResults}
-                                renderItem={(item, index) => (
-                                    <List.Item>
-                                        <List.Item.Meta
-                                            avatar={<AvatarUserInitials name={item.displayName} />}
-                                            title={
-                                                <Space size={5}>
-                                                    <Typography.Text strong>
-                                                        {item.displayName}
-                                                    </Typography.Text>
-                                                    <Typography.Text type='secondary'>
-                                                        {item.jobTitle}
-                                                    </Typography.Text>
-                                                </Space>
-                                            }
-                                            description={
-                                                <Space direction='vertical' size={5}>
-                                                    <Typography.Text type='secondary'>
-                                                        {item.mail}
-                                                    </Typography.Text>
-                                                    <Typography.Text type='secondary'>
-                                                        {item.mobilePhone || item.businessPhones[0]}
-                                                    </Typography.Text>
-                                                </Space>
+            <Col span={24} className="input-section">
+                <Space style={{ width: '95%' }} direction='vertical' size={10}>
+                    <Typography.Text strong>Search Users</Typography.Text>
+                    <Input.Search style={{ width: '100%' }} placeholder="Search By Name" enterButton="Search" size="large" onSearch={performSearch} />
+                    <Typography.Text disabled>
+                        Hint: Search by name or email
+                    </Typography.Text>
+                </Space>
+                <Divider />
+                <Space style={{ width: '100%' }} direction='vertical' size={30}>
+                    <Typography.Text strong>Search Results</Typography.Text>
+                    {searchInProgress && <Spin size='large' />}
 
-                                            }
-                                        />
-                                        <Button type='default'
-                                            onClick={() => { addUsers(item) }}
-                                            shape='circle' size='large' icon={<PlusOutlined />} />
-                                    </List.Item>
-                                )}
-                            />
+                    {searchResults.length < 1 && !searchInProgress && <Typography.Text disabled>
+                        <Empty description="No users data" />
+                    </Typography.Text>}
+                    {searchResults.length > 0 && !searchInProgress && <Space style={{ width: '100%' }} direction='vertical' size={20}>
+                        <List
+                            style={{ width: '50%' }}
+                            pagination={{
+                                position: 'bottom',
+                                align: 'center',
+                            }}
+                            dataSource={searchResults}
+                            renderItem={(item, index) => (
+                                <List.Item>
+                                    <List.Item.Meta
+                                        avatar={<AvatarUserInitials name={item.displayName} />}
+                                        title={
+                                            <Space size={5}>
+                                                <Typography.Text strong>
+                                                    {item.displayName}
+                                                </Typography.Text>
+                                                <Typography.Text type='secondary'>
+                                                    {item.jobTitle}
+                                                </Typography.Text>
+                                            </Space>
+                                        }
+                                        description={
+                                            <Space direction='vertical' size={5}>
+                                                <Typography.Text type='secondary'>
+                                                    {item.mail}
+                                                </Typography.Text>
+                                                <Typography.Text type='secondary'>
+                                                    {item.mobilePhone || item.businessPhones[0]}
+                                                </Typography.Text>
+                                            </Space>
 
-                        </Space>}
+                                        }
+                                    />
+                                    <Button type='default'
+                                        onClick={() => { addUsers(item) }}
+                                        shape='circle' size='large' icon={<PlusOutlined />} />
+                                </List.Item>
+                            )}
+                        />
 
-                    </Space>
-                    <Divider />
+                    </Space>}
 
-                </Col>
-           
-                <Col span={24} className="input-section">
-                    <Typography.Title level={5} type='secondary'>Users in the {group?.name} Group</Typography.Title>
-                    <Table columns={columns} dataSource={group?.users?.items || []} />
-                </Col>
-            
+                </Space>
+                <Divider />
+
+            </Col>
+
+            <Col span={24} className="input-section">
+                <Typography.Title level={5} type='secondary'>Users in the {group?.name} Group</Typography.Title>
+                <Table columns={columns} dataSource={group?.users?.items || []} />
+            </Col>
+
         </Row>
     )
 }

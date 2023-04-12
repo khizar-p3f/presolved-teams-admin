@@ -7,9 +7,9 @@ import * as mutations from "../../graphql/mutations";
 export const getGroupsUsers = async (tenantID) => {
     return new Promise((resolve, reject) => {
         try {
-            const query = groupsUsersQuery(tenantID);          
+            const query = groupsUsersQuery(tenantID);
             API.graphql({
-                query:query ,
+                query: query,
                 variables: {
                     filter: {
                         tenantId: {
@@ -34,6 +34,53 @@ export const getGroupsUsers = async (tenantID) => {
         }
     })
 }
+
+export const createNewGroupAPI = async (input) => {
+    return new Promise((resolve, reject) => {
+        try {
+            API.graphql({
+                query: mutations.createClientUsersGroup,
+                variables: {
+                    input: input
+                }
+            }).then((response) => {
+                resolve(response.data.createClientUsersGroup);
+            }).catch((error) => {
+                throw ({
+                    createNewGroupAPI: error,
+                });
+            });
+        }
+        catch (error) {
+            console.error({ error });
+        }
+    })
+}
+
+export const deleteUserFromGroupAPI = async (input) => {
+    return new Promise((resolve, reject) => {
+        try {
+            API.graphql({
+                query: mutations.deleteClientUserWhitelisting,
+                variables: input                
+            }).then((response) => {
+                resolve(response.data.deleteClientUsersGroupUser);
+            }).catch((error) => {
+                throw ({
+                    deleteUserFromGroupAPI: error,
+                });
+            });
+        }
+        catch (error) {
+            console.error({ error });
+        }
+    })
+}
+
+
+
+
+
 
 const groupsUsersQuery = (id) => `query MyQuery {
     listClientUsersGroups(filter: {tenantId: {eq: "${id}"}}) {
