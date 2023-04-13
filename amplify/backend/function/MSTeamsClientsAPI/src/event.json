@@ -2,7 +2,7 @@
   "httpMethod": "GET",
   "path": "/teams/init",
   "queryStringParameters": {
-    "tenantId": "69ecaa9a-f38c-4f7b-9b2f-1108dfe74b8f",
+    "tenantId": "69ecaa9a-f38c-4f7b-9b2f-1108dfe74b8f-khizar",
     "displayName": "Siv"
   },
   "body": "{\n  \"clientID\": \"d0aa9be0-44ba-411b-8712-1ddc33f5c00e\", \n  \"from\": \"connect1\",\n  \"to\": {\n    \"displayname\": \"Siva\",\n    \"id\": \"848c9bb7-36b9-46f1-af04-662a0c379c1b\",\n    \"tenantId\": \"4aed8dae-5d5c-4a2f-a6c8-64f94dfa89f6\"\n  }\n}",

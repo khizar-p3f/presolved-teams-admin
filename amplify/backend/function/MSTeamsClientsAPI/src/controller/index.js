@@ -40,10 +40,19 @@ const clientController = {
         clientUsers: [],
       };
       result.clientInfo = await clientModel.getClient(clientID);
-      if (result.clientInfo.data && result.clientInfo.data.getClientSignup.id) {
-        result.clientConfigurations = await clientModel.getClientConfigurations(
-          clientID
-        );
+      if (result.clientInfo && result.clientInfo.id) {
+        let asyncreq = {
+          clientConfigurations: clientModel.getClientConfigurations(clientID),
+          clientUsers: clientModel.getClientsUsersGroups(clientID),
+        }
+        result = {
+          ...result,
+          clientValidated: true,
+          clientConfigurations: await asyncreq.clientConfigurations,
+          clientUsers: await asyncreq.clientUsers,
+        }
+      } else {
+        throw new Error("Client not found : " + clientID)
       }
       res.status(200).json({ result });
     } catch (error) {

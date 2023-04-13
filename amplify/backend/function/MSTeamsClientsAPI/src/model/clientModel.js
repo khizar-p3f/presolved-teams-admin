@@ -2,59 +2,91 @@ const GRAPHQL_ENDPOINT = "https://fo5bad5dvvftlgb5cm4ih3dnce.appsync-api.us-east
 const GRAPHQL_API_KEY = "da2-vlztb4vfubdzhi7h4quuauoxqu"
 const clientModel = {
 
-    getClient: async (clientID) => {
-        try {
-            let variables = {
-                id: clientID
-            };
-            let options = {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "x-api-key": GRAPHQL_API_KEY,
-                },
-                body: JSON.stringify({ query: getClientSignup, variables }),
-            };
-            let getClientSignupRequest = new Request(GRAPHQL_ENDPOINT, options);
-            let response = await fetch(getClientSignupRequest);
-            let json = await response.json();
-            return (json);
-        } catch (error) {
-            console.error({ getClient: error, clientID });
-            throw ({ getClient: error })
+  getClient: async (clientID) => {
+    try {
+      let variables = {
+        id: clientID
+      };
+      let options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": GRAPHQL_API_KEY,
+        },
+        body: JSON.stringify({ query: getClientSignup, variables }),
+      };
+      let getClientSignupRequest = new Request(GRAPHQL_ENDPOINT, options);
+      let response = await fetch(getClientSignupRequest);
+      let json = await response.json();
+      let result= json.data?.getClientSignup || null
+      return (result);
+    } catch (error) {
+      console.error({ getClient: error, clientID });
+      throw ({ getClient: error })
+    }
+  },
+  getClientConfigurations: async (clientID) => {
+    try {
+      let variables = {
+        input: {
+          filter: {
+            tenantID: {
+              eq: clientID
+            }
+          }
         }
-    },
-    getClientConfigurations: async (clientID) => {
-        try {
-            let variables = {
-                input: {
-                    filter: {
-                        tenantID: {
-                            eq: clientID
-                        }
-                    }
-                }
-            };
-            let options = {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "x-api-key": GRAPHQL_API_KEY,
-                },
-                body: JSON.stringify({ query: listClientIntergrations, variables }),
-            };
-            let listClientIntergrationsRequest = new Request(GRAPHQL_ENDPOINT, options);
-            let response = await fetch(listClientIntergrationsRequest);
-            let json = await response.json();
-            return (json);
+      };
+      let options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": GRAPHQL_API_KEY,
+        },
+        body: JSON.stringify({ query: listClientIntergrations, variables }),
+      };
+      let listClientIntergrationsRequest = new Request(GRAPHQL_ENDPOINT, options);
+      let response = await fetch(listClientIntergrationsRequest);
+      let json = await response.json();
+      let result= json.data?.listClientIntergrations?.items[0] || null
+      return (result);
 
-        }
-        catch (error) {
-            console.error({ getClientConfigurations: error, clientID });
-            throw ({ getClientConfigurations: error })
-        }
+    }
+    catch (error) {
+      console.error({ getClientConfigurations: error, clientID });
+      throw ({ getClientConfigurations: error })
+    }
 
-    },
+  },
+  getClientsUsersGroups: async (clientID) => {
+    try {
+      let query = groupsUsersQuery(clientID);
+      let variables = {
+        filter: {
+          tenantId: {
+            eq: clientID
+          }
+        }
+      };
+      let options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": GRAPHQL_API_KEY,
+        },
+        body: JSON.stringify({ query: query, variables }),
+      };
+      let listClientUsersGroupsRequest = new Request(GRAPHQL_ENDPOINT, options);
+      let response = await fetch(listClientUsersGroupsRequest);
+      let json = await response.json();
+      let result= json.data?.listClientUsersGroups?.items || []
+      return (result);
+    }
+    catch (error) {
+      console.error({ getClientsUsersGroups: error, clientID });
+      throw ({ getClientsUsersGroups: error })
+    }
+  }
+
 
 
 }
@@ -108,3 +140,32 @@ const listClientIntergrations = /* GraphQL */ `
     }
   }
 `;
+
+const groupsUsersQuery = (id) => `query MyQuery {
+  listClientUsersGroups(filter: {tenantId: {eq: "${id}"}}) {
+    items {
+      createdAt
+      description
+      id
+      name
+      tenantId
+      updatedAt
+      users {
+        items {
+          id
+          displayName
+          jobTitle
+          mail
+          mobilePhone
+          officeLocation
+          preferredLanguage
+          surname
+          tenantId
+          uid
+          updatedAt
+          userPrincipalName
+        }
+      }
+    }
+  }
+}`
