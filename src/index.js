@@ -12,6 +12,7 @@ import { globalTheme } from "./globals/style";
 import { ConfigProvider, theme } from "antd";
 
 import SuperAdminIndexPage from "./super-admin/index";
+import Playground from "./playground";
 
 const AdminPage = React.lazy(() => import("./admin/index"));
 const ClientSignupPage = React.lazy(() => import("./signup"));
@@ -43,6 +44,7 @@ ReactDOM.render(
           <AdminPage path="/*" />
           <ClientSignupPage path="/signup/*" />
           <SuperAdminIndexPage path="/admin/*" />
+          <Playground path="/playground/*" />
         </Router>
       </ConfigProvider>
     </Suspense>
